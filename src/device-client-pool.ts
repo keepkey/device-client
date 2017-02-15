@@ -4,12 +4,10 @@
  */
 
 import * as _ from 'lodash';
-
 import {DeviceClient} from "./device-client";
 import {Transport} from "./transport";
 import {DeviceMessageHelper} from "./device-message-helper";
 import {EventEmitter} from "events";
-import Dictionary = _.Dictionary;
 import {HidHelper} from "./hid-helper";
 import {Readable} from "stream";
 
@@ -66,7 +64,7 @@ export class DeviceClientPool extends EventEmitter {
     this._rawFirmwareStreamFactory = streamFactory;
   }
 
-  private clients: Dictionary<DeviceClient> = {};
+  private clients: _.Dictionary<DeviceClient> = {};
 
   public findByDeviceId(deviceId): DeviceClient {
     return this.clients[deviceId];

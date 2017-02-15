@@ -9,19 +9,31 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bitcore-lib": "git+https://github.com/keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",
+    "@types/concat-stream": "^1.6.0",
     "@types/lodash": "^4.14.52",
     "@types/node": "^7.0.5",
-    "bytebuffer": "^5.0.1",
     "device-protocol": "git+https://github.com/keepkey/device-protocol.git#c9c7b3d930cf8e0fefeab7f0aea2a80ab4123f3d",
-    "events": "^1.1.1",
     "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
+    "gulp-download": "0.0.1",
+    "gulp-hjson": "^2.0.3",
+    "gulp-jsoncombine": "^1.0.3",
     "gulp-pbjs": "git+https://github.com/keepkey/gulp-pbjs.git",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "lodash": "^4.17.4",
+    "gulp-typescript": "^3.1.4",
+    "gulp-util": "^3.0.8",
     "proto2typescript": "git+https://github.com/bgok/Proto2TypeScript.git",
-    "through2": "^2.0.3",
     "typescript": "^2.1.6"
+  },
+  "dependencies": {
+    "bignumber.js": "^4.0.0",
+    "bitcore-lib": "git+https://github.com/keepkey/bitcore-lib.git",
+    "bytebuffer": "^5.0.1",
+    "concat-stream": "^1.6.0",
+    "events": "^1.1.1",
+    "lodash": "^4.17.4",
+    "through2": "^2.0.3"
   }
 }

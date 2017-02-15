@@ -2,8 +2,7 @@
 /* tslint:disable:member-ordering */
 import * as _ from "lodash";
 import {CoinName} from "./coin-name";
-import {BigNumber} from "bignumber.js";
-import {Configuration} from "bignumber.js";
+import {BigNumber, Configuration} from "bignumber.js";
 import Long = require('long');
 
 export interface CoinTypeConfiguration {

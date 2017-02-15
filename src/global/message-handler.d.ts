@@ -1,4 +1,4 @@
-//TODO move this to an @types module
+///<reference path="../../build/keepkey/messages.d.ts"/>
 
 interface ProtoBufModel {
   toArrayBuffer(): ArrayBuffer;

@@ -4,8 +4,6 @@
  */
 
 import ByteBuffer = require('bytebuffer');
-
-import {Logger} from "../../../../Logger";
 import {DeviceClient} from "../device-client";
 import {DeviceMessageHelper} from "../device-message-helper";
 import FirmwareUpload = DeviceMessages.FirmwareUpload;
@@ -15,14 +13,14 @@ import * as Bitcore from "bitcore-lib";
 import concat = require("concat-stream");
 
 export class FirmwareUploadAction {
-  private static firmwareFileMetaData: FirmwareFileMetadata = require('../../../../../build/keepkey_main');
+  private static firmwareFileMetaData: FirmwareFileMetadata = require('../../build/keepkey_main.json');
 
   private static client: DeviceClient;
   private static payload: ArrayBuffer;
 
   public static operation(client: DeviceClient): Promise<void> {
     FirmwareUploadAction.client = client;
-    Logger.logger.info('starting firmware upload');
+    console.log('starting firmware upload');
     return client.featuresService.promise
       .then<string>(FirmwareUploadAction.checkDeviceInBootloaderMode)
       .then<void>((): Promise<void> => {
@@ -48,7 +46,7 @@ export class FirmwareUploadAction {
   }
 
   private static checkDeviceInBootloaderMode(features: Features): Promise<string> {
-    Logger.logger.info('check for device in bootloader mode');
+    console.log('check for device in bootloader mode');
     if (!features.bootloaderMode) {
       return Promise.reject('Device must be in bootloader mode');
     } else {
@@ -67,8 +65,8 @@ export class FirmwareUploadAction {
 
   private static checkHash(hash, hashName, expectedHash): Promise < void > {
     var hexHash = ByteBuffer.wrap(hash).toHex();
-    Logger.logger.info('verifying %s: expecting %s', hashName, expectedHash);
-    Logger.logger.info(hashName + ":", hexHash);
+    console.log('verifying %s: expecting %s', hashName, expectedHash);
+    console.log(hashName + ":", hexHash);
     if (hexHash !== expectedHash) {
       return Promise.reject(`Hash ${hashName} doesn't match expected value`);
     } else {
@@ -93,7 +91,7 @@ export class FirmwareUploadAction {
   }
 
   private static verifyManufacturerPrefixInFirmwareImage(): Promise<any> {
-    Logger.logger.info('verifying manufacturers prefix in firmware file');
+    console.log('verifying manufacturers prefix in firmware file');
 
     var firmwareManufacturerTag = ByteBuffer
       .wrap(FirmwareUploadAction.payload.slice(0, 4))
@@ -107,7 +105,7 @@ export class FirmwareUploadAction {
   }
 
   private static sendFirmwareToDevice(): Promise<any> {
-    Logger.logger.info('sending firmware to device');
+    console.log('sending firmware to device');
 
     var message: FirmwareUpload = DeviceMessageHelper.factory('FirmwareUpload');
     message.setPayload(ByteBuffer.wrap(FirmwareUploadAction.payload));
@@ -118,7 +116,7 @@ export class FirmwareUploadAction {
   }
 
   private static eraseFirmware() {
-    Logger.logger.info('erasing firmware');
+    console.log('erasing firmware');
     var message: FirmwareErase = DeviceMessageHelper.factory('FirmwareErase');
     return FirmwareUploadAction.client.writeToDevice(message);
   }

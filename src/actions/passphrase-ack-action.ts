@@ -4,7 +4,6 @@
  */
 
 import {BasicClient} from "../device-client";
-import {Logger} from "../../../../Logger";
 import PassphraseAck = DeviceMessages.PassphraseAck;
 import {DeviceMessageHelper} from "../device-message-helper";
 
@@ -15,7 +14,7 @@ export class PassphraseAckAction {
 
     return client.writeToDevice(message)
       .catch(() => {
-        Logger.logger.error('failure while sending passphrase');
+        console.log('failure while sending passphrase');
       });
   }
 }

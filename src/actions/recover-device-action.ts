@@ -6,7 +6,6 @@
 import * as _ from 'lodash';
 
 import {BasicClient} from "../device-client";
-import {Logger} from "../../../../Logger";
 import RecoveryDevice = DeviceMessages.RecoveryDevice;
 import {DeviceMessageHelper} from "../device-message-helper";
 import {Features} from "../global/features";
@@ -70,7 +69,7 @@ export class RecoverDeviceAction {
         }
       })
       .catch(function (failure) {
-        Logger.logger.error('deviceRecovery failed', arguments);
+        console.log('deviceRecovery failed', arguments);
         return Promise.reject(failure);
       });
 

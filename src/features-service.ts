@@ -4,14 +4,24 @@
  */
 
 import * as _ from 'lodash';
-import {Configuration} from "../../Configuration";
 import {Features, IFeatures} from "./global/features";
 import {CoinType} from "./global/coin-type";
-import {CoinName} from "./global/coin-name";
 
 export class FeaturesService {
-  private static firmwareFileMetaData: FirmwareFileMetadata =
-    require('../../../../../build/keepkey_main');
+  private static firmwareFileMetaData: FirmwareFileMetadata = require('../build/keepkey_main.json');
+  private static deviceProfiles = require('../build/device-profiles.json');
+  private static getDeviceCapabilities(features: any) : any {
+    var deviceProfile = _.find(FeaturesService.deviceProfiles, (profile: any) => {
+      return !!(_.find([features], profile.identity));
+    });
+
+    if (!deviceProfile) {
+      console.error('Unknown device or version');
+      return undefined;
+    } else {
+      return deviceProfile.capabilities;
+    }
+  }
 
   private resolver: Function;
   private rejector: Function;
@@ -19,13 +29,10 @@ export class FeaturesService {
 
   public setValue(features: IFeatures): void {
     features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
-    features.deviceCapabilities = Configuration.getDeviceCapabilities(features);
+    features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
     features.coin_metadata = _.intersectionWith(CoinType.getList(), features.coins, (metadata, deviceCoin) => {
       return metadata.name === deviceCoin.coin_name;
     });
-    if (!Configuration.supportsEthereum) {
-      features.coin_metadata = _.reject(features.coin_metadata, {name: CoinName[CoinName.Ethereum]});
-    }
 
     if (!this._promise || !this.resolver) {
       if (features.deviceCapabilities) {

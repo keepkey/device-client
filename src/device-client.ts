@@ -104,11 +104,6 @@ export class DeviceClient extends EventEmitter implements BasicClient {
     return this._featuresService;
   }
 
-  private _transactionService: TransactionService;
-  get transactionService(): TransactionService {
-    return this._transactionService;
-  }
-
   private devicePollingInterval: Timer = setInterval(() => {
     this.pollDevice();
   }, 0);
