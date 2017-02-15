@@ -1,0 +1,20 @@
+{
+  "version": "2.0.6",
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom", "es5", "es2015.core", "es2015.promise", "scripthost"
+    ],
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "outDir": "build",
+    "allowJs": true
+  },
+  "include": [
+    "build/keepkey/messages.d.ts",
+    "src/global/message-handler.d.ts",
+    "src/**/*.ts"
+  ]
+}

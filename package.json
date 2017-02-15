@@ -1,0 +1,27 @@
+{
+  "name": "keepkey-device-client",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bytebuffer": "^5.0.33",
+    "@types/lodash": "^4.14.52",
+    "@types/node": "^7.0.5",
+    "bytebuffer": "^5.0.1",
+    "device-protocol": "git+https://github.com/keepkey/device-protocol.git#c9c7b3d930cf8e0fefeab7f0aea2a80ab4123f3d",
+    "events": "^1.1.1",
+    "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
+    "gulp-pbjs": "git+https://github.com/keepkey/gulp-pbjs.git",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "lodash": "^4.17.4",
+    "proto2typescript": "git+https://github.com/bgok/Proto2TypeScript.git",
+    "through2": "^2.0.3",
+    "typescript": "^2.1.6"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  identity: {
+    vendor: bitcointrezor.com
+    bootloader_mode: true
+  }
+  capabilities: {
+    vendorName: TREZOR
+    firmwareImageAvailable: false
+    defaultMnemonicSeedLength: 24
+    supportsCipheredKeyRecovery: false
+    supportsSecureAccountTransfer: false
+    usesProtectCallButtonRequests: true
+  }
+}

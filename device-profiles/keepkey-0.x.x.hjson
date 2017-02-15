@@ -1,0 +1,8 @@
+{
+  identity: {
+    major_version: 0
+  }
+  capabilities: {
+    prereleaseDevice: true
+  }
+}
