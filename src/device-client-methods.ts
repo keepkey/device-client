@@ -53,7 +53,7 @@ export type ApplyPolicyFunction = {
   (policy: DevicePolicyEnum, enabled: boolean): Promise<any>;
 }
 
-interface DeviceRecoveryRequest {
+export interface DeviceRecoveryRequest {
   messageType: string;
   passphrase_protection: boolean;
   pin_protection: boolean;
@@ -64,7 +64,7 @@ interface DeviceRecoveryRequest {
   use_character_cipher: boolean;
 }
 
-interface ResetRequest {
+export interface ResetRequest {
   messageType: string;
   display_random: boolean;
   passphrase_protection: boolean;

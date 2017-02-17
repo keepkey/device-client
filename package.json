@@ -1,13 +1,15 @@
 {
-  "name": "keepkey-device-client",
+  "name": "device-client-pool",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/device-client-pool.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "gulp pre-tsc && tsc",
+    "test": "echo \"no test specified\""
   },
-  "author": "",
-  "license": "ISC",
+  "author": "KeepKey Developers",
+  "license": "MIT",
   "devDependencies": {
     "@types/bitcore-lib": "git+https://github.com/keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",
@@ -16,6 +18,7 @@
     "@types/node": "^7.0.5",
     "device-protocol": "git+https://github.com/keepkey/device-protocol.git#c9c7b3d930cf8e0fefeab7f0aea2a80ab4123f3d",
     "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
+    "gulp-concat": "^2.6.1",
     "gulp-download": "0.0.1",
     "gulp-hjson": "^2.0.3",
     "gulp-jsoncombine": "^1.0.3",

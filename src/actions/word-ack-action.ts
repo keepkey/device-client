@@ -10,7 +10,7 @@ import WordAck = DeviceMessages.WordAck;
 import {DeviceMessageHelper} from "../device-message-helper";
 import {Features} from "../global/features";
 
-interface WordAckOptions {
+export interface WordAckOptions {
   word?: string;
 }
 

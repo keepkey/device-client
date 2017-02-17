@@ -13,7 +13,7 @@ import * as Bitcore from "bitcore-lib";
 import concat = require("concat-stream");
 
 export class FirmwareUploadAction {
-  private static firmwareFileMetaData: FirmwareFileMetadata = require('../../build/keepkey_main.json');
+  private static firmwareFileMetaData: FirmwareFileMetadata = require('../../dist/keepkey_main.json');
 
   private static client: DeviceClient;
   private static payload: ArrayBuffer;

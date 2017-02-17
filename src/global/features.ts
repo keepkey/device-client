@@ -4,19 +4,19 @@ import {DevicePolicyEnum} from "./device-policy-enum";
 import {CoinName} from "./coin-name";
 import {CoinTypeConfiguration} from "./coin-type";
 
-interface DeviceCapabilities {
+export interface DeviceCapabilities {
   firmwareImageAvailable: boolean;
   defaultMnemonicSeedLength: number;
   supportsCipheredKeyRecovery: boolean;
   supportsSecureAccountTransfer: boolean;
 }
 
-interface Policy {
+export interface Policy {
   policy_name: string;
   enabled: boolean;
 }
 
-interface IFeatureCoin {
+export interface IFeatureCoin {
   coin_name: string;
   coin_shortcut: string;
   address_type: number;

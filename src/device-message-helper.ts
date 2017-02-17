@@ -8,7 +8,7 @@ import ByteBuffer = require('bytebuffer');
 import Long = require('long');
 
 export class DeviceMessageHelper {
-  public static messageFactories = require('../../../../build/keepkey/messages.js');
+  public static messageFactories = require('../dist/messages.js');
 
   public static factory(MessageType, ...args) {
     return new (Function.prototype.bind.apply(DeviceMessageHelper.messageFactories[MessageType], args));
@@ -18,7 +18,7 @@ export class DeviceMessageHelper {
     return DeviceMessageHelper.messageFactories[messageType].decode(message);
   }
 
-  public static hydrate(pbMessage: any) {
+  public static hydrate(pbMessage: ReflectableProtoBufModel) {
     var objReflection: any = pbMessage.$type;
     var newMessage = _.cloneDeepWith<any>(pbMessage, (value) => {
       if (ByteBuffer.isByteBuffer(value)) {

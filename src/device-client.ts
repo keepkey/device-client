@@ -35,6 +35,7 @@ import {GetEthereumAddressAction} from "./actions/get-ethereum-address-action";
 import {FeaturesService} from "./features-service";
 import {EventEmitter} from "events";
 import {Readable} from "stream";
+import {Features} from './global/features';
 
 export const KEEPKEY = 'KEEPKEY';
 

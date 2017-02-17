@@ -7,25 +7,13 @@ import * as _ from 'lodash';
 
 import {DeviceMessageHelper} from "./device-message-helper";
 import {DeviceMessageStates} from "./device-message-states";
-import ProtoBufModel = DeviceMessages.ProtoBufModel;
 import {MessageState} from "./message-states";
 import EventEmitter = NodeJS.EventEmitter;
-
-declare module DeviceMessages {
-  interface MessageTypeMetaData {
-    name: string;
-  }
-
-  interface ProtoBufModel {
-    $type: MessageTypeMetaData;
-  }
-}
 
 interface WriteRequestInProgress extends MessageState {
   resolve?: (any) => any;
   reject?: (any) => any;
 }
-
 
 export class StatefulDeviceMessenger extends EventEmitter {
   public static UNEXPECTED_MESSAGE_EVENT = 'unexpected-message';
@@ -43,7 +31,7 @@ export class StatefulDeviceMessenger extends EventEmitter {
    * @param message
    * @returns {Promise<any>}
    */
-  public send(message: ProtoBufModel): Promise<any> {
+  public send(message: ReflectableProtoBufModel): Promise<any> {
     //TODO Don't send messages when the device is in the wrong mode
     if (this.isDisabled) {
       return Promise.reject("failed state");

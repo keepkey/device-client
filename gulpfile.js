@@ -16,11 +16,13 @@ var through = require('through2');
 var hjson = require('gulp-hjson');
 var crypto = require('crypto');
 var ts = require('gulp-typescript');
+var concat = require('gulp-concat');
 
 const paths = {
-  buildDirectory: 'build',
+  buildDirectory: 'dist',
   deviceProfiles: 'device-profiles/*.hjson',
-  messagesJs: 'build/keepkey/messages.js',
+  messagesJs: 'dist/messages.js',
+  messagesJson: 'dist/messages.json',
   firmware: 'misc/keepkey_main.bin',
   typescriptSources: [
     'src/**/*.ts', '!src/**/*.spec.ts'
@@ -53,12 +55,6 @@ gulp.task('bumpMajor', function () {
     .pipe(bump({type: 'major'}))
     .pipe(gulp.dest('./'));
 });
-
-function protocolBuffers() {
-  return gulp.src('node_modules/device-protocol/messages.proto')
-    .pipe(pbjs())
-    .pipe(gulp.dest('build/keepkey'));
-}
 
 function fileMetaData2Json() {
   return through.obj(function (file, enc, callback) {
@@ -100,7 +96,7 @@ function fileMetaData2Json() {
         size: file.stat.size,
         timeStamp: file.stat.mtime,
         version: firmwareVersion
-      }
+      };
 
       file.path = gutil.replaceExtension(file.path, '.json');
       file.contents = new Buffer(JSON.stringify(metaData));
@@ -121,15 +117,21 @@ function setExtensionToJson(path) {
   path.extname = '.json';
 }
 
+function protocolBuffers() {
+  return gulp.src('node_modules/device-protocol/messages.proto')
+    .pipe(pbjs())
+    .pipe(gulp.dest(paths.buildDirectory));
+}
+
 function extractMessagesJson() {
   return gulp.src(paths.messagesJs)
     .pipe(replace(/^.*\{([\w\W\n\r]+)\}.*$/, '{$1}'))
     .pipe(rename(setExtensionToJson))
-    .pipe(gulp.dest('build/keepkey'));
+    .pipe(gulp.dest(paths.buildDirectory));
 }
 
 function extractMessagesDts(cb) {
-  return gulp.src('build/keepkey/messages.json')
+  return gulp.src(paths.messagesJson)
     .pipe(through.obj(function (file, enc, cb) {
       var protoJson = JSON.parse(file.contents);
       protoJson.package = 'DeviceMessages';
@@ -148,7 +150,7 @@ function extractMessagesDts(cb) {
       path.basename += '.d';
       path.extname = '.ts';
     }))
-    .pipe(gulp.dest('build/keepkey'))
+    .pipe(gulp.dest('build/'))
 }
 
 
@@ -158,28 +160,18 @@ gulp.task('messages.d.ts', gulp.series(
   extractMessagesDts
 ));
 
-function tsc() {
-  return gulp.src(paths.typescriptSources)
-    .pipe(ts({
-      "target": "es5",
-      "lib": [
-        "dom", "es5", "es2015.core", "es2015.promise", "scripthost"
-      ],
-      "module": "commonjs",
-      "declaration": false,
-      "removeComments": true,
-      "noUnusedLocals": true,
-      "traceResolution": true,
-      "allowJs": true
-    })).js
-    .pipe(gulp.dest(paths.buildDirectory));
-}
-
-gulp.task('typescript', gulp.series(
+gulp.task('pre-tsc', gulp.series(
   'buildDeviceProfiles',
   'extractMetadataFromFirmware',
-  'messages.d.ts',
-  tsc
+  'messages.d.ts'
 ));
+
+function concatDts() {
+  return gulp.src(['build/**/*.d.ts', 'src/global/*.d.ts'])
+    .pipe(concat('index.d.ts'))
+    .pipe(gulp.dest('dist/'));
+}
+
+gulp.task('post-tsc', gulp.series(concatDts));
 
 module.exports = gulp;

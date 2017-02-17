@@ -9,7 +9,7 @@ import CharacterAck = DeviceMessages.CharacterAck;
 import {DeviceMessageHelper} from "../device-message-helper";
 import {Features} from "../global/features";
 
-interface CharacterAckOptions {
+export interface CharacterAckOptions {
   character?: string;
   delete?: boolean;
   done?: boolean;

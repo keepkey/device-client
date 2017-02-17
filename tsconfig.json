@@ -5,16 +5,17 @@
     "lib": [
       "dom", "es5", "es2015.core", "es2015.promise", "scripthost"
     ],
-    "module": "commonjs",
-    "declaration": false,
+    "module": "CommonJS",
+    "declaration": true,
+    "declarationDir": "./build",
     "removeComments": true,
-    "noUnusedLocals": true,
-    "outDir": "build",
-    "allowJs": true
+    "traceResolution": true,
+    "allowJs": false,
+    "outDir": "./dist"
   },
   "include": [
-    "build/keepkey/messages.d.ts",
-    "src/global/message-handler.d.ts",
-    "src/**/*.ts"
+    "dist/messages.d.ts",
+    "src/global/*.d.ts",
+    "src/device-client-pool.ts"
   ]
 }
