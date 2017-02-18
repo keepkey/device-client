@@ -24,15 +24,15 @@ const RECOGNIZED_DEVICES: Array<any> = [
   }
 ];
 
-export class DeviceClientPool extends EventEmitter {
+export class DeviceClientManager extends EventEmitter {
   public static DEVICE_CONNECTED_EVENT = 'connected';
-  private static _instance: DeviceClientPool;
+  private static _instance: DeviceClientManager;
 
-  public static get instance(): DeviceClientPool {
-    if (!DeviceClientPool._instance) {
-      DeviceClientPool._instance = new DeviceClientPool();
+  public static get instance(): DeviceClientManager {
+    if (!DeviceClientManager._instance) {
+      DeviceClientManager._instance = new DeviceClientManager();
     }
-    return DeviceClientPool._instance;
+    return DeviceClientManager._instance;
   }
 
 
@@ -99,7 +99,7 @@ export class DeviceClientPool extends EventEmitter {
     var client = new DeviceClient(transport, this.rawFirmwareStreamFactory);
     this.clients[client.transport.deviceId] = client;
 
-    this.emit(DeviceClientPool.DEVICE_CONNECTED_EVENT, client);
+    this.emit(DeviceClientManager.DEVICE_CONNECTED_EVENT, client);
 
     return client;
   }

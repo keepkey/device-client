@@ -16,6 +16,6 @@
   "include": [
     "dist/messages.d.ts",
     "src/global/*.d.ts",
-    "src/device-client-pool.ts"
+    "src/device-client-manager.ts"
   ]
 }

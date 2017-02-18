@@ -160,10 +160,16 @@ gulp.task('messages.d.ts', gulp.series(
   extractMessagesDts
 ));
 
+function copyDtsToDist() {
+  return gulp.src('src/**/*.d.ts')
+    .pipe(gulp.dest(paths.distDirectory));
+}
+
 gulp.task('pre-tsc', gulp.series(
   'buildDeviceProfiles',
   'extractMetadataFromFirmware',
-  'messages.d.ts'
+  'messages.d.ts',
+  copyDtsToDist
 ));
 
 module.exports = gulp;

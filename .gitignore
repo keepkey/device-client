@@ -1,5 +1,3 @@
 .idea/
 src/*.js
 node_modules
-build
-dist

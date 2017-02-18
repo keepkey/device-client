@@ -2,6 +2,9 @@
  * Copyright (C) 2015-2016 KeepKey, LLC
  * All Rights Reserved
  */
+
+/// <reference path="./global/message-handler.d.ts" />
+
 import * as  _ from 'lodash';
 
 import Timer = NodeJS.Timer;
@@ -125,7 +128,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
     return this.deviceMessenger.send(message);
   }
 
-  public addMessageHandler(handler: MessageHandlerClass, ...args) {
+  public addMessageHandler(handler: MessageHandlerClass<ProtoBufModel, ProtoBufModel | void>, ...args) {
     var handlerInstance = new (Function.prototype.bind.apply(handler, arguments));
     _.each(handler.messageNames, (messageName: string) => {
       console.log(`${messageName} message handler added.`);
@@ -134,7 +137,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
     });
   }
 
-  public removeMessageHandler(handler: MessageHandlerClass) {
+  public removeMessageHandler(handler: MessageHandlerClass<ProtoBufModel, ProtoBufModel | void>) {
     _.each(handler.messageNames, (messageName: string) => {
       console.log(`${messageName} message handler removed.`);
       this.removeAllListeners(messageName);

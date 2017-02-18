@@ -1,7 +1,11 @@
 {
   "name": "keepkey-device-client",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.5",
+  "description": "Communicate with a KeepKey device",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keepkey/keepkey-device-client.git"
+  },
   "main": "dist/device-client-pool.js",
   "module": "dist/**/*.js",
   "typings": "dist/*.d.ts",
@@ -10,7 +14,6 @@
     "test": "echo \"no test specified\""
   },
   "author": "KeepKey Developers",
-  "license": "MIT",
   "devDependencies": {
     "@types/bitcore-lib": "git+https://github.com/keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",

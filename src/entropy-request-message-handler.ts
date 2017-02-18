@@ -9,7 +9,7 @@ import {DeviceMessageHelper} from "./device-message-helper";
 import * as Bitcore from "bitcore-lib";
 import ByteBuffer = require('bytebuffer');
 
-export class EntropyRequestMessageHandler implements MessageHandler {
+export class EntropyRequestMessageHandler implements MessageHandler<EntropyRequest, EntropyAck> {
   public static messageNames = ['EntropyRequest'];
 
   public messageHandler(request: EntropyRequest): EntropyAck {
