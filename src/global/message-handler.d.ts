@@ -1,4 +1,4 @@
-///<reference types="../../build/messages"/>
+///<reference types="../../dist/messages"/>
 
 import ProtoBufModel = DeviceMessages.ProtoBufModel;
 

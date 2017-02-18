@@ -19,7 +19,7 @@ var ts = require('gulp-typescript');
 var concat = require('gulp-concat');
 
 const paths = {
-  buildDirectory: 'dist',
+  distDirectory: 'dist',
   deviceProfiles: 'device-profiles/*.hjson',
   messagesJs: 'dist/messages.js',
   messagesJson: 'dist/messages.json',
@@ -35,7 +35,7 @@ gulp.task('buildDeviceProfiles', function gatherConfigs() {
     .pipe(jsoncombine('device-profiles.json', function (files) {
       return new Buffer('{"deviceProfiles":' + JSON.stringify(_.values(files)) + '}');
     }))
-    .pipe(gulp.dest(paths.buildDirectory));
+    .pipe(gulp.dest(paths.distDirectory));
 });
 
 gulp.task('bumpPatch', function () {
@@ -110,7 +110,7 @@ function fileMetaData2Json() {
 gulp.task('extractMetadataFromFirmware', function () {
   return gulp.src(paths.firmware)
     .pipe(fileMetaData2Json())
-    .pipe(gulp.dest(paths.buildDirectory));
+    .pipe(gulp.dest(paths.distDirectory));
 });
 
 function setExtensionToJson(path) {
@@ -120,14 +120,14 @@ function setExtensionToJson(path) {
 function protocolBuffers() {
   return gulp.src('node_modules/device-protocol/messages.proto')
     .pipe(pbjs())
-    .pipe(gulp.dest(paths.buildDirectory));
+    .pipe(gulp.dest(paths.distDirectory));
 }
 
 function extractMessagesJson() {
   return gulp.src(paths.messagesJs)
     .pipe(replace(/^.*\{([\w\W\n\r]+)\}.*$/, '{$1}'))
     .pipe(rename(setExtensionToJson))
-    .pipe(gulp.dest(paths.buildDirectory));
+    .pipe(gulp.dest(paths.distDirectory));
 }
 
 function extractMessagesDts(cb) {
@@ -150,7 +150,7 @@ function extractMessagesDts(cb) {
       path.basename += '.d';
       path.extname = '.ts';
     }))
-    .pipe(gulp.dest('build/'))
+    .pipe(gulp.dest(paths.distDirectory))
 }
 
 
@@ -165,13 +165,5 @@ gulp.task('pre-tsc', gulp.series(
   'extractMetadataFromFirmware',
   'messages.d.ts'
 ));
-
-function concatDts() {
-  return gulp.src(['build/**/*.d.ts', 'src/global/*.d.ts'])
-    .pipe(concat('index.d.ts'))
-    .pipe(gulp.dest('dist/'));
-}
-
-gulp.task('post-tsc', gulp.series(concatDts));
 
 module.exports = gulp;

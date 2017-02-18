@@ -5,10 +5,10 @@
 
 import {DeviceClient} from "../device-client";
 import {DeviceMessageHelper} from "../device-message-helper";
-import ApplyPolicies = DeviceMessages.ApplyPolicies;
-import PolicyType = DeviceMessages.PolicyType;
 import {DevicePolicyEnum} from "../global/device-policy-enum";
 import {Features} from "../global/features";
+import PolicyType = DeviceMessages.PolicyType;
+import ApplyPolicies = DeviceMessages.ApplyPolicies;
 
 export class ApplyPolicyAction {
 

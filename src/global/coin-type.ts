@@ -1,5 +1,3 @@
-// *Sigh* improper ording is required to make this work
-/* tslint:disable:member-ordering */
 import * as _ from "lodash";
 import {CoinName} from "./coin-name";
 import {BigNumber, Configuration} from "bignumber.js";

@@ -1,9 +1,10 @@
 {
-  "name": "device-client-pool",
+  "name": "keepkey-device-client",
   "version": "0.0.1",
   "description": "",
   "main": "dist/device-client-pool.js",
-  "types": "dist/index.d.ts",
+  "module": "dist/**/*.js",
+  "typings": "dist/*.d.ts",
   "scripts": {
     "prepublish": "gulp pre-tsc && tsc",
     "test": "echo \"no test specified\""
