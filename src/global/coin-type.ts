@@ -55,7 +55,6 @@ export class CoinType {
     name            : CoinName[CoinName.Ethereum],
     currencySymbol  : 'ETH',
     coinTypeCode    : "60'",
-    //TODO Implement checksum address: https://github.com/ethereum/go-ethereum/blob/aa9fff3e68b1def0a9a22009c233150bf9ba481f/jsre/ethereum_js.go#L2317
     addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
     dust            : 1,
     decimals        : 18,

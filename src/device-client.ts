@@ -1,13 +1,8 @@
-/*
- * Copyright (C) 2015-2016 KeepKey, LLC
- * All Rights Reserved
- */
-
 /// <reference path="./global/message-handler.d.ts" />
 
 import * as  _ from 'lodash';
 
-import Timer = NodeJS.Timer;
+import Timer = require('timers');
 import {WordAckAction} from "./actions/word-ack-action";
 import {CharacterAckAction} from "./actions/character-ack-action";
 import {InitializeAction} from "./actions/initialize-action";
@@ -108,7 +103,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
     return this._featuresService;
   }
 
-  private devicePollingInterval: Timer = setInterval(() => {
+  private devicePollingInterval: NodeJS.Timer = setInterval(() => {
     this.pollDevice();
   }, 0);
 

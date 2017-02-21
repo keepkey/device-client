@@ -1,8 +1,3 @@
-/*
- * Copyright (C) 2015-2016 KeepKey, LLC
- * All Rights Reserved
- */
-
 /* tslint:disable:no-bitwise */
 import * as _ from 'lodash';
 import ByteBuffer = require('bytebuffer');

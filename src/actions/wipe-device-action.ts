@@ -1,8 +1,3 @@
-/*
- * Copyright (C) 2015-2016 KeepKey, LLC
- * All Rights Reserved
- */
-
 import {BasicClient} from "../device-client";
 import WipeDevice = DeviceMessages.WipeDevice;
 import {DeviceMessageHelper} from "../device-message-helper";

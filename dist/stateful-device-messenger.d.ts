@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import EventEmitter = NodeJS.EventEmitter;
+import EventEmitter = require('events');
 export declare class StatefulDeviceMessenger extends EventEmitter {
     private transport;
     static UNEXPECTED_MESSAGE_EVENT: string;

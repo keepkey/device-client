@@ -1,7 +1,3 @@
-/*
- * Copyright (C) 2015-2016 KeepKey, LLC
- * All Rights Reserved
- */
 export enum CoinName {
   Bitcoin = 0,
   Testnet = 1,

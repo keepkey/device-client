@@ -1,14 +1,9 @@
-/*
- * Copyright (C) 2015-2016 KeepKey, LLC
- * All Rights Reserved
- */
-
 import * as _ from 'lodash';
 
 import {DeviceMessageHelper} from "./device-message-helper";
 import {DeviceMessageStates} from "./device-message-states";
 import {MessageState} from "./message-states";
-import EventEmitter = NodeJS.EventEmitter;
+import EventEmitter = require('events');
 
 interface WriteRequestInProgress extends MessageState {
   resolve?: (any) => any;

@@ -1,7 +1,7 @@
 "use strict";
 var device_message_helper_1 = require("./device-message-helper");
-var Bitcore = require("bitcore-lib");
 var ByteBuffer = require("bytebuffer");
+var Bitcore = require("bitcore-lib");
 var EntropyRequestMessageHandler = (function () {
     function EntropyRequestMessageHandler() {
     }

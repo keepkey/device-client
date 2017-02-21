@@ -1,8 +1,3 @@
-/*
- * Copyright (C) 2015-2016 KeepKey, LLC
- * All Rights Reserved
- */
-
 import ByteBuffer = require('bytebuffer');
 
 import {BasicClient} from "../device-client";

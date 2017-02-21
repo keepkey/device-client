@@ -7,7 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var _ = require("lodash");
 var device_message_helper_1 = require("./device-message-helper");
 var device_message_states_1 = require("./device-message-states");
-var EventEmitter = NodeJS.EventEmitter;
+var EventEmitter = require("events");
 var StatefulDeviceMessenger = (function (_super) {
     __extends(StatefulDeviceMessenger, _super);
     function StatefulDeviceMessenger(transport) {

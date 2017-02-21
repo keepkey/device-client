@@ -1,8 +1,3 @@
-/*
- * Copyright (C) 2015-2016 KeepKey, LLC
- * All Rights Reserved
- */
-
 import {NodeVector} from "../node-vector";
 import {DeviceMessageHelper} from "../device-message-helper";
 import EthereumGetAddress = DeviceMessages.EthereumGetAddress;
