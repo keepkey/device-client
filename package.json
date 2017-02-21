@@ -1,5 +1,5 @@
 {
-  "name": "@keepkey/keepkey-device-client",
+  "name": "@keepkey/device-client",
   "version": "0.1.0",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
