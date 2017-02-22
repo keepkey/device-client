@@ -16,7 +16,7 @@
   "author": "KeepKey, LLC",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/keepkey/keepkey-device-client/issues"
+    "url": "https://github.com/keepkey/device-client/issues"
   },
   "homepage": "https://github.com/keepkey/keepkey-device-client#readme",
   "devDependencies": {
