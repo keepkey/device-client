@@ -1,6 +1,5 @@
 import ByteBuffer = require('bytebuffer');
 
-
 const OLD_MESSAGE_HEADER_START = '##';
 const MESSAGE_HEADER_START = String.fromCharCode(0x3f) + '##';
 
@@ -71,8 +70,7 @@ export abstract class Transport {
   public write(txProtoMsg) {
     var msgAB = txProtoMsg.encodeAB();
     const hash = '#'.charCodeAt(0);
-    var msgBB = new ByteBuffer(8 + msgAB.byteLength);
-    msgBB
+    var msgBB = new ByteBuffer(8 + msgAB.byteLength)
       .writeByte(hash)
       .writeByte(hash)
       .writeUint16(this.getMsgType(txProtoMsg.$type.name))
@@ -86,8 +84,6 @@ export abstract class Transport {
         console.log('sending message');
         return this._write(msgBB);
       });
-
-
   }
 
   public read() {
@@ -107,7 +103,7 @@ export abstract class Transport {
 
       if (next !== this.messageHeaderStart[i]) {
         throw {
-          name: 'Error',
+          name   : 'Error',
           message: 'Message header not found'
         };
       }
@@ -121,7 +117,7 @@ export abstract class Transport {
     msgBB.reset();
 
     return {
-      msgType: msgType,
+      msgType  : msgType,
       msgLength: msgLength
     };
   }
@@ -134,7 +130,7 @@ export abstract class Transport {
   private getMsgType(msgClass) {
     if (!this.messageMap.msgClassToType.hasOwnProperty(msgClass)) {
       throw {
-        name: 'Error',
+        name   : 'Error',
         message: 'Cannot find message name.'
       };
     } else {
@@ -145,7 +141,7 @@ export abstract class Transport {
   private getMsgClass(msgType) {
     if (!this.messageMap.msgTypeToClass.hasOwnProperty(msgType)) {
       throw {
-        name: 'Error',
+        name   : 'Error',
         message: 'Cannot find message id.'
       };
     } else {

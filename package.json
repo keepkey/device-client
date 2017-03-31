@@ -1,6 +1,6 @@
 {
   "name": "@keepkey/device-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
@@ -46,6 +46,10 @@
     "concat-stream": "^1.6.0",
     "events": "^1.1.1",
     "lodash": "^4.17.4",
+    "protobufjs": "^5.0",
     "through2": "^2.0.3"
+  },
+  "peerDependencies": {
+    "bitcore-lib": "git+https://github.com/keepkey/bitcore-lib.git"
   }
 }
