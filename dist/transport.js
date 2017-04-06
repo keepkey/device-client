@@ -75,8 +75,7 @@ var Transport = (function () {
         var _this = this;
         var msgAB = txProtoMsg.encodeAB();
         var hash = '#'.charCodeAt(0);
-        var msgBB = new ByteBuffer(8 + msgAB.byteLength);
-        msgBB
+        var msgBB = new ByteBuffer(8 + msgAB.byteLength)
             .writeByte(hash)
             .writeByte(hash)
             .writeUint16(this.getMsgType(txProtoMsg.$type.name))

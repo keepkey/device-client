@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import {CoinName} from "./coin-name";
-import {BigNumber, Configuration} from "bignumber.js";
 import Long = require('long');
+import * as BigNumber from "bignumber.js";
 
 export interface CoinTypeConfiguration {
   name: string,
@@ -10,7 +10,7 @@ export interface CoinTypeConfiguration {
   addressFormat: string;
   dust: number | string;
   decimals: number;
-  amountParameters: Configuration;
+  amountParameters: Partial<BigNumber.BigNumberConfig>;
 }
 
 //TODO Addresses should be validated using the address validation checks from the core client. Using regexp allows checksum errors.
@@ -110,8 +110,8 @@ export class CoinType {
     return this.configuration.coinTypeCode;
   }
 
-  private _dust: BigNumber = this.parseAmount(this.configuration.dust);
-  public get dust(): BigNumber {
+  private _dust: BigNumber.BigNumber = this.parseAmount(this.configuration.dust);
+  public get dust(): BigNumber.BigNumber {
     return this._dust;
   }
 
@@ -123,16 +123,16 @@ export class CoinType {
     return this._amountConstructor
   }
 
-  public parseAmount(amount: number | BigNumber | string) {
+  public parseAmount(amount: number | BigNumber.BigNumber | string) {
     return new this.amountConstructor(amount);
   }
 
-  public amountToFloat(amount: Long | string): BigNumber {
+  public amountToFloat(amount: Long | string): BigNumber.BigNumber {
     return new this.amountConstructor(amount.toString())
       .shift(-this.decimals);
   }
 
-  public floatToAmount(amount: number | BigNumber | string): BigNumber {
+  public floatToAmount(amount: number | BigNumber.BigNumber | string): BigNumber.BigNumber {
     return new this.amountConstructor(amount)
         .shift(this.decimals);
   }

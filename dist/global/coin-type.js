@@ -1,7 +1,7 @@
 "use strict";
 var _ = require("lodash");
 var coin_name_1 = require("./coin-name");
-var bignumber_js_1 = require("bignumber.js");
+var BigNumber = require("bignumber.js");
 var CoinType = (function () {
     function CoinType(configuration) {
         this.configuration = configuration;
@@ -61,7 +61,7 @@ var CoinType = (function () {
     Object.defineProperty(CoinType.prototype, "amountConstructor", {
         get: function () {
             if (!this._amountConstructor) {
-                this._amountConstructor = bignumber_js_1.BigNumber.another(this.configuration.amountParameters);
+                this._amountConstructor = BigNumber.another(this.configuration.amountParameters);
             }
             return this._amountConstructor;
         },
