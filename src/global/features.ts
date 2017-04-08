@@ -29,18 +29,26 @@ export interface IFeatureCoin {
 }
 
 export interface IFeatures {
-  bootloader_mode: boolean;
-  initialized: boolean;
-  device_id: string;
   available_firmware_version: string;
-  deviceCapabilities: DeviceCapabilities;
-  vendor: string;
+  bootloader_hash: string;
+  bootloader_mode: any;
+  coins: Array<IFeatureCoin>;
+  device_id: string;
+  initialized: boolean;
+  label: string;
+  language: string;
   major_version: number;
   minor_version: number;
+  passphrase_cached: boolean;
+  passphrase_protection: boolean;
   patch_version: number;
+  pin_cached: boolean;
+  pin_protection: boolean;
   policies: Array<Policy>;
-  coins: Array<IFeatureCoin>;
+  revision: string;
+  vendor: string;
   coin_metadata: Array<CoinTypeConfiguration>;
+  deviceCapabilities: DeviceCapabilities;
 }
 
 export class Features {
