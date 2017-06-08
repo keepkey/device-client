@@ -1,3 +1,5 @@
+/// <reference types="bignumber.js" />
+/// <reference types="long" />
 import { CoinName } from "./coin-name";
 import Long = require('long');
 import * as BigNumber from "bignumber.js";
