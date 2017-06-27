@@ -107,7 +107,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
     this.pollDevice();
   }, 0);
 
-  constructor(public transport: Transport, public rawFirmwareStreamFactory: () => Readable) {
+  constructor(public transport: Transport, public rawFirmwareStreamFactory?: () => Readable) {
     super();
     this.addMessageHandler(ButtonRequestMessageHandler);
     this.addMessageHandler(EntropyRequestMessageHandler);

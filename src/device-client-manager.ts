@@ -73,9 +73,6 @@ export class DeviceClientManager extends EventEmitter {
 
   private _rawFirmwareStreamFactory: () => Readable;
   public get rawFirmwareStreamFactory(): () => Readable {
-    if (!this._rawFirmwareStreamFactory) {
-      throw 'rawFirmwareStream must be set';
-    }
     return this._rawFirmwareStreamFactory;
   }
 

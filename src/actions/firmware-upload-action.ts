@@ -14,6 +14,9 @@ export class FirmwareUploadAction {
   private static payload: ArrayBuffer;
 
   public static operation(client: DeviceClient): Promise<void> {
+    if (!client.rawFirmwareStreamFactory) {
+      throw 'firmware stream factory required to upload firmware';
+    }
     FirmwareUploadAction.client = client;
     console.log('starting firmware upload');
     return client.featuresService.promise
