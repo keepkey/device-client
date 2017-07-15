@@ -37,7 +37,10 @@ var DeviceMessageHelper = (function () {
         return JSON.stringify(DeviceMessageHelper.hydrate(pbMessage), DeviceMessageHelper.buffer2Hex, 4);
     };
     DeviceMessageHelper.buffer2Hex = function (key, value) {
-        if (value && value.buffer) {
+        if (key === 'passphrase' || key === 'pin') {
+            return '<redacted>';
+        }
+        else if (value && value.buffer) {
             if (value.buffer instanceof Buffer) {
                 return value.toHex();
             }
@@ -56,7 +59,9 @@ var DeviceMessageHelper = (function () {
         else if (value && !_.isUndefined(value.low) && !_.isUndefined(value.high) && !_.isUndefined(value.unsigned)) {
             return (new Long(value.low, value.high, value.unsigned)).toString();
         }
-        return value;
+        else {
+            return value;
+        }
     };
     DeviceMessageHelper.getSelectedResponse = function (signedResponse) {
         var responseV1 = signedResponse.getResponse();

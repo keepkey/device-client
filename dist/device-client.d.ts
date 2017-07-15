@@ -47,7 +47,7 @@ export declare class DeviceClient extends EventEmitter implements BasicClient {
     private _featuresService;
     readonly featuresService: FeaturesService;
     private devicePollingInterval;
-    constructor(transport: Transport, rawFirmwareStreamFactory: () => Readable);
+    constructor(transport: Transport, rawFirmwareStreamFactory?: () => Readable);
     destroy(): void;
     writeToDevice(message: any): Promise<any>;
     addMessageHandler(handler: MessageHandlerClass<ProtoBufModel, ProtoBufModel | void>, ...args: any[]): void;

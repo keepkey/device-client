@@ -44,7 +44,9 @@ export class DeviceMessageHelper {
   }
 
   public static buffer2Hex(key, value: any) {
-    if (value && value.buffer) {
+    if (key === 'passphrase' || key === 'pin') {
+      return '<redacted>';
+    } else if (value && value.buffer) {
       // NOTE: v.buffer is type Buffer in node and ArrayBuffer in chrome
       if (value.buffer instanceof Buffer) {
         return value.toHex();
@@ -63,8 +65,9 @@ export class DeviceMessageHelper {
       return hexstring;
     } else if (value && !_.isUndefined(value.low) && !_.isUndefined(value.high) && !_.isUndefined(value.unsigned)) {
       return (new Long(value.low, value.high, value.unsigned)).toString();
+    } else {
+      return value;
     }
-    return value;
   }
 
   public static getSelectedResponse(signedResponse: DeviceMessages.SignedExchangeResponse): DeviceMessages.ExchangeResponse | DeviceMessages.ExchangeResponseV2 {

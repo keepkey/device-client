@@ -55,9 +55,6 @@ var DeviceClientManager = (function (_super) {
     });
     Object.defineProperty(DeviceClientManager.prototype, "rawFirmwareStreamFactory", {
         get: function () {
-            if (!this._rawFirmwareStreamFactory) {
-                throw 'rawFirmwareStream must be set';
-            }
             return this._rawFirmwareStreamFactory;
         },
         set: function (streamFactory) {
