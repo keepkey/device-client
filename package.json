@@ -1,6 +1,6 @@
 {
   "name": "@keepkey/device-client",
-  "version": "0.1.4",
+  "version": "3.1.0-prerelease.5",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
@@ -26,7 +26,7 @@
     "@types/concat-stream": "^1.6.0",
     "@types/lodash": "^4.14.52",
     "@types/node": "^7.0.5",
-    "device-protocol": "git+https://github.com/keepkey/device-protocol.git#c9c7b3d930cf8e0fefeab7f0aea2a80ab4123f3d",
+    "device-protocol": "git+https://github.com/keepkey/device-protocol.git#v3.1.0",
     "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
     "gulp-bump": "^2.7.0",
     "gulp-concat": "^2.6.1",

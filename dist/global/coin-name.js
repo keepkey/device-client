@@ -8,4 +8,5 @@ var CoinName;
     CoinName[CoinName["Dogecoin"] = 3] = "Dogecoin";
     CoinName[CoinName["Dash"] = 5] = "Dash";
     CoinName[CoinName["Ethereum"] = 6] = "Ethereum";
+    CoinName[CoinName["BitcoinCash"] = 145] = "BitcoinCash";
 })(CoinName = exports.CoinName || (exports.CoinName = {}));

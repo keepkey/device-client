@@ -6,4 +6,5 @@ export declare enum CoinName {
     Dogecoin = 3,
     Dash = 5,
     Ethereum = 6,
+    BitcoinCash = 145,
 }

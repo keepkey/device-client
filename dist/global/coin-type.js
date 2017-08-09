@@ -141,4 +141,15 @@ CoinType.Dash = new CoinType({
         DECIMAL_PLACES: 8
     }
 });
+CoinType.BitcoinCash = new CoinType({
+    name: coin_name_1.CoinName[coin_name_1.CoinName.BitcoinCash],
+    currencySymbol: 'BCH',
+    coinTypeCode: "145'",
+    addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    dust: 546,
+    decimals: 8,
+    amountParameters: {
+        DECIMAL_PLACES: 8
+    }
+});
 exports.CoinType = CoinType;

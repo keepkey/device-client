@@ -5,5 +5,6 @@ export enum CoinName {
   Litecoin = 2,
   Dogecoin = 3,
   Dash = 5,
-  Ethereum = 6
+  Ethereum = 6,
+  BitcoinCash = 145
 }

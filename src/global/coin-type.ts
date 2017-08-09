@@ -74,6 +74,17 @@ export class CoinType {
       DECIMAL_PLACES: 8
     }
   });
+  public static BitcoinCash = new CoinType({
+    name            : CoinName[CoinName.BitcoinCash],
+    currencySymbol  : 'BCH',
+    coinTypeCode    : "145'",
+    addressFormat   : "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    dust            : 546,
+    decimals        : 8,
+    amountParameters: {
+      DECIMAL_PLACES: 8
+    }
+  });
 
   public static get(type: CoinName): CoinType {
     return _.find(CoinType.instances, {name: CoinName[type]});
@@ -141,7 +152,7 @@ export class CoinType {
     return other instanceof CoinType && this.name === other.name;
   }
 
-  constructor(private configuration: CoinTypeConfiguration) {
+  constructor(public configuration: CoinTypeConfiguration) {
     CoinType.instances.push(this);
   }
 }
