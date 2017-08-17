@@ -2,12 +2,22 @@
 var _ = require("lodash");
 var coin_name_1 = require("./coin-name");
 var BigNumber = require("bignumber.js");
+var ASSUMED_TX_SIZE = 182;
+var BITCOIN_DUST_RELAY_FEE = 3000;
+var LITECOIN_DUST_RELAY_FEE = 100000;
+var DASH_MIN_RELAY_TX_FEE = 10000;
 var CoinType = (function () {
     function CoinType(configuration) {
         this.configuration = configuration;
         this._dust = this.parseAmount(this.configuration.dust);
         CoinType.instances.push(this);
     }
+    CoinType.newDustCalculation = function (dustRelayFee) {
+        return new BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+    };
+    CoinType.oldDustCalculation = function (minRelayTxFee) {
+        return new BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+    };
     CoinType.get = function (type) {
         return _.find(CoinType.instances, { name: coin_name_1.CoinName[type] });
     };
@@ -90,7 +100,7 @@ CoinType.Bitcoin = new CoinType({
     currencySymbol: 'BTC',
     coinTypeCode: "0'",
     addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
-    dust: 546,
+    dust: CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     decimals: 8,
     amountParameters: {
         DECIMAL_PLACES: 8
@@ -101,7 +111,7 @@ CoinType.Litecoin = new CoinType({
     currencySymbol: 'LTC',
     coinTypeCode: "2'",
     addressFormat: "^[L3][a-km-zA-HJ-NP-Z1-9]{26,33}$",
-    dust: 100000,
+    dust: CoinType.newDustCalculation(LITECOIN_DUST_RELAY_FEE),
     decimals: 8,
     amountParameters: {
         DECIMAL_PLACES: 8
@@ -135,7 +145,7 @@ CoinType.Dash = new CoinType({
     currencySymbol: 'DASH',
     coinTypeCode: "5'",
     addressFormat: "^X[a-km-zA-HJ-NP-Z1-9]{25,34}$",
-    dust: 546,
+    dust: CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
     decimals: 8,
     amountParameters: {
         DECIMAL_PLACES: 8
@@ -146,7 +156,7 @@ CoinType.BitcoinCash = new CoinType({
     currencySymbol: 'BCH',
     coinTypeCode: "145'",
     addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
-    dust: 546,
+    dust: CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     decimals: 8,
     amountParameters: {
         DECIMAL_PLACES: 8

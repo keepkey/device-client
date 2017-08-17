@@ -2,6 +2,7 @@ import * as _ from "lodash";
 import {CoinName} from "./coin-name";
 import Long = require('long');
 import * as BigNumber from "bignumber.js";
+import {NumberLike, RoundingMode} from "bignumber.js";
 
 export interface CoinTypeConfiguration {
   name: string,
@@ -15,15 +16,28 @@ export interface CoinTypeConfiguration {
 
 //TODO Addresses should be validated using the address validation checks from the core client. Using regexp allows checksum errors.
 
+const ASSUMED_TX_SIZE = 182;
+const BITCOIN_DUST_RELAY_FEE = 3000; // From bitcoin source code
+const LITECOIN_DUST_RELAY_FEE = 100000; // https://github.com/litecoin-project/litecoin/blob/master/src/policy/policy.h#L48
+const DASH_MIN_RELAY_TX_FEE = 10000; // https://github.com/dashpay/dash/blob/master/src/wallet/wallet.h#L57
+
 export class CoinType {
   private static instances: Array<CoinType> = [];
+
+  private static newDustCalculation(dustRelayFee: NumberLike): string {
+    return new BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+  }
+
+  private static oldDustCalculation(minRelayTxFee: NumberLike): string {
+    return new BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+  }
 
   public static Bitcoin = new CoinType({
     name            : CoinName[CoinName.Bitcoin],
     currencySymbol  : 'BTC',
     coinTypeCode    : "0'",
     addressFormat   : "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
-    dust            : 546,
+    dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     decimals        : 8,
     amountParameters: {
       DECIMAL_PLACES: 8
@@ -34,7 +48,7 @@ export class CoinType {
     currencySymbol  : 'LTC',
     coinTypeCode    : "2'",
     addressFormat   : "^[L3][a-km-zA-HJ-NP-Z1-9]{26,33}$",
-    dust            : 100000,
+    dust            : CoinType.newDustCalculation(LITECOIN_DUST_RELAY_FEE),
     decimals        : 8,
     amountParameters: {
       DECIMAL_PLACES: 8
@@ -68,7 +82,7 @@ export class CoinType {
     currencySymbol  : 'DASH',
     coinTypeCode    : "5'",
     addressFormat   : "^X[a-km-zA-HJ-NP-Z1-9]{25,34}$", //TODO
-    dust            : 546, //TODO
+    dust            : CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
     decimals        : 8,
     amountParameters: {
       DECIMAL_PLACES: 8
@@ -79,7 +93,7 @@ export class CoinType {
     currencySymbol  : 'BCH',
     coinTypeCode    : "145'",
     addressFormat   : "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
-    dust            : 546,
+    dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     decimals        : 8,
     amountParameters: {
       DECIMAL_PLACES: 8

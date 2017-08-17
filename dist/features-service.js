@@ -34,7 +34,6 @@ var FeaturesService = (function () {
         features.coin_metadata = _.intersectionWith(coin_type_1.CoinType.getList(), features.coins, function (metadata, deviceCoin) {
             return metadata.name === deviceCoin.coin_name;
         });
-        features.coin_metadata.push(coin_type_1.CoinType.getBySymbol("BCH").configuration);
         if (!this._promise || !this.resolver) {
             if (features.deviceCapabilities) {
                 this._promise = Promise.resolve(new features_1.Features(features));

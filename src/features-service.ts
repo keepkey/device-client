@@ -41,9 +41,6 @@ export class FeaturesService {
       return metadata.name === deviceCoin.coin_name;
     });
 
-    //TODO remove the next line once BCH is available in the firmware
-    features.coin_metadata.push(CoinType.getBySymbol("BCH").configuration);
-
     if (!this._promise || !this.resolver) {
       if (features.deviceCapabilities) {
         this._promise = Promise.resolve(new Features(features));

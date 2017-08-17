@@ -15,6 +15,8 @@ export interface CoinTypeConfiguration {
 export declare class CoinType {
     configuration: CoinTypeConfiguration;
     private static instances;
+    private static newDustCalculation(dustRelayFee);
+    private static oldDustCalculation(minRelayTxFee);
     static Bitcoin: CoinType;
     static Litecoin: CoinType;
     static Dogecoin: CoinType;
