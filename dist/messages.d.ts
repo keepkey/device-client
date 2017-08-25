@@ -335,6 +335,9 @@ declare module DeviceMessages {
 		bip44_account_path?: number;
 		getBip44AccountPath() : number;
 		setBip44AccountPath(bip44AccountPath : number): void;
+		forkid?: number;
+		getForkid() : number;
+		setForkid(forkid : number): void;
 		
 	}
 	
@@ -397,6 +400,9 @@ declare module DeviceMessages {
 		multisig?: MultisigRedeemScriptType;
 		getMultisig() : MultisigRedeemScriptType;
 		setMultisig(multisig : MultisigRedeemScriptType): void;
+		amount?: Long;
+		getAmount() : Long;
+		setAmount(amount : Long): void;
 		
 	}
 	
@@ -496,6 +502,12 @@ declare module DeviceMessages {
 		outputs_cnt?: number;
 		getOutputsCnt() : number;
 		setOutputsCnt(outputsCnt : number): void;
+		extra_data?: ByteBuffer;
+		getExtraData() : ByteBuffer;
+		setExtraData(extraData : ByteBuffer): void;
+		extra_data_len?: number;
+		getExtraDataLen() : number;
+		setExtraDataLen(extraDataLen : number): void;
 		
 	}
 	
@@ -537,6 +549,12 @@ declare module DeviceMessages {
 		tx_hash?: ByteBuffer;
 		getTxHash() : ByteBuffer;
 		setTxHash(txHash : ByteBuffer): void;
+		extra_data_len?: number;
+		getExtraDataLen() : number;
+		setExtraDataLen(extraDataLen : number): void;
+		extra_data_offset?: number;
+		getExtraDataOffset() : number;
+		setExtraDataOffset(extraDataOffset : number): void;
 		
 	}
 	
@@ -1117,6 +1135,9 @@ declare module DeviceMessages {
 		multisig?: MultisigRedeemScriptType;
 		getMultisig() : MultisigRedeemScriptType;
 		setMultisig(multisig : MultisigRedeemScriptType): void;
+		script_type?: InputScriptType;
+		getScriptType() : InputScriptType;
+		setScriptType(scriptType : InputScriptType): void;
 		
 	}
 	
@@ -1876,6 +1897,9 @@ declare module DeviceMessages {
 		exchange_type?: ExchangeType;
 		getExchangeType() : ExchangeType;
 		setExchangeType(exchangeType : ExchangeType): void;
+		chain_id?: number;
+		getChainId() : number;
+		setChainId(chainId : number): void;
 		
 	}
 	
@@ -2226,6 +2250,8 @@ declare module DeviceMessages {
 		PAYTOSCRIPTHASH = 1,
 		PAYTOMULTISIG = 2,
 		PAYTOOPRETURN = 3,
+		PAYTOWITNESS = 4,
+		PAYTOP2SHWITNESS = 5,
 		
 	}
 }
@@ -2234,6 +2260,9 @@ declare module DeviceMessages {
 	export const enum InputScriptType {
 		SPENDADDRESS = 0,
 		SPENDMULTISIG = 1,
+		EXTERNAL = 2,
+		SPENDWITNESS = 3,
+		SPENDP2SHWITNESS = 4,
 		
 	}
 }
@@ -2244,6 +2273,7 @@ declare module DeviceMessages {
 		TXOUTPUT = 1,
 		TXMETA = 2,
 		TXFINISHED = 3,
+		TXEXTRADATA = 4,
 		
 	}
 }

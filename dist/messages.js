@@ -313,6 +313,12 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "uint32",
                     "name": "bip44_account_path",
                     "id": 9
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint32",
+                    "name": "forkid",
+                    "id": 12
                 }
             ]
         },
@@ -389,6 +395,12 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "MultisigRedeemScriptType",
                     "name": "multisig",
                     "id": 7
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint64",
+                    "name": "amount",
+                    "id": 8
                 }
             ]
         },
@@ -506,6 +518,18 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "uint32",
                     "name": "outputs_cnt",
                     "id": 7
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "extra_data",
+                    "id": 8
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint32",
+                    "name": "extra_data_len",
+                    "id": 9
                 }
             ]
         },
@@ -534,6 +558,18 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "bytes",
                     "name": "tx_hash",
                     "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint32",
+                    "name": "extra_data_len",
+                    "id": 3
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint32",
+                    "name": "extra_data_offset",
+                    "id": 4
                 }
             ]
         },
@@ -1022,6 +1058,15 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "MultisigRedeemScriptType",
                     "name": "multisig",
                     "id": 4
+                },
+                {
+                    "rule": "optional",
+                    "type": "InputScriptType",
+                    "name": "script_type",
+                    "id": 5,
+                    "options": {
+                        "default": "SPENDADDRESS"
+                    }
                 }
             ]
         },
@@ -1769,6 +1814,12 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "ExchangeType",
                     "name": "exchange_type",
                     "id": 11
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint32",
+                    "name": "chain_id",
+                    "id": 12
                 }
             ]
         },
@@ -2116,6 +2167,14 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                 {
                     "name": "PAYTOOPRETURN",
                     "id": 3
+                },
+                {
+                    "name": "PAYTOWITNESS",
+                    "id": 4
+                },
+                {
+                    "name": "PAYTOP2SHWITNESS",
+                    "id": 5
                 }
             ]
         },
@@ -2129,6 +2188,18 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                 {
                     "name": "SPENDMULTISIG",
                     "id": 1
+                },
+                {
+                    "name": "EXTERNAL",
+                    "id": 2
+                },
+                {
+                    "name": "SPENDWITNESS",
+                    "id": 3
+                },
+                {
+                    "name": "SPENDP2SHWITNESS",
+                    "id": 4
                 }
             ]
         },
@@ -2150,6 +2221,10 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                 {
                     "name": "TXFINISHED",
                     "id": 3
+                },
+                {
+                    "name": "TXEXTRADATA",
+                    "id": 4
                 }
             ]
         },

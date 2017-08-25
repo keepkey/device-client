@@ -20,17 +20,6 @@ var FeaturesService = (function () {
     FeaturesService.prototype.setValue = function (features) {
         features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
         features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
-        features.coins.push({
-            coin_name: "BitcoinCash",
-            coin_shortcut: "BCH",
-            address_type: 0,
-            maxfee_kb: "100000",
-            address_type_p2sh: 5,
-            address_type_p2wpkh: 6,
-            address_type_p2wsh: 10,
-            signed_message_header: "\u0018Bitcoin Signed Message:\n",
-            bip44_account_path: 2147483648
-        });
         features.coin_metadata = _.intersectionWith(coin_type_1.CoinType.getList(), features.coins, function (metadata, deviceCoin) {
             return metadata.name === deviceCoin.coin_name;
         });

@@ -26,17 +26,6 @@ export class FeaturesService {
   public setValue(features: IFeatures): void {
     features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
     features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
-    features.coins.push({
-      coin_name: "BitcoinCash",
-      coin_shortcut: "BCH",
-      address_type: 0,
-      maxfee_kb: "100000",
-      address_type_p2sh: 5,
-      address_type_p2wpkh: 6,
-      address_type_p2wsh: 10,
-      signed_message_header: "\u0018Bitcoin Signed Message:\n",
-      bip44_account_path: 2147483648
-    });
     features.coin_metadata = _.intersectionWith(CoinType.getList(), features.coins, (metadata, deviceCoin) => {
       return metadata.name === deviceCoin.coin_name;
     });
