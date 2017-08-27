@@ -28,7 +28,7 @@ export class DeviceMessageHelper {
     _.each(enumFields, function (it: any) {
       var value = pbMessage[it.name];
       var match: any = _.find(it.resolvedType.children, {id: value});
-      newMessage[it.name] = match.name;
+      newMessage[it.name] = match && match.name;
     });
 
     newMessage.typeName = pbMessage.$type.name;

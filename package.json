@@ -1,6 +1,6 @@
 {
   "name": "@keepkey/device-client",
-  "version": "3.1.0-prerelease.11",
+  "version": "4.0.0",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
@@ -26,7 +26,7 @@
     "@types/concat-stream": "^1.6.0",
     "@types/lodash": "^4.14.52",
     "@types/node": "^7.0.5",
-    "device-protocol": "keepkey/device-protocol.git#bitcoin-cash",
+    "device-protocol": "keepkey/device-protocol.git#v4.0.0",
     "gulp": "gulpjs/gulp.git#4.0",
     "gulp-bump": "^2.7.0",
     "gulp-concat": "^2.6.1",
