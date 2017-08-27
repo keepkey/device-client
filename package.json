@@ -1,6 +1,6 @@
 {
   "name": "@keepkey/device-client",
-  "version": "0.1.4",
+  "version": "4.0.0-beta.0",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
@@ -21,24 +21,24 @@
   "homepage": "https://github.com/keepkey/keepkey-device-client#readme",
   "devDependencies": {
     "@types/bignumber.js": "^4.0.2",
-    "@types/bitcore-lib": "git+https://github.com/keepkey/bitcore-lib-types.git",
+    "@types/bitcore-lib": "keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",
     "@types/concat-stream": "^1.6.0",
     "@types/lodash": "^4.14.52",
     "@types/node": "^7.0.5",
-    "device-protocol": "git+https://github.com/keepkey/device-protocol.git#c9c7b3d930cf8e0fefeab7f0aea2a80ab4123f3d",
-    "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
+    "device-protocol": "keepkey/device-protocol.git#v4.0.0",
+    "gulp": "gulpjs/gulp.git#4.0",
     "gulp-bump": "^2.7.0",
     "gulp-concat": "^2.6.1",
     "gulp-download": "0.0.1",
     "gulp-hjson": "^2.0.3",
     "gulp-jsoncombine": "^1.0.3",
-    "gulp-pbjs": "git+https://github.com/keepkey/gulp-pbjs.git",
+    "gulp-pbjs": "keepkey/gulp-pbjs.git",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-typescript": "^3.1.4",
     "gulp-util": "^3.0.8",
-    "proto2typescript": "git+https://github.com/bgok/Proto2TypeScript.git",
+    "proto2typescript": "keepkey/Proto2TypeScript.git",
     "typescript": "^2.1.6"
   },
   "dependencies": {
@@ -51,6 +51,6 @@
     "through2": "^2.0.3"
   },
   "peerDependencies": {
-    "bitcore-lib": "git+https://github.com/keepkey/bitcore-lib.git"
+    "bitcore-lib": "keepkey/bitcore-lib.git"
   }
 }

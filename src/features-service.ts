@@ -1,11 +1,12 @@
-import * as _ from 'lodash';
+import * as _ from "lodash";
 import {Features, IFeatures} from "./global/features";
 import {CoinType} from "./global/coin-type";
 
 export class FeaturesService {
   private static firmwareFileMetaData: FirmwareFileMetadata = require('../dist/keepkey_main.json');
   private static deviceProfiles = require('../dist/device-profiles.json');
-  private static getDeviceCapabilities(features: any) : any {
+
+  private static getDeviceCapabilities(features: any): any {
     var deviceProfile = _.find(FeaturesService.deviceProfiles, (profile: any) => {
       return !!(_.find([features], profile.identity));
     });

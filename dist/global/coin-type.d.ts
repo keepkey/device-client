@@ -13,13 +13,16 @@ export interface CoinTypeConfiguration {
     amountParameters: Partial<BigNumber.BigNumberConfig>;
 }
 export declare class CoinType {
-    private configuration;
+    configuration: CoinTypeConfiguration;
     private static instances;
+    private static newDustCalculation(dustRelayFee);
+    private static oldDustCalculation(minRelayTxFee);
     static Bitcoin: CoinType;
     static Litecoin: CoinType;
     static Dogecoin: CoinType;
     static Ethereum: CoinType;
     static Dash: CoinType;
+    static BitcoinCash: CoinType;
     static get(type: CoinName): CoinType;
     static getByName(name: string): CoinType;
     static getBySymbol(symbol: string): CoinType;
