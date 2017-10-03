@@ -8,7 +8,6 @@ import * as DeviceClientMethods from "./device-client-methods";
 import { FeaturesService } from "./features-service";
 import { EventEmitter } from "events";
 import { Readable } from "stream";
-import { Features } from './global/features';
 export declare const KEEPKEY = "KEEPKEY";
 export interface BasicClient {
     featuresService: FeaturesService;
@@ -19,7 +18,7 @@ export declare class DeviceClient extends EventEmitter implements BasicClient {
     rawFirmwareStreamFactory: () => Readable;
     static UNEXPECTED_MESSAGE_EVENT: string;
     initialize: _.Function0<Promise<any>>;
-    cancel: _.Function0<Promise<Features>>;
+    cancel: _.Function0<Promise<any>>;
     wipeDevice: _.Function0<Promise<any>>;
     resetDevice: DeviceClientMethods.ResetDeviceFunction;
     recoveryDevice: DeviceClientMethods.RecoveryDeviceFunction;

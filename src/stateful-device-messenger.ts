@@ -39,7 +39,7 @@ export class StatefulDeviceMessenger extends EventEmitter {
         if (lastRequest.resolveMessage === messageType) {
           this.writeRequestInProgress.pop();
         } else if (messageType === DeviceMessageStates.Cancel) {
-          _.each<WriteRequestInProgress>(this.writeRequestInProgress, (request) => {
+          _.each(this.writeRequestInProgress, (request: WriteRequestInProgress) => {
             request.reject && request.reject(`${request.messageName} cancelled`);
           });
           this.writeRequestInProgress.length = 0;

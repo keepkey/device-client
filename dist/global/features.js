@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var device_policy_enum_1 = require("./device-policy-enum");
 var coin_name_1 = require("./coin-name");

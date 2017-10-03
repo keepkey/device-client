@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ByteBuffer = require("bytebuffer");
 var cipher_key_value_action_1 = require("./cipher-key-value-action");
 var node_vector_1 = require("../node-vector");

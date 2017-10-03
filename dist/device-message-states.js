@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var message_states_1 = require("./message-states");
 var message_states_2 = require("./message-states");
@@ -16,9 +17,9 @@ var DeviceMessageStates = (function () {
     DeviceMessageStates.getDeviceMessageState = function (name) {
         return message_states_2.MessageStates.getMessageState(message_states_1.MessageSender.device, message_states_3.MessageDirection.request, name);
     };
+    DeviceMessageStates.Cancel = 'Cancel';
+    DeviceMessageStates.TxRequest = 'TxRequest';
+    DeviceMessageStates.EthereumTxRequest = 'EthereumTxRequest';
     return DeviceMessageStates;
 }());
-DeviceMessageStates.Cancel = 'Cancel';
-DeviceMessageStates.TxRequest = 'TxRequest';
-DeviceMessageStates.EthereumTxRequest = 'EthereumTxRequest';
 exports.DeviceMessageStates = DeviceMessageStates;

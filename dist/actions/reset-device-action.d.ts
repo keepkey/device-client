@@ -1,5 +1,4 @@
 import { BasicClient } from "../device-client";
-import { Features } from "../global/features";
 export interface ResetDeviceOptions {
     display_random?: boolean;
     strength?: number;
@@ -10,6 +9,6 @@ export interface ResetDeviceOptions {
 }
 export declare class ResetDeviceAction {
     private static DEFAULT_OPTIONS;
-    static operation(client: BasicClient, options: ResetDeviceOptions): Promise<Features>;
+    static operation(client: BasicClient, options: ResetDeviceOptions): Promise<any>;
     private static wordCount2KeyStrength(wc);
 }

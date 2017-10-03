@@ -18,7 +18,7 @@ export declare abstract class Transport {
     protected abstract _write(message: ByteBuffer): Promise<any>;
     protected abstract _read(): Promise<any>;
     setMessageMap(deviceType: any, proto: any): void;
-    write(txProtoMsg: any): Promise<void>;
+    write(txProtoMsg: any): Promise<any>;
     read(): Promise<any>;
     protected parseMsgHeader(msgBB: any): {
         msgType: any;

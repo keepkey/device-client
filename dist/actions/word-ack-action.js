@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var device_message_helper_1 = require("../device-message-helper");
 var WordAckAction = (function () {
@@ -13,9 +14,9 @@ var WordAckAction = (function () {
             return client.writeToDevice(message);
         });
     };
+    WordAckAction.DEFAULT_OPTIONS = {
+        word: ''
+    };
     return WordAckAction;
 }());
-WordAckAction.DEFAULT_OPTIONS = {
-    word: ''
-};
 exports.WordAckAction = WordAckAction;

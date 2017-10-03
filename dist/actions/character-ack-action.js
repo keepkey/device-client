@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var device_message_helper_1 = require("../device-message-helper");
 var CharacterAckAction = (function () {
@@ -15,11 +16,11 @@ var CharacterAckAction = (function () {
             return client.writeToDevice(message);
         });
     };
+    CharacterAckAction.DEFAULT_OPTIONS = {
+        character: '',
+        delete: false,
+        done: false
+    };
     return CharacterAckAction;
 }());
-CharacterAckAction.DEFAULT_OPTIONS = {
-    character: '',
-    delete: false,
-    done: false
-};
 exports.CharacterAckAction = CharacterAckAction;

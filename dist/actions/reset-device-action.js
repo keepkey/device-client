@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var device_message_helper_1 = require("../device-message-helper");
 var ResetDeviceAction = (function () {
@@ -32,13 +33,13 @@ var ResetDeviceAction = (function () {
             default: return 0;
         }
     };
+    ResetDeviceAction.DEFAULT_OPTIONS = {
+        display_random: false,
+        passphrase_protection: false,
+        pin_protection: true,
+        language: 'english',
+        label: null
+    };
     return ResetDeviceAction;
 }());
-ResetDeviceAction.DEFAULT_OPTIONS = {
-    display_random: false,
-    passphrase_protection: false,
-    pin_protection: true,
-    language: 'english',
-    label: null
-};
 exports.ResetDeviceAction = ResetDeviceAction;

@@ -1,5 +1,4 @@
 import { BasicClient } from "../device-client";
-import { Features } from "../global/features";
 export interface RecoverDeviceOptions {
     passphrase_protection?: boolean;
     pin_protection?: boolean;
@@ -11,5 +10,5 @@ export interface RecoverDeviceOptions {
 }
 export declare class RecoverDeviceAction {
     private static DEFAULT_OPTIONS;
-    static operation(client: BasicClient, options: RecoverDeviceOptions): Promise<Features>;
+    static operation(client: BasicClient, options: RecoverDeviceOptions): Promise<any>;
 }

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var features_1 = require("./global/features");
 var coin_type_1 = require("./global/coin-type");
@@ -60,8 +61,8 @@ var FeaturesService = (function () {
         this._promise = undefined;
         this.resolver = undefined;
     };
+    FeaturesService.firmwareFileMetaData = require('../dist/keepkey_main.json');
+    FeaturesService.deviceProfiles = require('../dist/device-profiles.json');
     return FeaturesService;
 }());
-FeaturesService.firmwareFileMetaData = require('../dist/keepkey_main.json');
-FeaturesService.deviceProfiles = require('../dist/device-profiles.json');
 exports.FeaturesService = FeaturesService;

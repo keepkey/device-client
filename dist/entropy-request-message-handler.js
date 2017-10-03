@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var device_message_helper_1 = require("./device-message-helper");
 var ByteBuffer = require("bytebuffer");
 var Bitcore = require("bitcore-lib");
@@ -11,7 +12,7 @@ var EntropyRequestMessageHandler = (function () {
         message.setEntropy(randomBytes);
         return message;
     };
+    EntropyRequestMessageHandler.messageNames = ['EntropyRequest'];
     return EntropyRequestMessageHandler;
 }());
-EntropyRequestMessageHandler.messageNames = ['EntropyRequest'];
 exports.EntropyRequestMessageHandler = EntropyRequestMessageHandler;

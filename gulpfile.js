@@ -34,11 +34,6 @@ let through = require('through2');
 let hjson = require('gulp-hjson');
 let crypto = require('crypto');
 let ts = require('gulp-typescript');
-let concat = require('gulp-concat');
-let browserify = require('browserify');
-let source = require('vinyl-source-stream');
-let buffer = require('vinyl-buffer');
-let es6toes5 = require('gulp-babel');
 let bump = require('gulp-bump');
 
 const paths = {

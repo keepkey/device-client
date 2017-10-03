@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var CoinName;
 (function (CoinName) {
     CoinName[CoinName["Bitcoin"] = 0] = "Bitcoin";
