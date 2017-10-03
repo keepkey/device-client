@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ByteBuffer = require("bytebuffer");
 var device_message_helper_1 = require("../device-message-helper");
 var Bitcore = require("bitcore-lib");
@@ -92,7 +93,7 @@ var FirmwareUploadAction = (function () {
         var message = device_message_helper_1.DeviceMessageHelper.factory('FirmwareErase');
         return FirmwareUploadAction.client.writeToDevice(message);
     };
+    FirmwareUploadAction.firmwareFileMetaData = require('../../dist/keepkey_main.json');
     return FirmwareUploadAction;
 }());
-FirmwareUploadAction.firmwareFileMetaData = require('../../dist/keepkey_main.json');
 exports.FirmwareUploadAction = FirmwareUploadAction;

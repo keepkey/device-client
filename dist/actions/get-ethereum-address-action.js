@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var device_message_helper_1 = require("../device-message-helper");
 var action_helper_1 = require("./action-helper");
 var GetEthereumAddressAction = (function () {

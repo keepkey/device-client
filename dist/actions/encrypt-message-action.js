@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var ByteBuffer = require("bytebuffer");
 var node_vector_1 = require("../node-vector");

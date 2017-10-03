@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var node_vector_1 = require("../node-vector");
 var device_message_helper_1 = require("../device-message-helper");
 var GetPublicKeyAction = (function () {

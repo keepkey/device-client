@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var device_message_helper_1 = require("../device-message-helper");
 var FailureCodes;
@@ -44,15 +45,15 @@ var RecoverDeviceAction = (function () {
             return Promise.reject(failure);
         });
     };
+    RecoverDeviceAction.DEFAULT_OPTIONS = {
+        passphrase_protection: false,
+        pin_protection: true,
+        language: null,
+        label: null,
+        word_count: 12,
+        enforce_wordlist: true,
+        use_character_cipher: true
+    };
     return RecoverDeviceAction;
 }());
-RecoverDeviceAction.DEFAULT_OPTIONS = {
-    passphrase_protection: false,
-    pin_protection: true,
-    language: null,
-    label: null,
-    word_count: 12,
-    enforce_wordlist: true,
-    use_character_cipher: true
-};
 exports.RecoverDeviceAction = RecoverDeviceAction;

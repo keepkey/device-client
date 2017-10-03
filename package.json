@@ -1,6 +1,6 @@
 {
   "name": "@keepkey/device-client",
-  "version": "4.0.0-beta.0",
+  "version": "4.0.0",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/keepkey/keepkey-device-client#readme",
   "devDependencies": {
-    "@types/bignumber.js": "^4.0.2",
     "@types/bitcore-lib": "keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",
     "@types/concat-stream": "^1.6.0",
@@ -48,9 +47,7 @@
     "events": "^1.1.1",
     "lodash": "^4.17.4",
     "protobufjs": "^5.0",
-    "through2": "^2.0.3"
-  },
-  "peerDependencies": {
+    "through2": "^2.0.3",
     "bitcore-lib": "keepkey/bitcore-lib.git"
   }
 }

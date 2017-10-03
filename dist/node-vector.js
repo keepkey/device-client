@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var ByteBuffer = require("bytebuffer");
 var purpose_code_helper_1 = require("./purpose-code-helper");

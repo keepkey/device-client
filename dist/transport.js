@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ByteBuffer = require("bytebuffer");
 var OLD_MESSAGE_HEADER_START = '##';
 var MESSAGE_HEADER_START = String.fromCharCode(0x3f) + '##';
@@ -141,7 +142,7 @@ var Transport = (function () {
             return this.messageMap.msgTypeToClass[msgType];
         }
     };
+    Transport.MSG_HEADER_LENGTH = 6;
     return Transport;
 }());
-Transport.MSG_HEADER_LENGTH = 6;
 exports.Transport = Transport;

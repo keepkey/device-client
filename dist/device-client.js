@@ -1,9 +1,15 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var word_ack_action_1 = require("./actions/word-ack-action");
 var character_ack_action_1 = require("./actions/character-ack-action");
@@ -170,7 +176,7 @@ var DeviceClient = (function (_super) {
             });
         }
     };
+    DeviceClient.UNEXPECTED_MESSAGE_EVENT = stateful_device_messenger_1.StatefulDeviceMessenger.UNEXPECTED_MESSAGE_EVENT;
     return DeviceClient;
 }(events_1.EventEmitter));
-DeviceClient.UNEXPECTED_MESSAGE_EVENT = stateful_device_messenger_1.StatefulDeviceMessenger.UNEXPECTED_MESSAGE_EVENT;
 exports.DeviceClient = DeviceClient;

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ByteBuffer = require("bytebuffer");
 var BufferHelper = (function () {
     function BufferHelper() {

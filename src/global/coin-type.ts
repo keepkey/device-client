@@ -2,7 +2,6 @@ import * as _ from "lodash";
 import {CoinName} from "./coin-name";
 import Long = require('long');
 import * as BigNumber from "bignumber.js";
-import {NumberLike, RoundingMode} from "bignumber.js";
 
 export interface CoinTypeConfiguration {
   name: string,
@@ -24,11 +23,11 @@ const DASH_MIN_RELAY_TX_FEE = 10000; // https://github.com/dashpay/dash/blob/mas
 export class CoinType {
   private static instances: Array<CoinType> = [];
 
-  private static newDustCalculation(dustRelayFee: NumberLike): string {
+  private static newDustCalculation(dustRelayFee: BigNumber.NumberLike): string {
     return new BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
   }
 
-  private static oldDustCalculation(minRelayTxFee: NumberLike): string {
+  private static oldDustCalculation(minRelayTxFee: BigNumber.NumberLike): string {
     return new BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
   }
 

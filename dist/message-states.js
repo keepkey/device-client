@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var DeviceExecutionMode;
 (function (DeviceExecutionMode) {
@@ -29,9 +30,9 @@ var MessageStates = (function () {
     MessageStates.register = function (state) {
         MessageStates.states.push(state);
     };
+    MessageStates.states = [];
     return MessageStates;
 }());
-MessageStates.states = [];
 exports.MessageStates = MessageStates;
 MessageStates.register({
     messageName: "Initialize",

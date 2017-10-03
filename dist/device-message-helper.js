@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var ByteBuffer = require("bytebuffer");
 var Long = require("long");
@@ -74,7 +75,7 @@ var DeviceMessageHelper = (function () {
         }
         return responseV1 || responseV2;
     };
+    DeviceMessageHelper.messageFactories = require('../dist/messages.js');
     return DeviceMessageHelper;
 }());
-DeviceMessageHelper.messageFactories = require('../dist/messages.js');
 exports.DeviceMessageHelper = DeviceMessageHelper;
