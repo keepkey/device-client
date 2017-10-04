@@ -3,6 +3,8 @@ import {CoinName} from "./coin-name";
 import Long = require('long');
 import * as BigNumber from "bignumber.js";
 
+const BN = BigNumber.BigNumber;
+
 export interface CoinTypeConfiguration {
   name: string,
   currencySymbol: string;
@@ -10,7 +12,7 @@ export interface CoinTypeConfiguration {
   addressFormat: string;
   dust: number | string;
   decimals: number;
-  amountParameters: Partial<BigNumber.BigNumberConfig>;
+  amountParameters: Partial<BigNumber.Configuration>;
 }
 
 //TODO Addresses should be validated using the address validation checks from the core client. Using regexp allows checksum errors.
@@ -23,12 +25,12 @@ const DASH_MIN_RELAY_TX_FEE = 10000; // https://github.com/dashpay/dash/blob/mas
 export class CoinType {
   private static instances: Array<CoinType> = [];
 
-  private static newDustCalculation(dustRelayFee: BigNumber.NumberLike): string {
-    return new BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+  private static newDustCalculation(dustRelayFee: number | BigNumber.BigNumber | string): string {
+    return new BN(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BN.ROUND_UP).toString();
   }
 
-  private static oldDustCalculation(minRelayTxFee: BigNumber.NumberLike): string {
-    return new BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+  private static oldDustCalculation(minRelayTxFee: number | BigNumber.BigNumber | string): string {
+    return new BN(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BN.ROUND_UP).toString();
   }
 
   public static Bitcoin = new CoinType({
@@ -142,7 +144,7 @@ export class CoinType {
   private _amountConstructor;
   private get amountConstructor() {
     if (!this._amountConstructor) {
-      this._amountConstructor = BigNumber.another(this.configuration.amountParameters);
+      this._amountConstructor = BN.another(this.configuration.amountParameters);
     }
     return this._amountConstructor
   }

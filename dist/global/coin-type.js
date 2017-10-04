@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var coin_name_1 = require("./coin-name");
 var BigNumber = require("bignumber.js");
+var BN = BigNumber.BigNumber;
 var ASSUMED_TX_SIZE = 182;
 var BITCOIN_DUST_RELAY_FEE = 3000;
 var LITECOIN_DUST_RELAY_FEE = 100000;
@@ -14,10 +15,10 @@ var CoinType = (function () {
         CoinType.instances.push(this);
     }
     CoinType.newDustCalculation = function (dustRelayFee) {
-        return new BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+        return new BN(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BN.ROUND_UP).toString();
     };
     CoinType.oldDustCalculation = function (minRelayTxFee) {
-        return new BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+        return new BN(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BN.ROUND_UP).toString();
     };
     CoinType.get = function (type) {
         return _.find(CoinType.instances, { name: coin_name_1.CoinName[type] });
@@ -72,7 +73,7 @@ var CoinType = (function () {
     Object.defineProperty(CoinType.prototype, "amountConstructor", {
         get: function () {
             if (!this._amountConstructor) {
-                this._amountConstructor = BigNumber.another(this.configuration.amountParameters);
+                this._amountConstructor = BN.another(this.configuration.amountParameters);
             }
             return this._amountConstructor;
         },
