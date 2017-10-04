@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/keepkey/keepkey-device-client#readme",
   "devDependencies": {
+    "@types/bignumber.js": "^4.0.3",
     "@types/bitcore-lib": "keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",
     "@types/concat-stream": "^1.6.0",

@@ -9,7 +9,7 @@ export interface CoinTypeConfiguration {
     addressFormat: string;
     dust: number | string;
     decimals: number;
-    amountParameters: Partial<BigNumber.BigNumberConfig>;
+    amountParameters: Partial<BigNumber.Configuration>;
 }
 export declare class CoinType {
     configuration: CoinTypeConfiguration;
