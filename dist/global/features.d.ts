@@ -43,6 +43,7 @@ export interface IFeatures {
     vendor: string;
     coin_metadata: Array<CoinTypeConfiguration>;
     deviceCapabilities: DeviceCapabilities;
+    model: string;
 }
 export declare class Features {
     private data;
@@ -57,5 +58,6 @@ export declare class Features {
     supportsPolicy(policy: DevicePolicyEnum): boolean;
     policyEnabled(policy: DevicePolicyEnum): boolean;
     supportsCoinType(coin: CoinName): boolean;
+    readonly model: string;
     private findPolicy(policy);
 }

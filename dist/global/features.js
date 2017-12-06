@@ -71,6 +71,13 @@ var Features = (function () {
         var coinName = coin_name_1.CoinName[coin];
         return !!(_.find(this.data.coin_metadata, { name: coinName }));
     };
+    Object.defineProperty(Features.prototype, "model", {
+        get: function () {
+            return this.data.model;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Features.prototype.findPolicy = function (policy) {
         return _.find(this.data.policies, {
             policy_name: device_policy_enum_1.DevicePolicyEnum[policy]
