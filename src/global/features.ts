@@ -49,6 +49,7 @@ export interface IFeatures {
   vendor: string;
   coin_metadata: Array<CoinTypeConfiguration>;
   deviceCapabilities: DeviceCapabilities;
+  model: string;
 }
 
 export class Features {
@@ -97,6 +98,10 @@ export class Features {
   public supportsCoinType(coin: CoinName): boolean {
     var coinName: string = CoinName[coin];
     return !!(_.find(this.data.coin_metadata, {name: coinName}));
+  }
+
+  public get model(): string {
+    return this.data.model;
   }
 
   private findPolicy(policy: DevicePolicyEnum) {
