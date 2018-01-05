@@ -26,6 +26,9 @@ export interface IFeatureCoin {
   address_type_p2wsh: number;
   signed_message_header: string;
   bip44_account_path: number;
+  forkid: number;
+  decimals: number;
+  contract_address: number;
 }
 
 export interface IFeatures {

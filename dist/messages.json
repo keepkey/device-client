@@ -319,6 +319,18 @@
                     "type": "uint32",
                     "name": "forkid",
                     "id": 12
+                },
+                {
+                    "rule": "optional",
+                    "type": "uint32",
+                    "name": "decimals",
+                    "id": 13
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "contract_address",
+                    "id": 14
                 }
             ]
         },
@@ -807,6 +819,12 @@
                     "type": "PolicyType",
                     "name": "policies",
                     "id": 18
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "model",
+                    "id": 21
                 }
             ]
         },
@@ -1820,6 +1838,24 @@
                     "type": "uint32",
                     "name": "chain_id",
                     "id": 12
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "token_value",
+                    "id": 100
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "token_to",
+                    "id": 101
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "token_shortcut",
+                    "id": 102
                 }
             ]
         },

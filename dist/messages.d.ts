@@ -338,6 +338,12 @@ declare module DeviceMessages {
 		forkid?: number;
 		getForkid() : number;
 		setForkid(forkid : number): void;
+		decimals?: number;
+		getDecimals() : number;
+		setDecimals(decimals : number): void;
+		contract_address?: string;
+		getContractAddress() : string;
+		setContractAddress(contractAddress : string): void;
 		
 	}
 	
@@ -766,6 +772,9 @@ declare module DeviceMessages {
 		policies: PolicyType[];
 		getPolicies() : PolicyType[];
 		setPolicies(policies : PolicyType[]): void;
+		model?: string;
+		getModel() : string;
+		setModel(model : string): void;
 		
 	}
 	
@@ -1900,6 +1909,15 @@ declare module DeviceMessages {
 		chain_id?: number;
 		getChainId() : number;
 		setChainId(chainId : number): void;
+		token_value?: ByteBuffer;
+		getTokenValue() : ByteBuffer;
+		setTokenValue(tokenValue : ByteBuffer): void;
+		token_to?: ByteBuffer;
+		getTokenTo() : ByteBuffer;
+		setTokenTo(tokenTo : ByteBuffer): void;
+		token_shortcut?: string;
+		getTokenShortcut() : string;
+		setTokenShortcut(tokenShortcut : string): void;
 		
 	}
 	

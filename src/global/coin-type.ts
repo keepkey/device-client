@@ -100,6 +100,138 @@ export class CoinType {
       DECIMAL_PLACES: 8
     }
   });
+  public static Aragon = new CoinType({
+    name            : CoinName[CoinName.Aragon],
+    currencySymbol  : 'ANT',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static Augur = new CoinType({
+    name            : CoinName[CoinName.Augur],
+    currencySymbol  : 'REP',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static BAT = new CoinType({
+    name            : CoinName[CoinName.BAT],
+    currencySymbol  : 'BAT',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static Civic = new CoinType({
+    name            : CoinName[CoinName.Civic],
+    currencySymbol  : 'CVC',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static district0x = new CoinType({
+    name            : CoinName[CoinName.district0x],
+    currencySymbol  : 'DNT',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static EOS = new CoinType({
+    name            : CoinName[CoinName.EOS],
+    currencySymbol  : 'EOS',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static FunFair = new CoinType({
+    name            : CoinName[CoinName.FunFair],
+    currencySymbol  : 'FUN',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static Gnosis = new CoinType({
+    name            : CoinName[CoinName.Gnosis],
+    currencySymbol  : 'GNO',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static Golem = new CoinType({
+    name            : CoinName[CoinName.Golem],
+    currencySymbol  : 'GNT',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static OmiseGo = new CoinType({
+    name            : CoinName[CoinName.OmiseGo],
+    currencySymbol  : 'OMG',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
+  public static Salt = new CoinType({
+    name            : CoinName[CoinName.Salt],
+    currencySymbol  : 'SALT',
+    coinTypeCode    : "60'",
+    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    dust            : 1,
+    decimals        : 18,
+    amountParameters: {
+      DECIMAL_PLACES: 18,
+      EXPONENTIAL_AT: [-19, 9]
+    }
+  });
 
   public static get(type: CoinName): CoinType {
     return _.find(CoinType.instances, {name: CoinName[type]});

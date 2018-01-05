@@ -162,6 +162,138 @@ var CoinType = (function () {
             DECIMAL_PLACES: 8
         }
     });
+    CoinType.Aragon = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.Aragon],
+        currencySymbol: 'ANT',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.Augur = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.Augur],
+        currencySymbol: 'REP',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.BAT = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.BAT],
+        currencySymbol: 'BAT',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.Civic = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.Civic],
+        currencySymbol: 'CVC',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.district0x = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.district0x],
+        currencySymbol: 'DNT',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.EOS = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.EOS],
+        currencySymbol: 'EOS',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.FunFair = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.FunFair],
+        currencySymbol: 'FUN',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.Gnosis = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.Gnosis],
+        currencySymbol: 'GNO',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.Golem = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.Golem],
+        currencySymbol: 'GNT',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.OmiseGo = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.OmiseGo],
+        currencySymbol: 'OMG',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
+    CoinType.Salt = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.Salt],
+        currencySymbol: 'SALT',
+        coinTypeCode: "60'",
+        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        dust: 1,
+        decimals: 18,
+        amountParameters: {
+            DECIMAL_PLACES: 18,
+            EXPONENTIAL_AT: [-19, 9]
+        }
+    });
     return CoinType;
 }());
 exports.CoinType = CoinType;
