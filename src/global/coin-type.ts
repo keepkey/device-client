@@ -142,9 +142,9 @@ export class CoinType {
     coinTypeCode    : "60'",
     addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
     dust            : 1,
-    decimals        : 18,
+    decimals        : 8,
     amountParameters: {
-      DECIMAL_PLACES: 18,
+      DECIMAL_PLACES: 8,
       EXPONENTIAL_AT: [-19, 9]
     }
   });
@@ -160,27 +160,15 @@ export class CoinType {
       EXPONENTIAL_AT: [-19, 9]
     }
   });
-  public static EOS = new CoinType({
-    name            : CoinName[CoinName.EOS],
-    currencySymbol  : 'EOS',
-    coinTypeCode    : "60'",
-    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
-    dust            : 1,
-    decimals        : 18,
-    amountParameters: {
-      DECIMAL_PLACES: 18,
-      EXPONENTIAL_AT: [-19, 9]
-    }
-  });
   public static FunFair = new CoinType({
     name            : CoinName[CoinName.FunFair],
     currencySymbol  : 'FUN',
     coinTypeCode    : "60'",
     addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
     dust            : 1,
-    decimals        : 18,
+    decimals        : 8,
     amountParameters: {
-      DECIMAL_PLACES: 18,
+      DECIMAL_PLACES: 8,
       EXPONENTIAL_AT: [-19, 9]
     }
   });
@@ -226,9 +214,9 @@ export class CoinType {
     coinTypeCode    : "60'",
     addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
     dust            : 1,
-    decimals        : 18,
+    decimals        : 8,
     amountParameters: {
-      DECIMAL_PLACES: 18,
+      DECIMAL_PLACES: 8,
       EXPONENTIAL_AT: [-19, 9]
     }
   });

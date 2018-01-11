@@ -27,7 +27,6 @@ export declare class CoinType {
     static BAT: CoinType;
     static Civic: CoinType;
     static district0x: CoinType;
-    static EOS: CoinType;
     static FunFair: CoinType;
     static Gnosis: CoinType;
     static Golem: CoinType;

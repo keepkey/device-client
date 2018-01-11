@@ -204,9 +204,9 @@ var CoinType = (function () {
         coinTypeCode: "60'",
         addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
         dust: 1,
-        decimals: 18,
+        decimals: 8,
         amountParameters: {
-            DECIMAL_PLACES: 18,
+            DECIMAL_PLACES: 8,
             EXPONENTIAL_AT: [-19, 9]
         }
     });
@@ -222,27 +222,15 @@ var CoinType = (function () {
             EXPONENTIAL_AT: [-19, 9]
         }
     });
-    CoinType.EOS = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.EOS],
-        currencySymbol: 'EOS',
-        coinTypeCode: "60'",
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
-        dust: 1,
-        decimals: 18,
-        amountParameters: {
-            DECIMAL_PLACES: 18,
-            EXPONENTIAL_AT: [-19, 9]
-        }
-    });
     CoinType.FunFair = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.FunFair],
         currencySymbol: 'FUN',
         coinTypeCode: "60'",
         addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
         dust: 1,
-        decimals: 18,
+        decimals: 8,
         amountParameters: {
-            DECIMAL_PLACES: 18,
+            DECIMAL_PLACES: 8,
             EXPONENTIAL_AT: [-19, 9]
         }
     });
@@ -288,9 +276,9 @@ var CoinType = (function () {
         coinTypeCode: "60'",
         addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
         dust: 1,
-        decimals: 18,
+        decimals: 8,
         amountParameters: {
-            DECIMAL_PLACES: 18,
+            DECIMAL_PLACES: 8,
             EXPONENTIAL_AT: [-19, 9]
         }
     });
