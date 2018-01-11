@@ -28,7 +28,7 @@ export interface IFeatureCoin {
   bip44_account_path: number;
   forkid: number;
   decimals: number;
-  contract_address: number;
+  contract_address: string;
 }
 
 export interface IFeatures {
