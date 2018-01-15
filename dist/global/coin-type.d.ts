@@ -6,6 +6,7 @@ export interface CoinTypeConfiguration {
     name: string;
     currencySymbol: string;
     coinTypeCode: string;
+    isToken: boolean;
     addressFormat: string;
     dust: number | string;
     decimals: number;
