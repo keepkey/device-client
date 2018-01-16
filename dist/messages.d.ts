@@ -766,6 +766,9 @@ declare module DeviceMessages {
 		policies: PolicyType[];
 		getPolicies() : PolicyType[];
 		setPolicies(policies : PolicyType[]): void;
+		model?: string;
+		getModel() : string;
+		setModel(model : string): void;
 		
 	}
 	

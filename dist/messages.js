@@ -807,6 +807,12 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "PolicyType",
                     "name": "policies",
                     "id": 18
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "model",
+                    "id": 21
                 }
             ]
         },
