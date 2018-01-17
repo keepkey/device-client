@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {BigNumber} from "bignumber.js";
 
 import {DevicePolicyEnum} from "./device-policy-enum";
 import {CoinName} from "./coin-name";
@@ -29,6 +30,7 @@ export interface IFeatureCoin {
   forkid: number;
   decimals: number;
   contract_address: string;
+  gas_limit: BigNumber;
 }
 
 export interface IFeatures {

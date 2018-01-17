@@ -1,3 +1,4 @@
+import { BigNumber } from "bignumber.js";
 import { DevicePolicyEnum } from "./device-policy-enum";
 import { CoinName } from "./coin-name";
 import { CoinTypeConfiguration } from "./coin-type";
@@ -24,6 +25,7 @@ export interface IFeatureCoin {
     forkid: number;
     decimals: number;
     contract_address: string;
+    gas_limit: BigNumber;
 }
 export interface IFeatures {
     available_firmware_version: string;
