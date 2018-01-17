@@ -41,6 +41,7 @@ export declare class CoinType {
     readonly symbol: string;
     readonly decimals: number;
     readonly coinTypeCode: string;
+    readonly isToken: boolean;
     private _dust;
     readonly dust: BigNumber.BigNumber;
     private _amountConstructor;

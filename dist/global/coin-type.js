@@ -63,6 +63,13 @@ var CoinType = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(CoinType.prototype, "isToken", {
+        get: function () {
+            return this.configuration.isToken;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(CoinType.prototype, "dust", {
         get: function () {
             return this._dust;

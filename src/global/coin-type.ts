@@ -273,6 +273,10 @@ export class CoinType {
     return this.configuration.coinTypeCode;
   }
 
+  public get isToken(): boolean {
+    return this.configuration.isToken;
+  }
+
   private _dust: BigNumber.BigNumber = this.parseAmount(this.configuration.dust);
   public get dust(): BigNumber.BigNumber {
     return this._dust;
