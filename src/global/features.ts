@@ -30,7 +30,7 @@ export interface IFeatureCoin {
   forkid: number;
   decimals: number;
   contract_address: string;
-  gas_limit: BigNumber;
+  gas_limit: ByteBuffer;
 }
 
 export interface IFeatures {

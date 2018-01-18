@@ -331,6 +331,12 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                     "type": "string",
                     "name": "contract_address",
                     "id": 14
+                },
+                {
+                    "rule": "optional",
+                    "type": "bytes",
+                    "name": "gas_limit",
+                    "id": 15
                 }
             ]
         },
