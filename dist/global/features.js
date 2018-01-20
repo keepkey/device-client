@@ -71,6 +71,9 @@ var Features = (function () {
         var coinName = coin_name_1.CoinName[coin];
         return !!(_.find(this.data.coin_metadata, { name: coinName }));
     };
+    Features.prototype.getTokenList = function () {
+        return this.data.coins.filter(function (coin) { return !!coin.contract_address; });
+    };
     Object.defineProperty(Features.prototype, "model", {
         get: function () {
             return this.data.model;

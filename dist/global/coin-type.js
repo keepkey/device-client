@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
-var coin_name_1 = require("./coin-name");
-var Long = require("long");
-var BigNumber = require("bignumber.js");
 var ByteBuffer = require("bytebuffer");
-var BN = BigNumber.BigNumber;
+var bignumber_js_1 = require("bignumber.js");
+var Long = require("long");
+var coin_name_1 = require("./coin-name");
 var ASSUMED_TX_SIZE = 182;
 var BITCOIN_DUST_RELAY_FEE = 3000;
 var LITECOIN_DUST_RELAY_FEE = 100000;
@@ -17,10 +16,10 @@ var CoinType = (function () {
         CoinType.instances.push(this);
     }
     CoinType.newDustCalculation = function (dustRelayFee) {
-        return new BN(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BN.ROUND_UP).toString();
+        return new bignumber_js_1.BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, bignumber_js_1.BigNumber.ROUND_UP).toString();
     };
     CoinType.oldDustCalculation = function (minRelayTxFee) {
-        return new BN(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BN.ROUND_UP).toString();
+        return new bignumber_js_1.BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, bignumber_js_1.BigNumber.ROUND_UP).toString();
     };
     CoinType.get = function (type) {
         return _.find(CoinType.instances, { name: coin_name_1.CoinName[type] });
@@ -65,6 +64,13 @@ var CoinType = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(CoinType.prototype, "addessFormat", {
+        get: function () {
+            return this.configuration.addressFormat;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(CoinType.prototype, "isToken", {
         get: function () {
             return this.configuration.isToken;
@@ -82,7 +88,7 @@ var CoinType = (function () {
     Object.defineProperty(CoinType.prototype, "amountConstructor", {
         get: function () {
             if (!this._amountConstructor) {
-                this._amountConstructor = BN.another(this.configuration.amountParameters);
+                this._amountConstructor = bignumber_js_1.BigNumber.another(this.configuration.amountParameters);
             }
             return this._amountConstructor;
         },
@@ -194,9 +200,9 @@ var CoinType = (function () {
     CoinType.Aragon = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.Aragon],
         currencySymbol: 'ANT',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 18,
         amountParameters: {
@@ -207,9 +213,9 @@ var CoinType = (function () {
     CoinType.Augur = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.Augur],
         currencySymbol: 'REP',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 18,
         amountParameters: {
@@ -220,9 +226,9 @@ var CoinType = (function () {
     CoinType.BAT = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.BAT],
         currencySymbol: 'BAT',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 18,
         amountParameters: {
@@ -233,22 +239,22 @@ var CoinType = (function () {
     CoinType.Civic = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.Civic],
         currencySymbol: 'CVC',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 8,
         amountParameters: {
             DECIMAL_PLACES: 8,
-            EXPONENTIAL_AT: [-19, 9]
+            EXPONENTIAL_AT: [-9, 9]
         }
     });
     CoinType.district0x = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.district0x],
         currencySymbol: 'DNT',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 18,
         amountParameters: {
@@ -259,22 +265,22 @@ var CoinType = (function () {
     CoinType.FunFair = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.FunFair],
         currencySymbol: 'FUN',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 8,
         amountParameters: {
             DECIMAL_PLACES: 8,
-            EXPONENTIAL_AT: [-19, 9]
+            EXPONENTIAL_AT: [-9, 9]
         }
     });
     CoinType.Gnosis = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.Gnosis],
         currencySymbol: 'GNO',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 18,
         amountParameters: {
@@ -285,9 +291,9 @@ var CoinType = (function () {
     CoinType.Golem = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.Golem],
         currencySymbol: 'GNT',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 18,
         amountParameters: {
@@ -298,9 +304,9 @@ var CoinType = (function () {
     CoinType.OmiseGo = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.OmiseGo],
         currencySymbol: 'OMG',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 18,
         amountParameters: {
@@ -311,14 +317,14 @@ var CoinType = (function () {
     CoinType.Salt = new CoinType({
         name: coin_name_1.CoinName[coin_name_1.CoinName.Salt],
         currencySymbol: 'SALT',
-        coinTypeCode: "60'",
+        coinTypeCode: CoinType.Ethereum.coinTypeCode,
         isToken: true,
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
+        addressFormat: CoinType.Ethereum.addessFormat,
         dust: 1,
         decimals: 8,
         amountParameters: {
             DECIMAL_PLACES: 8,
-            EXPONENTIAL_AT: [-19, 9]
+            EXPONENTIAL_AT: [-9, 9]
         }
     });
     return CoinType;

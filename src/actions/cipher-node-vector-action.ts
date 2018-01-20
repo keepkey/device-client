@@ -1,4 +1,4 @@
-import ByteBuffer = require('bytebuffer');
+import * as ByteBuffer from'bytebuffer';
 
 import {CipherKeyValueAction} from "./cipher-key-value-action";
 import {DeviceClient} from "../device-client";

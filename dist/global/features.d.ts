@@ -1,4 +1,5 @@
 /// <reference types="bytebuffer" />
+import * as ByteBuffer from "bytebuffer";
 import { DevicePolicyEnum } from "./device-policy-enum";
 import { CoinName } from "./coin-name";
 import { CoinTypeConfiguration } from "./coin-type";
@@ -63,6 +64,7 @@ export declare class Features {
     supportsPolicy(policy: DevicePolicyEnum): boolean;
     policyEnabled(policy: DevicePolicyEnum): boolean;
     supportsCoinType(coin: CoinName): boolean;
+    getTokenList(): Array<IFeatureCoin>;
     readonly model: string;
     private findPolicy(policy);
 }

@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {BigNumber} from "bignumber.js";
+import * as ByteBuffer from "bytebuffer";
 
 import {DevicePolicyEnum} from "./device-policy-enum";
 import {CoinName} from "./coin-name";
@@ -103,6 +103,10 @@ export class Features {
   public supportsCoinType(coin: CoinName): boolean {
     var coinName: string = CoinName[coin];
     return !!(_.find(this.data.coin_metadata, {name: coinName}));
+  }
+
+  public getTokenList(): Array<IFeatureCoin> {
+    return this.data.coins.filter((coin: IFeatureCoin) => !!coin.contract_address)
   }
 
   public get model(): string {

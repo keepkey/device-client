@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import {Features, IFeatures} from "./global/features";
+import {Features, IFeatureCoin, IFeatures} from "./global/features";
 import {CoinType} from "./global/coin-type";
 
 export class FeaturesService {
@@ -7,7 +7,7 @@ export class FeaturesService {
   private static deviceProfiles = require('../dist/device-profiles.json');
 
   private static getDeviceCapabilities(features: any): any {
-    var deviceProfile = _.find(FeaturesService.deviceProfiles, (profile: any) => {
+    var deviceProfile: any = _.find(FeaturesService.deviceProfiles, (profile: any) => {
       return !!(_.find([features], profile.identity));
     });
 
@@ -26,6 +26,8 @@ export class FeaturesService {
   public setValue(features: IFeatures): void {
     features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
     features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
+
+    //TODO There should be on canonical coin list that comes from the device
     features.coin_metadata = _.intersectionWith(CoinType.getList(), features.coins, (metadata, deviceCoin) => {
       return metadata.name === deviceCoin.coin_name;
     });
