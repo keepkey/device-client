@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var coin_name_1 = require("./coin-name");
+var Long = require("long");
 var BigNumber = require("bignumber.js");
+var ByteBuffer = require("bytebuffer");
 var BN = BigNumber.BigNumber;
 var ASSUMED_TX_SIZE = 182;
 var BITCOIN_DUST_RELAY_FEE = 3000;
@@ -88,7 +90,7 @@ var CoinType = (function () {
         configurable: true
     });
     CoinType.prototype.parseAmount = function (amount) {
-        return new this.amountConstructor(amount);
+        return this.number2Big(amount);
     };
     CoinType.prototype.amountToFloat = function (amount) {
         return new this.amountConstructor(amount.toString())
@@ -100,6 +102,20 @@ var CoinType = (function () {
     };
     CoinType.prototype.equals = function (other) {
         return other instanceof CoinType && this.name === other.name;
+    };
+    CoinType.prototype.number2Big = function (n) {
+        if (n instanceof ByteBuffer) {
+            return this.fromBuffer(n);
+        }
+        else if (n instanceof Long) {
+            return new this.amountConstructor(n.toString());
+        }
+        else {
+            return new this.amountConstructor(n);
+        }
+    };
+    CoinType.prototype.fromBuffer = function (buffer) {
+        return new this.amountConstructor(buffer.toHex() || "00", 16);
     };
     CoinType.instances = [];
     CoinType.Bitcoin = new CoinType({

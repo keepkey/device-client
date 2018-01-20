@@ -2,6 +2,7 @@ import * as _ from "lodash";
 import {CoinName} from "./coin-name";
 import Long = require('long');
 import * as BigNumber from "bignumber.js";
+import * as ByteBuffer from "bytebuffer";
 
 const BN = BigNumber.BigNumber;
 
@@ -290,8 +291,8 @@ export class CoinType {
     return this._amountConstructor
   }
 
-  public parseAmount(amount: number | BigNumber.BigNumber | string) {
-    return new this.amountConstructor(amount);
+  public parseAmount(amount: number | BigNumber.BigNumber | string | ByteBuffer) {
+    return this.number2Big(amount);
   }
 
   public amountToFloat(amount: Long | string): BigNumber.BigNumber {
@@ -310,5 +311,19 @@ export class CoinType {
 
   constructor(public configuration: CoinTypeConfiguration) {
     CoinType.instances.push(this);
+  }
+
+  private number2Big(n: ByteBuffer | Long | number | string | BigNumber.BigNumber): BigNumber.BigNumber {
+    if (n instanceof ByteBuffer) {
+      return this.fromBuffer(n);
+    } else if (n instanceof Long) {
+      return new this.amountConstructor(n.toString());
+    } else {
+      return new this.amountConstructor(n);
+    }
+  }
+
+  private fromBuffer(buffer: ByteBuffer): BigNumber.BigNumber {
+    return new this.amountConstructor(buffer.toHex() || "00", 16);
   }
 }

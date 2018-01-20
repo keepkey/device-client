@@ -1,7 +1,9 @@
+/// <reference types="bytebuffer" />
 /// <reference types="long" />
 import { CoinName } from "./coin-name";
 import Long = require('long');
 import * as BigNumber from "bignumber.js";
+import * as ByteBuffer from "bytebuffer";
 export interface CoinTypeConfiguration {
     name: string;
     currencySymbol: string;
@@ -46,9 +48,11 @@ export declare class CoinType {
     readonly dust: BigNumber.BigNumber;
     private _amountConstructor;
     private readonly amountConstructor;
-    parseAmount(amount: number | BigNumber.BigNumber | string): any;
+    parseAmount(amount: number | BigNumber.BigNumber | string | ByteBuffer): BigNumber.BigNumber;
     amountToFloat(amount: Long | string): BigNumber.BigNumber;
     floatToAmount(amount: number | BigNumber.BigNumber | string): BigNumber.BigNumber;
     equals(other: any): boolean;
     constructor(configuration: CoinTypeConfiguration);
+    private number2Big(n);
+    private fromBuffer(buffer);
 }
