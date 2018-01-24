@@ -3,15 +3,11 @@ import * as ByteBuffer from 'bytebuffer';
 import { BigNumber, Configuration as BigNumberConfig } from "bignumber.js";
 import Long = require('long');
 import { CoinName } from "./coin-name";
+import { IFeatureCoin } from "./features";
 export interface CoinTypeConfiguration {
     name: string;
-    currencySymbol: string;
-    coinTypeCode: string;
-    isToken: boolean;
     addressFormat: string;
     dust: number | string;
-    decimals: number;
-    amountParameters: Partial<BigNumberConfig>;
 }
 export declare class CoinType {
     configuration: CoinTypeConfiguration;
@@ -21,21 +17,41 @@ export declare class CoinType {
     static get(type: CoinName): CoinType;
     static getByName(name: string): CoinType;
     static getBySymbol(symbol: string): CoinType;
-    static getList(): Array<CoinTypeConfiguration>;
+    static getList(): Array<CoinType>;
     readonly name: string;
-    readonly symbol: string;
-    readonly decimals: number;
-    readonly coinTypeCode: string;
     readonly addessFormat: string;
-    readonly isToken: boolean;
     private _dust;
     readonly dust: BigNumber;
+    decimals: number;
+    coinTypeCode: string;
+    isToken: boolean;
+    private _symbol;
+    symbol: string;
+    private _contractAddress;
+    readonly contractAddress: ByteBuffer;
+    contractAddressString: string;
+    private _gasLimit;
+    gasLimit: ByteBuffer;
     private _amountConstructor;
     private readonly amountConstructor;
+    amountParameters: Partial<BigNumberConfig>;
     parseAmount(amount: number | BigNumber | string | ByteBuffer): BigNumber;
     amountToFloat(amount: Long | string): BigNumber;
     floatToAmount(amount: number | BigNumber | string): BigNumber;
     equals(other: any): boolean;
+    decorateWithFeatureCoin(coin: IFeatureCoin): void;
+    toFeatureCoinMetadata(): {
+        addressFormat: string;
+        amountParameters: {
+            DECIMAL_PLACES: number;
+            EXPONENTIAL_AT: number[];
+        };
+        coinTypeCode: string;
+        currencySymbol: string;
+        decimals: number;
+        dust: string;
+        name: string;
+    };
     constructor(configuration: CoinTypeConfiguration);
     private number2Big(n);
     private fromBuffer(buffer);

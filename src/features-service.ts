@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 import {Features, IFeatureCoin, IFeatures} from "./global/features";
 import {CoinType} from "./global/coin-type";
+import {CoinName} from "./global/coin-name";
 
 export class FeaturesService {
   private static firmwareFileMetaData: FirmwareFileMetadata = require('../dist/keepkey_main.json');
@@ -27,10 +28,10 @@ export class FeaturesService {
     features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
     features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
 
+    this.addFeatureDataToCoinType(features.coins);
+
     //TODO There should be on canonical coin list that comes from the device
-    features.coin_metadata = _.intersectionWith(CoinType.getList(), features.coins, (metadata, deviceCoin) => {
-      return metadata.name === deviceCoin.coin_name;
-    });
+    features.coin_metadata = CoinType.getList().map((coin:CoinType) => coin.toFeatureCoinMetadata());
 
     if (!this._promise || !this.resolver) {
       if (features.deviceCapabilities) {
@@ -47,6 +48,15 @@ export class FeaturesService {
       this.resolver = undefined;
       this.rejector = undefined;
     }
+  }
+
+  private addFeatureDataToCoinType(coins: Array<IFeatureCoin>) {
+    coins.forEach((coin) => {
+      let coinTypeCoin = CoinType.get(CoinName[coin.coin_name]);
+      if (coinTypeCoin) {
+        coinTypeCoin.decorateWithFeatureCoin(coin);
+      }
+    });
   }
 
   public get promise(): Promise<Features> {

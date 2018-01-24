@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var features_1 = require("./global/features");
 var coin_type_1 = require("./global/coin-type");
+var coin_name_1 = require("./global/coin-name");
 var FeaturesService = (function () {
     function FeaturesService() {
     }
@@ -21,9 +22,8 @@ var FeaturesService = (function () {
     FeaturesService.prototype.setValue = function (features) {
         features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
         features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
-        features.coin_metadata = _.intersectionWith(coin_type_1.CoinType.getList(), features.coins, function (metadata, deviceCoin) {
-            return metadata.name === deviceCoin.coin_name;
-        });
+        this.addFeatureDataToCoinType(features.coins);
+        features.coin_metadata = coin_type_1.CoinType.getList().map(function (coin) { return coin.toFeatureCoinMetadata(); });
         if (!this._promise || !this.resolver) {
             if (features.deviceCapabilities) {
                 this._promise = Promise.resolve(new features_1.Features(features));
@@ -42,6 +42,14 @@ var FeaturesService = (function () {
             this.resolver = undefined;
             this.rejector = undefined;
         }
+    };
+    FeaturesService.prototype.addFeatureDataToCoinType = function (coins) {
+        coins.forEach(function (coin) {
+            var coinTypeCoin = coin_type_1.CoinType.get(coin_name_1.CoinName[coin.coin_name]);
+            if (coinTypeCoin) {
+                coinTypeCoin.decorateWithFeatureCoin(coin);
+            }
+        });
     };
     Object.defineProperty(FeaturesService.prototype, "promise", {
         get: function () {
