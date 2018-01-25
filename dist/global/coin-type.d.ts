@@ -31,7 +31,8 @@ export declare class CoinType {
     readonly contractAddress: ByteBuffer;
     contractAddressString: string;
     private _gasLimit;
-    gasLimit: ByteBuffer;
+    gasLimitFromBuffer: ByteBuffer;
+    readonly gasLimit: BigNumber;
     private _amountConstructor;
     private readonly amountConstructor;
     amountParameters: Partial<BigNumberConfig>;
@@ -51,6 +52,7 @@ export declare class CoinType {
         decimals: number;
         dust: string;
         name: string;
+        isToken: boolean;
     };
     constructor(configuration: CoinTypeConfiguration);
     private number2Big(n);

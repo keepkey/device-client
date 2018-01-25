@@ -91,8 +91,11 @@ export class CoinType {
   }
 
   private _gasLimit: BigNumber;
-  public set gasLimit(n: ByteBuffer) {
+  public set gasLimitFromBuffer(n: ByteBuffer) {
     this._gasLimit = this.number2Big(n);
+  }
+  public get gasLimit(): BigNumber {
+    return this._gasLimit;
   }
 
   private _amountConstructor: typeof BigNumber;
@@ -137,7 +140,7 @@ export class CoinType {
       // it is an ERC20 token
       this.isToken = true;
       this.contractAddressString = coin.contract_address;
-      this.gasLimit = coin.gas_limit;
+      this.gasLimitFromBuffer = coin.gas_limit;
     }
   }
 
@@ -152,7 +155,8 @@ export class CoinType {
       currencySymbol: this.symbol,
       decimals: this.decimals,
       dust: this.dust.toString(),
-      name: this.name
+      name: this.name,
+      isToken: this.isToken
     }
   }
 

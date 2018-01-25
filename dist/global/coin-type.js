@@ -86,9 +86,16 @@ var CoinType = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(CoinType.prototype, "gasLimit", {
+    Object.defineProperty(CoinType.prototype, "gasLimitFromBuffer", {
         set: function (n) {
             this._gasLimit = this.number2Big(n);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CoinType.prototype, "gasLimit", {
+        get: function () {
+            return this._gasLimit;
         },
         enumerable: true,
         configurable: true
@@ -135,7 +142,7 @@ var CoinType = (function () {
         if (!!coin.contract_address) {
             this.isToken = true;
             this.contractAddressString = coin.contract_address;
-            this.gasLimit = coin.gas_limit;
+            this.gasLimitFromBuffer = coin.gas_limit;
         }
     };
     CoinType.prototype.toFeatureCoinMetadata = function () {
@@ -149,7 +156,8 @@ var CoinType = (function () {
             currencySymbol: this.symbol,
             decimals: this.decimals,
             dust: this.dust.toString(),
-            name: this.name
+            name: this.name,
+            isToken: this.isToken
         };
     };
     CoinType.prototype.number2Big = function (n) {
