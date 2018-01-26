@@ -1,6 +1,5 @@
 /// <reference path="../src/global/message-handler.d.ts" />
 /// <reference types="node" />
-/// <reference types="lodash" />
 import * as _ from 'lodash';
 import { StatefulDeviceMessenger } from "./stateful-device-messenger";
 import { Transport } from "./transport";

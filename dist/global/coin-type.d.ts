@@ -1,22 +1,62 @@
-/// <reference types="long" />
-import { CoinName } from "./coin-name";
+/// <reference types="bytebuffer" />
+import * as ByteBuffer from 'bytebuffer';
+import { BigNumber, Configuration as BigNumberConfig } from "bignumber.js";
 import Long = require('long');
-import * as BigNumber from "bignumber.js";
+import { CoinName } from "./coin-name";
+import { IFeatureCoin } from "./features";
 export interface CoinTypeConfiguration {
     name: string;
-    currencySymbol: string;
-    coinTypeCode: string;
-    isToken: boolean;
     addressFormat: string;
     dust: number | string;
-    decimals: number;
-    amountParameters: Partial<BigNumber.Configuration>;
 }
 export declare class CoinType {
     configuration: CoinTypeConfiguration;
     private static instances;
     private static newDustCalculation(dustRelayFee);
     private static oldDustCalculation(minRelayTxFee);
+    static get(type: CoinName): CoinType;
+    static getByName(name: string): CoinType;
+    static getBySymbol(symbol: string): CoinType;
+    static getList(): Array<CoinType>;
+    readonly name: string;
+    readonly addessFormat: string;
+    private _dust;
+    readonly dust: BigNumber;
+    decimals: number;
+    coinTypeCode: string;
+    isToken: boolean;
+    private _symbol;
+    symbol: string;
+    private _contractAddress;
+    readonly contractAddress: ByteBuffer;
+    contractAddressString: string;
+    private _gasLimit;
+    gasLimitFromBuffer: ByteBuffer;
+    readonly gasLimit: BigNumber;
+    private _amountConstructor;
+    private readonly amountConstructor;
+    amountParameters: Partial<BigNumberConfig>;
+    parseAmount(amount: number | BigNumber | string | ByteBuffer): BigNumber;
+    amountToFloat(amount: Long | string): BigNumber;
+    floatToAmount(amount: number | BigNumber | string): BigNumber;
+    equals(other: any): boolean;
+    decorateWithFeatureCoin(coin: IFeatureCoin): void;
+    toFeatureCoinMetadata(): {
+        addressFormat: string;
+        amountParameters: {
+            DECIMAL_PLACES: number;
+            EXPONENTIAL_AT: number[];
+        };
+        coinTypeCode: string;
+        currencySymbol: string;
+        decimals: number;
+        dust: string;
+        name: string;
+        isToken: boolean;
+    };
+    constructor(configuration: CoinTypeConfiguration);
+    private number2Big(n);
+    private fromBuffer(buffer);
     static Bitcoin: CoinType;
     static Litecoin: CoinType;
     static Dogecoin: CoinType;
@@ -33,22 +73,4 @@ export declare class CoinType {
     static Golem: CoinType;
     static OmiseGo: CoinType;
     static Salt: CoinType;
-    static get(type: CoinName): CoinType;
-    static getByName(name: string): CoinType;
-    static getBySymbol(symbol: string): CoinType;
-    static getList(): Array<CoinTypeConfiguration>;
-    readonly name: string;
-    readonly symbol: string;
-    readonly decimals: number;
-    readonly coinTypeCode: string;
-    readonly isToken: boolean;
-    private _dust;
-    readonly dust: BigNumber.BigNumber;
-    private _amountConstructor;
-    private readonly amountConstructor;
-    parseAmount(amount: number | BigNumber.BigNumber | string): any;
-    amountToFloat(amount: Long | string): BigNumber.BigNumber;
-    floatToAmount(amount: number | BigNumber.BigNumber | string): BigNumber.BigNumber;
-    equals(other: any): boolean;
-    constructor(configuration: CoinTypeConfiguration);
 }
