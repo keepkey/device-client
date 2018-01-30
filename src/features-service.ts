@@ -52,10 +52,7 @@ export class FeaturesService {
 
   private addFeatureDataToCoinType(coins: Array<IFeatureCoin>) {
     coins.forEach((coin) => {
-      let coinTypeCoin = CoinType.get(CoinName[coin.coin_name]);
-      if (coinTypeCoin) {
-        coinTypeCoin.decorateWithFeatureCoin(coin);
-      }
+      CoinType.fromFeatureCoin(coin);
     });
   }
 

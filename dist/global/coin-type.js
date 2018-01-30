@@ -9,6 +9,7 @@ var ASSUMED_TX_SIZE = 182;
 var BITCOIN_DUST_RELAY_FEE = 3000;
 var LITECOIN_DUST_RELAY_FEE = 100000;
 var DASH_MIN_RELAY_TX_FEE = 10000;
+var ETHEREUM_ADDRESS_FORMAT = "^(0x)?[0-9a-fA-F]{40}$";
 var CoinType = (function () {
     function CoinType(configuration) {
         this.configuration = configuration;
@@ -32,6 +33,27 @@ var CoinType = (function () {
     };
     CoinType.getList = function () {
         return CoinType.instances;
+    };
+    CoinType.fromFeatureCoin = function (coin) {
+        var config = _.find(CoinType.config, { name: coin.coin_name });
+        if (config) {
+            var instance = new CoinType(config);
+            instance.isToken = false;
+            instance.symbol = coin.coin_shortcut;
+            instance.decimals = coin.decimals || config.defaultDecimals || 0;
+            instance.coinTypeCode = (coin.bip44_account_path < 0x80000000) ?
+                '' + coin.bip44_account_path : '' + (coin.bip44_account_path - 0x80000000) + '\'';
+            instance.amountParameters = {
+                DECIMAL_PLACES: instance.decimals,
+                EXPONENTIAL_AT: [-(instance.decimals + 1), instance.decimals + 1]
+            };
+            if (!!coin.contract_address) {
+                instance.isToken = true;
+                instance.contractAddressString = "0x" + coin.contract_address.toHex();
+                instance.gasLimitFromBuffer = coin.gas_limit;
+            }
+            return instance;
+        }
     };
     Object.defineProperty(CoinType.prototype, "name", {
         get: function () {
@@ -129,22 +151,6 @@ var CoinType = (function () {
     CoinType.prototype.equals = function (other) {
         return other instanceof CoinType && this.name === other.name;
     };
-    CoinType.prototype.decorateWithFeatureCoin = function (coin) {
-        this.isToken = false;
-        this.symbol = coin.coin_shortcut;
-        this.decimals = coin.decimals || this.configuration.defaultDecimals || 0;
-        this.coinTypeCode = (coin.bip44_account_path < 0x80000000) ?
-            '' + coin.bip44_account_path : '' + (coin.bip44_account_path - 0x80000000) + '\'';
-        this.amountParameters = {
-            DECIMAL_PLACES: this.decimals,
-            EXPONENTIAL_AT: [-(this.decimals + 1), this.decimals + 1]
-        };
-        if (!!coin.contract_address) {
-            this.isToken = true;
-            this.contractAddressString = "0x" + coin.contract_address.toHex();
-            this.gasLimitFromBuffer = coin.gas_limit;
-        }
-    };
     CoinType.prototype.toFeatureCoinMetadata = function () {
         return {
             addressFormat: this.addessFormat,
@@ -175,92 +181,87 @@ var CoinType = (function () {
         return new this.amountConstructor(buffer.toHex() || "00", 16);
     };
     CoinType.instances = [];
-    CoinType.Bitcoin = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Bitcoin],
-        addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
-        dust: CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
-        defaultDecimals: 8
-    });
-    CoinType.Litecoin = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Litecoin],
-        addressFormat: "^[L3][a-km-zA-HJ-NP-Z1-9]{26,33}$",
-        dust: CoinType.newDustCalculation(LITECOIN_DUST_RELAY_FEE),
-        defaultDecimals: 8
-    });
-    CoinType.Dogecoin = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Dogecoin],
-        addressFormat: "^[DA9][1-9A-HJ-NP-Za-km-z]{33}$",
-        dust: "100000000",
-        defaultDecimals: 8
-    });
-    CoinType.Ethereum = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Ethereum],
-        addressFormat: "^(0x)?[0-9a-fA-F]{40}$",
-        dust: 1,
-        defaultDecimals: 18
-    });
-    CoinType.Dash = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Dash],
-        addressFormat: "^X[a-km-zA-HJ-NP-Z1-9]{25,34}$",
-        dust: CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
-        defaultDecimals: 8
-    });
-    CoinType.BitcoinCash = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.BitcoinCash],
-        addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
-        dust: CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
-        defaultDecimals: 8
-    });
-    CoinType.Aragon = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Aragon],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.Augur = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Augur],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.BAT = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.BAT],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.Civic = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Civic],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.district0x = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.district0x],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.FunFair = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.FunFair],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.Gnosis = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Gnosis],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.Golem = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Golem],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.OmiseGo = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.OmiseGo],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
-    CoinType.Salt = new CoinType({
-        name: coin_name_1.CoinName[coin_name_1.CoinName.Salt],
-        addressFormat: CoinType.Ethereum.addessFormat,
-        dust: 1,
-    });
+    CoinType.config = [{
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Bitcoin],
+            addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+            dust: CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
+            defaultDecimals: 8
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Litecoin],
+            addressFormat: "^[L3][a-km-zA-HJ-NP-Z1-9]{26,33}$",
+            dust: CoinType.newDustCalculation(LITECOIN_DUST_RELAY_FEE),
+            defaultDecimals: 8
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Dogecoin],
+            addressFormat: "^[DA9][1-9A-HJ-NP-Za-km-z]{33}$",
+            dust: "100000000",
+            defaultDecimals: 8
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Ethereum],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Dash],
+            addressFormat: "^X[a-km-zA-HJ-NP-Z1-9]{25,34}$",
+            dust: CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
+            defaultDecimals: 8
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.BitcoinCash],
+            addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+            dust: CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
+            defaultDecimals: 8
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Aragon],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Augur],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.BAT],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Civic],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 8
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.district0x],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.FunFair],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 8
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Gnosis],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Golem],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.OmiseGo],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 18
+        }, {
+            name: coin_name_1.CoinName[coin_name_1.CoinName.Salt],
+            addressFormat: ETHEREUM_ADDRESS_FORMAT,
+            dust: 1,
+            defaultDecimals: 8
+        }];
     return CoinType;
 }());
 exports.CoinType = CoinType;

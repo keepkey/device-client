@@ -21,6 +21,8 @@ const BITCOIN_DUST_RELAY_FEE = 3000; // From bitcoin source code
 const LITECOIN_DUST_RELAY_FEE = 100000; // https://github.com/litecoin-project/litecoin/blob/master/src/policy/policy.h#L48
 const DASH_MIN_RELAY_TX_FEE = 10000; // https://github.com/dashpay/dash/blob/master/src/wallet/wallet.h#L57
 
+const ETHEREUM_ADDRESS_FORMAT = "^(0x)?[0-9a-fA-F]{40}$";
+
 export class CoinType {
   private static instances: Array<CoinType> = [];
 
@@ -47,6 +49,31 @@ export class CoinType {
 
   public static getList(): Array<CoinType> {
     return CoinType.instances;
+  }
+
+  public static fromFeatureCoin(coin: IFeatureCoin) {
+    let config: CoinTypeConfiguration = _.find(CoinType.config, {name: coin.coin_name});
+    if (config) {
+      let instance = new CoinType(config);
+
+      instance.isToken = false;
+      instance.symbol = coin.coin_shortcut;
+      instance.decimals = coin.decimals || config.defaultDecimals || 0;
+      instance.coinTypeCode = (coin.bip44_account_path < 0x80000000) ?
+        '' + coin.bip44_account_path : '' + (coin.bip44_account_path - 0x80000000) + '\'';
+      instance.amountParameters = {
+        DECIMAL_PLACES: instance.decimals,
+        EXPONENTIAL_AT: [-(instance.decimals + 1), instance.decimals + 1]
+      };
+      if (!!coin.contract_address) {
+        // it is an ERC20 token
+        instance.isToken = true;
+        instance.contractAddressString = "0x"+coin.contract_address.toHex();
+        instance.gasLimitFromBuffer = coin.gas_limit;
+      }
+
+      return instance;
+    }
   }
 
   // expose configuration values
@@ -127,24 +154,6 @@ export class CoinType {
     return other instanceof CoinType && this.name === other.name;
   }
 
-  public decorateWithFeatureCoin(coin: IFeatureCoin) {
-    this.isToken = false;
-    this.symbol = coin.coin_shortcut;
-    this.decimals = coin.decimals || this.configuration.defaultDecimals || 0;
-    this.coinTypeCode = (coin.bip44_account_path < 0x80000000) ?
-      '' + coin.bip44_account_path : '' + (coin.bip44_account_path - 0x80000000) + '\'';
-    this.amountParameters = {
-      DECIMAL_PLACES: this.decimals,
-      EXPONENTIAL_AT: [-(this.decimals + 1), this.decimals + 1]
-    };
-    if (!!coin.contract_address) {
-      // it is an ERC20 token
-      this.isToken = true;
-      this.contractAddressString = "0x"+coin.contract_address.toHex();
-      this.gasLimitFromBuffer = coin.gas_limit;
-    }
-  }
-
   public toFeatureCoinMetadata() {
     return {
       addressFormat: this.addessFormat,
@@ -161,7 +170,7 @@ export class CoinType {
     }
   }
 
-  constructor(public configuration: CoinTypeConfiguration) {
+  private constructor(public configuration: CoinTypeConfiguration) {
     CoinType.instances.push(this);
   }
 
@@ -180,91 +189,86 @@ export class CoinType {
   }
 
   // Create all instances
-  public static Bitcoin = new CoinType({
+  private static config: Array<CoinTypeConfiguration> = [{
     name            : CoinName[CoinName.Bitcoin],
     addressFormat   : "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
-  });
-  public static Litecoin = new CoinType({
+  }, {
     name            : CoinName[CoinName.Litecoin],
     addressFormat   : "^[L3][a-km-zA-HJ-NP-Z1-9]{26,33}$",
     dust            : CoinType.newDustCalculation(LITECOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
-  });
-  public static Dogecoin = new CoinType({
+  }, {
     name            : CoinName[CoinName.Dogecoin],
     addressFormat   : "^[DA9][1-9A-HJ-NP-Za-km-z]{33}$",
     dust            : "100000000",
     defaultDecimals : 8
-  });
-  public static Ethereum = new CoinType({
+  }, {
     name            : CoinName[CoinName.Ethereum],
-    addressFormat   : "^(0x)?[0-9a-fA-F]{40}$",
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
-  });
-  public static Dash = new CoinType({
+  }, {
     name            : CoinName[CoinName.Dash],
     addressFormat   : "^X[a-km-zA-HJ-NP-Z1-9]{25,34}$", //TODO
     dust            : CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
     defaultDecimals : 8
-  });
-  public static BitcoinCash = new CoinType({
+  }, {
     name            : CoinName[CoinName.BitcoinCash],
     addressFormat   : "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
-  });
-  public static Aragon = new CoinType({
+  }, {
     name            : CoinName[CoinName.Aragon],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static Augur = new CoinType({
+    defaultDecimals : 18
+  }, {
     name            : CoinName[CoinName.Augur],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static BAT = new CoinType({
+    defaultDecimals : 18
+  }, {
     name            : CoinName[CoinName.BAT],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static Civic = new CoinType({
+    defaultDecimals : 18
+  }, {
     name            : CoinName[CoinName.Civic],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static district0x = new CoinType({
+    defaultDecimals : 8
+  }, {
     name            : CoinName[CoinName.district0x],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static FunFair = new CoinType({
+    defaultDecimals : 18
+  }, {
     name            : CoinName[CoinName.FunFair],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static Gnosis = new CoinType({
+    defaultDecimals : 8
+  }, {
     name            : CoinName[CoinName.Gnosis],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static Golem = new CoinType({
+    defaultDecimals : 18
+  }, {
     name            : CoinName[CoinName.Golem],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static OmiseGo = new CoinType({
+    defaultDecimals : 18
+  }, {
     name            : CoinName[CoinName.OmiseGo],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
-  public static Salt = new CoinType({
+    defaultDecimals : 18
+  }, {
     name            : CoinName[CoinName.Salt],
-    addressFormat   : CoinType.Ethereum.addessFormat,
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-  });
+    defaultDecimals : 8
+  }];
 }
 
