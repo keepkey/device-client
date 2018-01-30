@@ -29,7 +29,7 @@ export interface IFeatureCoin {
   bip44_account_path: number;
   forkid: number;
   decimals: number;
-  contract_address: string;
+  contract_address: ByteBuffer;
   gas_limit: ByteBuffer;
 }
 

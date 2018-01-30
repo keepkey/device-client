@@ -328,7 +328,7 @@
                 },
                 {
                     "rule": "optional",
-                    "type": "string",
+                    "type": "bytes",
                     "name": "contract_address",
                     "id": 14
                 },

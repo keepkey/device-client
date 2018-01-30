@@ -8,6 +8,7 @@ export interface CoinTypeConfiguration {
     name: string;
     addressFormat: string;
     dust: number | string;
+    defaultDecimals?: number;
 }
 export declare class CoinType {
     configuration: CoinTypeConfiguration;
