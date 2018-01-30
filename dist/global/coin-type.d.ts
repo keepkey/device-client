@@ -19,6 +19,7 @@ export declare class CoinType {
     static getByName(name: string): CoinType;
     static getBySymbol(symbol: string): CoinType;
     static getList(): Array<CoinType>;
+    static fromFeatureCoin(coin: IFeatureCoin): CoinType;
     readonly name: string;
     readonly addessFormat: string;
     private _dust;
@@ -41,7 +42,6 @@ export declare class CoinType {
     amountToFloat(amount: Long | string): BigNumber;
     floatToAmount(amount: number | BigNumber | string): BigNumber;
     equals(other: any): boolean;
-    decorateWithFeatureCoin(coin: IFeatureCoin): void;
     toFeatureCoinMetadata(): {
         addressFormat: string;
         amountParameters: {
@@ -55,23 +55,8 @@ export declare class CoinType {
         name: string;
         isToken: boolean;
     };
-    constructor(configuration: CoinTypeConfiguration);
+    private constructor();
     private number2Big(n);
     private fromBuffer(buffer);
-    static Bitcoin: CoinType;
-    static Litecoin: CoinType;
-    static Dogecoin: CoinType;
-    static Ethereum: CoinType;
-    static Dash: CoinType;
-    static BitcoinCash: CoinType;
-    static Aragon: CoinType;
-    static Augur: CoinType;
-    static BAT: CoinType;
-    static Civic: CoinType;
-    static district0x: CoinType;
-    static FunFair: CoinType;
-    static Gnosis: CoinType;
-    static Golem: CoinType;
-    static OmiseGo: CoinType;
-    static Salt: CoinType;
+    private static config;
 }

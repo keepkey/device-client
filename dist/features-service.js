@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var features_1 = require("./global/features");
 var coin_type_1 = require("./global/coin-type");
-var coin_name_1 = require("./global/coin-name");
 var FeaturesService = (function () {
     function FeaturesService() {
     }
@@ -45,10 +44,7 @@ var FeaturesService = (function () {
     };
     FeaturesService.prototype.addFeatureDataToCoinType = function (coins) {
         coins.forEach(function (coin) {
-            var coinTypeCoin = coin_type_1.CoinType.get(coin_name_1.CoinName[coin.coin_name]);
-            if (coinTypeCoin) {
-                coinTypeCoin.decorateWithFeatureCoin(coin);
-            }
+            coin_type_1.CoinType.fromFeatureCoin(coin);
         });
     };
     Object.defineProperty(FeaturesService.prototype, "promise", {
