@@ -328,7 +328,7 @@ module.exports = require("protobufjs").newBuilder({})['import']({
                 },
                 {
                     "rule": "optional",
-                    "type": "string",
+                    "type": "bytes",
                     "name": "contract_address",
                     "id": 14
                 },

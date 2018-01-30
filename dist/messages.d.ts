@@ -341,9 +341,9 @@ declare module DeviceMessages {
 		decimals?: number;
 		getDecimals() : number;
 		setDecimals(decimals : number): void;
-		contract_address?: string;
-		getContractAddress() : string;
-		setContractAddress(contractAddress : string): void;
+		contract_address?: ByteBuffer;
+		getContractAddress() : ByteBuffer;
+		setContractAddress(contractAddress : ByteBuffer): void;
 		gas_limit?: ByteBuffer;
 		getGasLimit() : ByteBuffer;
 		setGasLimit(gasLimit : ByteBuffer): void;
