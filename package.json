@@ -45,7 +45,7 @@
     "bytebuffer": "^5.0.1",
     "concat-stream": "^1.6.0",
     "events": "^1.1.1",
-    "lodash": "^4.17.4",
+    "lodash": "4.17.2",
     "protobufjs": "^5.0",
     "through2": "^2.0.3",
     "bitcore-lib": "keepkey/bitcore-lib.git"
