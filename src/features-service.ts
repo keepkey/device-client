@@ -1,7 +1,6 @@
 import * as _ from "lodash";
 import {Features, IFeatureCoin, IFeatures} from "./global/features";
 import {CoinType} from "./global/coin-type";
-import {CoinName} from "./global/coin-name";
 
 export class FeaturesService {
   private static firmwareFileMetaData: FirmwareFileMetadata = require('../dist/keepkey_main.json');
@@ -69,5 +68,6 @@ export class FeaturesService {
   public clear() {
     this._promise = undefined;
     this.resolver = undefined;
+    CoinType.clearList();
   }
 }

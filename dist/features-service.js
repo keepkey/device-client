@@ -64,6 +64,7 @@ var FeaturesService = (function () {
     FeaturesService.prototype.clear = function () {
         this._promise = undefined;
         this.resolver = undefined;
+        coin_type_1.CoinType.clearList();
     };
     FeaturesService.firmwareFileMetaData = require('../dist/keepkey_main.json');
     FeaturesService.deviceProfiles = require('../dist/device-profiles.json');

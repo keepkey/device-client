@@ -13,7 +13,6 @@ var ETHEREUM_ADDRESS_FORMAT = "^(0x)?[0-9a-fA-F]{40}$";
 var CoinType = (function () {
     function CoinType(configuration) {
         this.configuration = configuration;
-        CoinType.instances.push(this);
     }
     CoinType.newDustCalculation = function (dustRelayFee) {
         return new bignumber_js_1.BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, bignumber_js_1.BigNumber.ROUND_UP).toString();
@@ -34,9 +33,12 @@ var CoinType = (function () {
     CoinType.getList = function () {
         return CoinType.instances;
     };
+    CoinType.clearList = function () {
+        CoinType.instances.length = 0;
+    };
     CoinType.fromFeatureCoin = function (coin) {
         var config = _.find(CoinType.config, { name: coin.coin_name });
-        if (config) {
+        if (config && !CoinType.get(coin_name_1.CoinName[coin.coin_name])) {
             var instance = new CoinType(config);
             instance.isToken = false;
             instance.symbol = coin.coin_shortcut;
@@ -52,6 +54,7 @@ var CoinType = (function () {
                 instance.contractAddressString = "0x" + coin.contract_address.toHex();
                 instance.gasLimitFromBuffer = coin.gas_limit;
             }
+            CoinType.instances.push(instance);
             return instance;
         }
     };
