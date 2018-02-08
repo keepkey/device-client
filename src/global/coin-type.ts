@@ -51,9 +51,13 @@ export class CoinType {
     return CoinType.instances;
   }
 
+  public static clearList() {
+    CoinType.instances.length = 0;
+  }
+
   public static fromFeatureCoin(coin: IFeatureCoin) {
     let config: CoinTypeConfiguration = _.find(CoinType.config, {name: coin.coin_name});
-    if (config) {
+    if (config && !CoinType.get(CoinName[coin.coin_name])) {
       let instance = new CoinType(config);
 
       instance.isToken = false;
@@ -71,6 +75,8 @@ export class CoinType {
         instance.contractAddressString = "0x"+coin.contract_address.toHex();
         instance.gasLimitFromBuffer = coin.gas_limit;
       }
+
+      CoinType.instances.push(instance);
 
       return instance;
     }
@@ -170,9 +176,7 @@ export class CoinType {
     }
   }
 
-  private constructor(public configuration: CoinTypeConfiguration) {
-    CoinType.instances.push(this);
-  }
+  private constructor(public configuration: CoinTypeConfiguration) {}
 
   private number2Big(n: ByteBuffer | Long | number | string | BigNumber): BigNumber {
     if (n instanceof ByteBuffer) {

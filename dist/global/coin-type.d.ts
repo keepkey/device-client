@@ -19,6 +19,7 @@ export declare class CoinType {
     static getByName(name: string): CoinType;
     static getBySymbol(symbol: string): CoinType;
     static getList(): Array<CoinType>;
+    static clearList(): void;
     static fromFeatureCoin(coin: IFeatureCoin): CoinType;
     readonly name: string;
     readonly addessFormat: string;
