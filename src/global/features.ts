@@ -50,6 +50,7 @@ export interface IFeatures {
   coin_metadata: Array<CoinTypeConfiguration>;
   deviceCapabilities: DeviceCapabilities;
   model: string;
+  version: string;
 }
 
 export class Features {
