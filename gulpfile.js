@@ -1,7 +1,7 @@
 /**
  * @license
  * Copyright 2017 KeepKey, LLC.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -41,7 +41,7 @@ const paths = {
   deviceProfiles: 'device-profiles/*.hjson',
   messagesJs: 'dist/messages.js',
   messagesJson: 'dist/messages.json',
-  firmware: 'misc/keepkey_main.bin',
+  firmware: 'misc/*.bin',
   typescriptSources: [
     'src/**/*.ts', '!src/**/*.spec.ts'
   ],
@@ -75,6 +75,22 @@ gulp.task('bumpMajor', function () {
     .pipe(gulp.dest('./'));
 });
 
+function extractString(file, cursor) {
+  var nextChar, str = '';
+  nextChar = file.contents.slice(cursor++, cursor).toString();
+
+  var max = 20;
+  while (nextChar.charCodeAt(0) && max--) {
+    str += nextChar;
+    nextChar = file.contents.slice(cursor++, cursor).toString();
+  }
+
+  if (max < 0) {
+    throw 'version string is too long';
+  }
+  return str;
+}
+
 function fileMetaData2Json() {
   return through.obj(function (file, enc, callback) {
     if (file.isStream()) {
@@ -83,24 +99,17 @@ function fileMetaData2Json() {
     }
 
     if (file.isBuffer()) {
+      var modelNumberLocation = file.contents.indexOf('K1-14');
+      if (modelNumberLocation === -1) {
+        throw 'model number prefix not found in firmware file';
+      }
+      let modelNumber = extractString(file, modelNumberLocation);
+
       var versionMarkerLocation = file.contents.indexOf('VERSION');
       if (versionMarkerLocation === -1) {
         throw 'Firmware file needs a version tag';
       }
-
-      var cursor = versionMarkerLocation + 7;
-      var nextChar, firmwareVersion = '';
-      nextChar = file.contents.slice(cursor++, cursor).toString();
-
-      var max = 20;
-      while (nextChar.charCodeAt(0) && max--) {
-        firmwareVersion += nextChar;
-        nextChar = file.contents.slice(cursor++, cursor).toString();
-      }
-
-      if (max < 0) {
-        throw 'version string is too long';
-      }
+      var firmwareVersion = extractString(file, versionMarkerLocation + 7);
 
       var fileHash = crypto.createHash('sha256');
       fileHash.update(file.contents);
@@ -114,7 +123,8 @@ function fileMetaData2Json() {
         trezorDigest: fileHashTrezor.digest('hex'),
         size: file.stat.size,
         timeStamp: file.stat.mtime,
-        version: firmwareVersion
+        version: firmwareVersion,
+        modelNumber: modelNumber
       };
 
       file.path = gutil.replaceExtension(file.path, '.json');
@@ -129,6 +139,9 @@ function fileMetaData2Json() {
 gulp.task('extractMetadataFromFirmware', function () {
   return gulp.src(paths.firmware)
     .pipe(fileMetaData2Json())
+    .pipe(jsoncombine('firmware.json', function (files) {
+      return new Buffer(JSON.stringify(_.values(files)));
+    }))
     .pipe(gulp.dest(paths.distDirectory));
 });
 
