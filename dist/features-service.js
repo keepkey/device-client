@@ -21,9 +21,8 @@ var FeaturesService = (function () {
     FeaturesService.prototype.setValue = function (features) {
         features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
         features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
-        features.coin_metadata = _.intersectionWith(coin_type_1.CoinType.getList(), features.coins, function (metadata, deviceCoin) {
-            return metadata.name === deviceCoin.coin_name;
-        });
+        this.addFeatureDataToCoinType(features.coins);
+        features.coin_metadata = coin_type_1.CoinType.getList().map(function (coin) { return coin.toFeatureCoinMetadata(); });
         if (!this._promise || !this.resolver) {
             if (features.deviceCapabilities) {
                 this._promise = Promise.resolve(new features_1.Features(features));
@@ -43,6 +42,11 @@ var FeaturesService = (function () {
             this.rejector = undefined;
         }
     };
+    FeaturesService.prototype.addFeatureDataToCoinType = function (coins) {
+        coins.forEach(function (coin) {
+            coin_type_1.CoinType.fromFeatureCoin(coin);
+        });
+    };
     Object.defineProperty(FeaturesService.prototype, "promise", {
         get: function () {
             var _this = this;
@@ -60,6 +64,7 @@ var FeaturesService = (function () {
     FeaturesService.prototype.clear = function () {
         this._promise = undefined;
         this.resolver = undefined;
+        coin_type_1.CoinType.clearList();
     };
     FeaturesService.firmwareFileMetaData = require('../dist/keepkey_main.json');
     FeaturesService.deviceProfiles = require('../dist/device-profiles.json');

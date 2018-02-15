@@ -1,3 +1,5 @@
+/// <reference types="bytebuffer" />
+import * as ByteBuffer from "bytebuffer";
 import { DevicePolicyEnum } from "./device-policy-enum";
 import { CoinName } from "./coin-name";
 import { CoinTypeConfiguration } from "./coin-type";
@@ -21,6 +23,10 @@ export interface IFeatureCoin {
     address_type_p2wsh: number;
     signed_message_header: string;
     bip44_account_path: number;
+    forkid: number;
+    decimals: number;
+    contract_address: ByteBuffer;
+    gas_limit: ByteBuffer;
 }
 export interface IFeatures {
     available_firmware_version: string;
@@ -58,6 +64,7 @@ export declare class Features {
     supportsPolicy(policy: DevicePolicyEnum): boolean;
     policyEnabled(policy: DevicePolicyEnum): boolean;
     supportsCoinType(coin: CoinName): boolean;
+    getTokenList(): Array<IFeatureCoin>;
     readonly model: string;
     private findPolicy(policy);
 }

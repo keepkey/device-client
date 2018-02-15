@@ -7,6 +7,7 @@ export declare class FeaturesService {
     private rejector;
     private _promise;
     setValue(features: IFeatures): void;
+    private addFeatureDataToCoinType(coins);
     readonly promise: Promise<Features>;
     clear(): void;
 }
