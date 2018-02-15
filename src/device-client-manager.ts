@@ -23,12 +23,11 @@
  */
 
 import * as _ from 'lodash';
-import {DeviceClient} from "./device-client";
+import {DeviceClient, FirmwareStreamFactory} from "./device-client";
 import {Transport} from "./transport";
 import {DeviceMessageHelper} from "./device-message-helper";
 import {EventEmitter} from "events";
 import {HidHelper} from "./hid-helper";
-import {Readable} from "stream";
 
 const RECOGNIZED_DEVICES: Array<any> = [
   {
@@ -71,12 +70,12 @@ export class DeviceClientManager extends EventEmitter {
     this._hidHelper = helper;
   }
 
-  private _rawFirmwareStreamFactory: () => Readable;
-  public get rawFirmwareStreamFactory(): () => Readable {
+  private _rawFirmwareStreamFactory: FirmwareStreamFactory;
+  public get rawFirmwareStreamFactory(): FirmwareStreamFactory {
     return this._rawFirmwareStreamFactory;
   }
 
-  public set rawFirmwareStreamFactory(streamFactory: () => Readable) {
+  public set rawFirmwareStreamFactory(streamFactory: FirmwareStreamFactory) {
     this._rawFirmwareStreamFactory = streamFactory;
   }
 
