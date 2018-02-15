@@ -14,16 +14,22 @@ export class FirmwareUploadAction {
   private static payload: ArrayBuffer;
 
   public static operation(client: DeviceClient): Promise<void> {
+    let modelNumber: string;
     if (!client.rawFirmwareStreamFactory) {
       throw 'firmware stream factory required to upload firmware';
     }
     FirmwareUploadAction.client = client;
     console.log('starting firmware upload');
     return client.featuresService.promise
+      .then((features) => {
+        console.assert(features.model, "Device model number not available from the device feature object");
+        modelNumber = features.model;
+        return features;
+      })
       .then<string>(FirmwareUploadAction.checkDeviceInBootloaderMode)
       .then<void>((): Promise<void> => {
         return new Promise<void>((resolve, reject) => {
-          client.rawFirmwareStreamFactory()
+          client.rawFirmwareStreamFactory(modelNumber)
             .on('error', (err: Error) => {
               console.error(err);
               reject(err);
