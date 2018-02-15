@@ -171,7 +171,9 @@ export class CoinType {
   }
 
   private constructor(public configuration: CoinTypeConfiguration) {
-    CoinType.instances.push(this);
+    if (CoinType.instances.indexOf(this) === -1){
+      CoinType.instances.push(this);
+    }
   }
 
   private number2Big(n: ByteBuffer | Long | number | string | BigNumber): BigNumber {
