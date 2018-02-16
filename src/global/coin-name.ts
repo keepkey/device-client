@@ -19,5 +19,5 @@ export enum CoinName {
   Golem = 608,
   Gnosis = 609,
   OmiseGo = 610,
-  Salt = 611
+  SALT = 611
 }

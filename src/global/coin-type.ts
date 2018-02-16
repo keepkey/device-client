@@ -269,7 +269,7 @@ export class CoinType {
     dust            : 1,
     defaultDecimals : 18
   }, {
-    name            : CoinName[CoinName.Salt],
+    name            : CoinName[CoinName.SALT],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 8
