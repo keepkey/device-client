@@ -85,5 +85,6 @@ export class FeaturesService {
   public clear() {
     this._promise = undefined;
     this.resolver = undefined;
+    CoinType.clearList();
   }
 }
