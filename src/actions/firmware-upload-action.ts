@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import ByteBuffer = require('bytebuffer');
 import {DeviceClient} from "../device-client";
 import {DeviceMessageHelper} from "../device-message-helper";
@@ -7,8 +8,10 @@ import {Features} from "../global/features";
 import * as Bitcore from "bitcore-lib";
 import concat = require("concat-stream");
 
+const FIRMWARE_METADATA_FILE: Array<FirmwareFileMetadata> = require('../../dist/firmware.json');
+
 export class FirmwareUploadAction {
-  private static firmwareFileMetaData: FirmwareFileMetadata = require('../../dist/keepkey_main.json');
+  private static firmwareFileMetaData: FirmwareFileMetadata;
 
   private static client: DeviceClient;
   private static payload: ArrayBuffer;
@@ -24,6 +27,8 @@ export class FirmwareUploadAction {
       .then((features) => {
         console.assert(features.model, "Device model number not available from the device feature object");
         modelNumber = features.model;
+        FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {modelNumber: modelNumber});
+        console.assert(FirmwareUploadAction.firmwareFileMetaData, `Firmware metadata not found for ${modelNumber}`);
         return features;
       })
       .then<string>(FirmwareUploadAction.checkDeviceInBootloaderMode)
