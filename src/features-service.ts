@@ -2,8 +2,9 @@ import * as _ from "lodash";
 import {Features, IFeatureCoin, IFeatures} from "./global/features";
 import {CoinType} from "./global/coin-type";
 
+const FIRMWARE_METADATA_FILE: Array<FirmwareFileMetadata> = require('../dist/firmware.json');
+
 export class FeaturesService {
-  private static firmwareFileMetaData: FirmwareFileMetadata = require('../dist/keepkey_main.json');
   private static deviceProfiles = require('../dist/device-profiles.json');
 
   private static getDeviceCapabilities(features: any): any {
@@ -24,7 +25,6 @@ export class FeaturesService {
   private _promise: Promise<Features>;
 
   public setValue(features: IFeatures): void {
-    features.available_firmware_version = FeaturesService.firmwareFileMetaData.version;
     features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
 
     this.addFeatureDataToCoinType(features.coins);
@@ -47,6 +47,12 @@ export class FeaturesService {
           break;
       }
     }
+
+    if (!features.model) {
+      features.model = 'K1-14AM';
+    }
+
+    features.available_firmware_version = _.find(FIRMWARE_METADATA_FILE, {modelNumber: features.model}).version;
 
     if (!this._promise || !this.resolver) {
       if (features.deviceCapabilities) {
