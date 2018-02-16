@@ -36,6 +36,8 @@ import {Readable} from "stream";
 
 export const KEEPKEY = 'KEEPKEY';
 
+export type FirmwareStreamFactory = (model: string) => Readable
+
 export interface BasicClient {
   featuresService: FeaturesService;
   writeToDevice: (message) => Promise<any>;
@@ -106,7 +108,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
     this.pollDevice();
   }, 0);
 
-  constructor(public transport: Transport, public rawFirmwareStreamFactory?: () => Readable) {
+  constructor(public transport: Transport, public rawFirmwareStreamFactory?: FirmwareStreamFactory) {
     super();
     this.addMessageHandler(ButtonRequestMessageHandler);
     this.addMessageHandler(EntropyRequestMessageHandler);

@@ -31,6 +31,22 @@ export class FeaturesService {
 
     //TODO There should be on canonical coin list that comes from the device
     features.coin_metadata = CoinType.getList().map((coin:CoinType) => coin.toFeatureCoinMetadata());
+    features.version = `v${features.major_version}.${features.minor_version}.${features.patch_version}`;
+
+    if (features.bootloader_mode) {
+      // Override the version number for older devices that don't have a model number specified
+      switch (features.version) {
+        case 'v1.0.0':
+        case 'v1.0.1':
+        case 'v1.0.2':
+        case 'v1.0.3':
+          features.model = 'K1-14AM';
+          break;
+        case 'v1.0.4':
+          features.model = 'K1-14WL-S';
+          break;
+      }
+    }
 
     if (!this._promise || !this.resolver) {
       if (features.deviceCapabilities) {
