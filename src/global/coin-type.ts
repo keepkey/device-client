@@ -67,7 +67,7 @@ export class CoinType {
         '' + coin.bip44_account_path : '' + (coin.bip44_account_path - 0x80000000) + '\'';
       instance.amountParameters = {
         DECIMAL_PLACES: instance.decimals,
-        EXPONENTIAL_AT: [-(instance.decimals + 1), instance.decimals + 1]
+        EXPONENTIAL_AT: [-(instance.decimals + 1), 40]
       };
       if (!!coin.contract_address) {
         // it is an ERC20 token
@@ -165,7 +165,7 @@ export class CoinType {
       addressFormat: this.addessFormat,
       amountParameters: {
         DECIMAL_PLACES: this.decimals + 1,
-        EXPONENTIAL_AT: [ -(this.decimals + 1), this.decimals + 1]
+        EXPONENTIAL_AT: [ -(this.decimals + 1), 40]
       },
       coinTypeCode: this.coinTypeCode,
       currencySymbol: this.symbol,
