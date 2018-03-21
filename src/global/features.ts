@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import {DevicePolicyEnum} from "./device-policy-enum";
 import {CoinName} from "./coin-name";
 import {CoinTypeConfiguration} from "./coin-type";
+import * as ByteBuffer from "bytebuffer";
 
 export interface DeviceCapabilities {
   firmwareImageAvailable: boolean;
@@ -30,7 +31,7 @@ export interface IFeatureCoin {
 
 export interface IFeatures {
   available_firmware_version: string;
-  bootloader_hash: string;
+  bootloader_hash: ByteBuffer;
   bootloader_mode: any;
   coins: Array<IFeatureCoin>;
   device_id: string;
