@@ -69,7 +69,7 @@ export class FeaturesService {
     if (!this._promise || !this.resolver) {
       if (isUnofficialBootloader) {
         this._promise = Promise.reject<Features>(
-          `Unoffical bootloader detected. Please contact support. (${bootloaderHash})`);
+          `Unofficial bootloader detected. Please contact support. (${bootloaderHash})`);
       } else if (features.deviceCapabilities) {
         this._promise = Promise.resolve(new Features(features));
       } else {
@@ -78,7 +78,7 @@ export class FeaturesService {
     } else {
       if (isUnofficialBootloader) {
         this.rejector(
-          `Unoffical bootloader detected. Please contact support. (${bootloaderHash})`);
+          `Unofficial bootloader detected. Please contact support. (${bootloaderHash})`);
       } else if (features.deviceCapabilities) {
         this.resolver(new Features(features));
       } else {
