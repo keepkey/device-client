@@ -35,7 +35,7 @@ export interface IFeatureCoin {
 
 export interface IFeatures {
   available_firmware_version: string;
-  bootloader_hash: string;
+  bootloader_hash: ByteBuffer;
   bootloader_mode: any;
   coins: Array<IFeatureCoin>;
   device_id: string;

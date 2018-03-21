@@ -3,6 +3,12 @@ import {Features, IFeatureCoin, IFeatures} from "./global/features";
 import {CoinType} from "./global/coin-type";
 
 const FIRMWARE_METADATA_FILE: Array<FirmwareFileMetadata> = require('../dist/firmware.json');
+const OFFICIAL_BOOTLOADER_HASHES = [
+  '6397c446f6b9002a8b150bf4b9b4e0bb66800ed099b881ca49700139b0559f10', // v1.0.0
+  'd544b5e06b0c355d68b868ac7580e9bab2d224a1e2440881cc1bca2b816752d5', // v1.0.1
+  'cb222548a39ff6cbe2ae2f02c8d431c9ae0df850f814444911f521b95ab02f4c', // v1.0.3
+  '770b30aaa0be884ee8621859f5d055437f894a5c9c7ca22635e7024e059857b7'  // v1.0.4
+];
 
 export class FeaturesService {
   private static deviceProfiles = require('../dist/device-profiles.json');
@@ -54,14 +60,22 @@ export class FeaturesService {
 
     features.available_firmware_version = _.find(FIRMWARE_METADATA_FILE, {modelNumber: features.model}).version;
 
+    let bootloaderHash: string = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
+    let isUnofficialBootloader = !features.bootloader_mode && !_.includes(OFFICIAL_BOOTLOADER_HASHES, bootloaderHash);
     if (!this._promise || !this.resolver) {
-      if (features.deviceCapabilities) {
+      if (isUnofficialBootloader) {
+        this._promise = Promise.reject<Features>(
+          `Unoffical bootloader detected. Please contact support. (${bootloaderHash})`);
+      } else if (features.deviceCapabilities) {
         this._promise = Promise.resolve(new Features(features));
       } else {
         this._promise = Promise.reject<Features>('Unknown device or version');
       }
     } else {
-      if (features.deviceCapabilities) {
+      if (isUnofficialBootloader) {
+        this.rejector(
+          `Unoffical bootloader detected. Please contact support. (${bootloaderHash})`);
+      } else if (features.deviceCapabilities) {
         this.resolver(new Features(features));
       } else {
         this.rejector('Unknown device or version');
