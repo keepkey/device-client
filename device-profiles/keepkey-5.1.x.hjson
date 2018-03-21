@@ -2,6 +2,7 @@
   identity: {
     vendor: keepkey.com
     major_version: 5
+    minor_version: 1
     bootloader_mode: null
   }
   capabilities: {
