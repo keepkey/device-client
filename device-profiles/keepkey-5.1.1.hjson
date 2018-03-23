@@ -1,9 +1,9 @@
 {
   identity: {
     vendor: keepkey.com
-    major_version: 4
-    minor_version: 0
-    patch_version: 3
+    major_version: 5
+    minor_version: 1
+    patch_version: 1
     bootloader_mode: null
   }
   capabilities: {
@@ -14,5 +14,6 @@
     supportsSecureAccountTransfer: true
     usesProtectCallButtonRequests: false
     usesShapeshiftResponseV2: true
+    upgradeSkipable: true
   }
 }
