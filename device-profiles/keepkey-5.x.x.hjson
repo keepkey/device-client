@@ -1,8 +1,7 @@
 {
   identity: {
     vendor: keepkey.com
-    major_version: 1
-    minor_version: 0
+    major_version: 5
     bootloader_mode: null
   }
   capabilities: {
@@ -10,7 +9,8 @@
     firmwareImageAvailable: true
     defaultMnemonicSeedLength: 12
     supportsCipheredKeyRecovery: true
-    supportsSecureAccountTransfer: false
-    usesProtectCallButtonRequests: true
+    supportsSecureAccountTransfer: true
+    usesProtectCallButtonRequests: false
+    usesShapeshiftResponseV2: true
   }
 }
