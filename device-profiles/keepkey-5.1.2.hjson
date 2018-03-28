@@ -3,7 +3,7 @@
     vendor: keepkey.com
     major_version: 5
     minor_version: 1
-    patch_version: 1
+    patch_version: 2
     bootloader_mode: null
   }
   capabilities: {
