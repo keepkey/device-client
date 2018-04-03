@@ -4,12 +4,17 @@ import * as Bitcore from "bitcore-lib";
 import ByteBuffer = require('bytebuffer');
 import {DeviceMessageHelper} from "../device-message-helper";
 import FlashWrite = DeviceMessages.FlashWrite;
+import FlashHash = DeviceMessages.FlashHash;
+import FlashHashResponse = DeviceMessages.FlashHashResponse;
 
 type SectorData = {
   start: number;
   end: number;
   buffer?: ByteBuffer;
 }
+
+const CHUNK_SIZE = 64;
+const CHALLENGE_SIZE = 32;
 
 export class VerifyFlashHash {
   private static sectors: Array<SectorData> = [
@@ -21,32 +26,73 @@ export class VerifyFlashHash {
     {start: 0x080E0000, end: 0x080FFFFF}
   ];
 
-  private static initializeSectorTable() {
-    VerifyFlashHash.sectors.forEach((sectorData: SectorData) => {
-      let length = sectorData.end - sectorData.start;
-      sectorData.buffer = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(length));
-    });
-  }
-
   public static operation(client: DeviceClient,
                           challenge?: ByteBuffer): Promise<any> {
     return client.featuresService.promise
       .then((features: Features) => {
-        VerifyFlashHash.initializeSectorTable();
-
         if (!challenge) {
-          challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(32));
+
+          challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
         }
 
+        let promise = Promise.resolve();
         VerifyFlashHash.sectors.forEach((sectorData: SectorData) => {
-          var message: FlashWrite = DeviceMessageHelper.factory('FlashWrite');
-          message.setAddress(sectorData.start);
-          message.setData(sectorData.buffer);
-          message.setErase(false);
+          let length = VerifyFlashHash.sectorLenth(sectorData);
+          sectorData.buffer = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(length));
+          promise = promise.then(() => VerifyFlashHash.writeSector(client, sectorData));
         });
+        return promise;
+      })
+      .then(() => {
+        VerifyFlashHash.sectors.forEach((sectorData: SectorData) =>
+          VerifyFlashHash.validateRWSector(client, sectorData, challenge));
       });
   }
+
+  private static writeSector(client: DeviceClient, sectorData: SectorData): Promise<any> {
+    let promise = Promise.resolve();
+
+    for (let pos = sectorData.start; pos += CHUNK_SIZE; pos >= sectorData.end) {
+      let message: FlashWrite = DeviceMessageHelper.factory('FlashWrite');
+
+      message.setAddress(pos);
+      message.setData(sectorData.buffer.readBytes(CHUNK_SIZE, pos));
+      message.setErase(false);
+
+      promise = promise.then(() => client.writeToDevice(message));
+    }
+    return promise;
+  }
+
+  private static validateRWSector(client: DeviceClient, sector: SectorData, challenge: ByteBuffer) {
+    let dataToHash: ByteBuffer = new ByteBuffer(CHALLENGE_SIZE + VerifyFlashHash.sectorLenth(sector));
+
+    console.assert(challenge.capacity() === CHALLENGE_SIZE, "Challenge buffer size is wrong");
+    console.assert(sector.buffer === VerifyFlashHash.sectorLenth(sector), "sector data buffer size is wrong");
+
+    dataToHash
+      .append(challenge)
+      .append(sector.buffer);
+
+    let expectedResponse = ByteBuffer.wrap(
+      Bitcore.crypto.Hash.sha256(dataToHash.toBuffer())).toHex();
+
+    let message: FlashHash = DeviceMessageHelper.factory('FlashHash');
+    message.setAddress(sector.start);
+    message.setChallenge(challenge);
+    message.setLength(VerifyFlashHash.sectorLenth(sector));
+
+    return client.writeToDevice(message)
+      .then((response: FlashHashResponse) => {
+        let actualResult = response.data.toHex();
+
+        if (actualResult !== expectedResponse) {
+          throw `Error: Flash hash mismatch for sector ${sector.start}`;
+        }
+      })
+  }
+
+  private static sectorLenth(sectorData) {
+    return sectorData.end - sectorData.start;
+  }
 }
-
-
-// for (i=0 to 63) buffer[i] = fromCharCode()
