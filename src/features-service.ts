@@ -16,8 +16,6 @@ const OFFICIAL_BOOTLOADER_HASHES = [
   '917d1952260c9b89f3a96bea07eea4074afdcc0e8cdd5d064e36868bdd68ba7d', // v1.0.3-patched
   '6465bc505586700a8111c4bf7db6f40af73e720f9e488d20db56135e5a690c4f', // v1.0.3v2
   'db4bc389335e876e942ae3b12558cecd202b745903e79b34dd2c32532708860e', // v1.0.3v2-patched
-  '2e38950143cf350345a6ddada4c0c4f21eb2ed337309f39c5dbc70b6c091ae00', // v1.0.3v3
-  '83d14cb6c7c48af2a83bc326353ee6b9abdd74cfe47ba567de1cb564da65e8e9', // v1.0.3v3-patched
   '770b30aaa0be884ee8621859f5d055437f894a5c9c7ca22635e7024e059857b7', // v1.0.4
   'fc4e5c4dc2e5127b6814a3f69424c936f1dc241d1daf2c5a2d8f0728eb69d20d', // v1.0.4-patched
 ];
@@ -48,21 +46,6 @@ export class FeaturesService {
       return metadata.name === deviceCoin.coin_name;
     });
     features.version = `v${features.major_version}.${features.minor_version}.${features.patch_version}`;
-
-    if (features.bootloader_mode) {
-      // Override the version number for older devices that don't have a model number specified
-      switch (features.version) {
-        case 'v1.0.0':
-        case 'v1.0.1':
-        case 'v1.0.2':
-        case 'v1.0.3':
-          features.model = 'K1-14AM';
-          break;
-        case 'v1.0.4':
-          features.model = 'K1-14WL-S';
-          break;
-      }
-    }
 
     if (!features.model) {
       features.model = 'K1-14AM';
