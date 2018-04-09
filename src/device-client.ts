@@ -88,7 +88,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
   public enablePolicy = <DeviceClientMethods.ApplyPolicyFunction>
     (_.partial(ApplyPolicyAction.operation, this, _, _));
   public verifyDevice = <DeviceClientMethods.VerifyDevice>
-    (_.partial(VerifyFlashHashAction, this));
+    (_.partial(VerifyFlashHashAction.operation, this, _));
   private _deviceMessenger: StatefulDeviceMessenger;
   public get deviceMessenger(): StatefulDeviceMessenger {
     if (!this._deviceMessenger) {

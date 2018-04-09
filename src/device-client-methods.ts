@@ -42,7 +42,7 @@ export type FirmwareUploadFunction = {
 }
 
 export type VerifyDevice = {
-  (): Promise<void>;
+  (callback: (message: any)=>void): Promise<void>;
 }
 
 export type RecoveryDeviceFunction = {
