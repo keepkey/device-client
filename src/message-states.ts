@@ -640,3 +640,28 @@ MessageStates.register({
   messageType: MessageDirection.request,
   userInteractionRequired: false
 });
+MessageStates.register({
+  messageName: "FlashWrite",
+  validMode: DeviceExecutionMode.running,
+  sender: MessageSender.host,
+  messageType: MessageDirection.request,
+  userInteractionRequired: false,
+  resolveMessage: "FlashHashResponse",
+  rejectMessage: "Failure"
+});
+MessageStates.register({
+  messageName: "FlashHash",
+  validMode: DeviceExecutionMode.running,
+  sender: MessageSender.host,
+  messageType: MessageDirection.request,
+  userInteractionRequired: false,
+  resolveMessage: "FlashHashResponse",
+  rejectMessage: "Failure"
+});
+MessageStates.register({
+  messageName: "FlashHashResponse",
+  validMode: DeviceExecutionMode.running,
+  sender: MessageSender.device,
+  messageType: MessageDirection.response,
+  userInteractionRequired: false
+});
