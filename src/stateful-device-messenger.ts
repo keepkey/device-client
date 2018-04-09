@@ -34,6 +34,8 @@ export class StatefulDeviceMessenger extends EventEmitter {
       var messageType = message.$type.name;
       var state = DeviceMessageStates.getHostMessageState(messageType);
 
+      console.assert(state, `Unknown message: ${messageType}`)
+
       if (this.writeRequestInProgress.length) {
         var lastRequest = _.last(this.writeRequestInProgress);
         if (lastRequest.resolveMessage === messageType) {
