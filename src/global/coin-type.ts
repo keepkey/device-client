@@ -273,6 +273,106 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.Bancor],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.SingularDTV],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 0
+  }, {
+    name            : CoinName[CoinName.Iconomi],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.DigixDAO],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 9
+  }, {
+    name            : CoinName[CoinName.Melon],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.SwarmCity],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Wings],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.WeTrust],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 6
+  }, {
+    name            : CoinName[CoinName.iExec],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 9
+  }, {
+    name            : CoinName[CoinName.MatchPool],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 3
+  }, {
+    name            : CoinName[CoinName.Status],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Numeraire],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Edgeless],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 0
+  }, {
+    name            : CoinName[CoinName.Metal],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.TenX],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Qtum],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : "0x",
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.FirstBlood],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Ripio],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Storj],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
   }];
 }
 
