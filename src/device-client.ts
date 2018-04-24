@@ -1,8 +1,9 @@
-/// <reference path="./global/message-handler.d.ts" />
+/// <reference path="../dist/messages.d.ts" />
 
 import * as  _ from 'lodash';
 
-import Timer = require('timers');
+import ProtoBufModel = DeviceMessages.ProtoBufModel;
+import {MessageHandlerClass} from "./global/message-handler";
 import {WordAckAction} from "./actions/word-ack-action";
 import {CharacterAckAction} from "./actions/character-ack-action";
 import {InitializeAction} from "./actions/initialize-action";
@@ -33,7 +34,6 @@ import {GetEthereumAddressAction} from "./actions/get-ethereum-address-action";
 import {FeaturesService} from "./features-service";
 import {EventEmitter} from "events";
 import {Readable} from "stream";
-import {Features} from './global/features';
 import {VerifyFlashHashAction} from "./actions/verify-flash-hash-action";
 
 export const KEEPKEY = 'KEEPKEY';

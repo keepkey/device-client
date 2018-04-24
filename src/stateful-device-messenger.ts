@@ -4,6 +4,7 @@ import {DeviceMessageHelper} from "./device-message-helper";
 import {DeviceMessageStates} from "./device-message-states";
 import {MessageState} from "./message-states";
 import EventEmitter = require('events');
+import {ReflectableProtoBufModel} from "./global/message-handler";
 
 interface WriteRequestInProgress extends MessageState {
   resolve?: (any) => any;

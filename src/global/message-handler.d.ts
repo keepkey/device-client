@@ -1,8 +1,9 @@
 ///<reference path="../../dist/messages.d.ts"/>
 
 import ProtoBufModel = DeviceMessages.ProtoBufModel;
+import * as ByteBuffer from "bytebuffer";
 
-interface ReflectableProtoBufModel extends ProtoBufModel {
+export interface ReflectableProtoBufModel extends ProtoBufModel {
   toArrayBuffer(): ArrayBuffer;
   toBuffer(): Buffer;
   encode(): ByteBuffer;
@@ -11,15 +12,15 @@ interface ReflectableProtoBufModel extends ProtoBufModel {
   $type: MessageTypeMetaData;
 }
 
-interface MessageTypeMetaData {
+export interface MessageTypeMetaData {
   name: string;
 }
 
-interface MessageHandler<M extends ProtoBufModel, R extends ProtoBufModel | void> {
+export interface MessageHandler<M extends ProtoBufModel, R extends ProtoBufModel | void> {
   messageHandler: (request: M) => R;
 }
 
-interface MessageHandlerClass<M extends ProtoBufModel, R extends ProtoBufModel | void> {
+export interface MessageHandlerClass<M extends ProtoBufModel, R extends ProtoBufModel | void> {
   new (...args: any[]): MessageHandler<M, R>;
   messageNames: Array<string>;
 }

@@ -5,6 +5,7 @@
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
   "typings": "dist/*.d.ts",
+  "files": ["dist/**/*", "misc/*"],
   "scripts": {
     "prepublish": "gulp pre-tsc && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
