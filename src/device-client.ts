@@ -34,7 +34,6 @@ import {GetEthereumAddressAction} from "./actions/get-ethereum-address-action";
 import {FeaturesService} from "./features-service";
 import {EventEmitter} from "events";
 import {Readable} from "stream";
-import {VerifyFlashHashAction} from "./actions/verify-flash-hash-action";
 
 export const KEEPKEY = 'KEEPKEY';
 
@@ -87,8 +86,6 @@ export class DeviceClient extends EventEmitter implements BasicClient {
     (_.partial(PassphraseAckAction.operation, this, _));
   public enablePolicy = <DeviceClientMethods.ApplyPolicyFunction>
     (_.partial(ApplyPolicyAction.operation, this, _, _));
-  public verifyDevice = <DeviceClientMethods.VerifyDevice>
-    (_.partial(VerifyFlashHashAction.operation, this, _));
   private _deviceMessenger: StatefulDeviceMessenger;
   public get deviceMessenger(): StatefulDeviceMessenger {
     if (!this._deviceMessenger) {
