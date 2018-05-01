@@ -91,6 +91,11 @@ function extractString(file, cursor) {
   return str;
 }
 
+const MODEL_NUMBERS = {
+  "firmware.keepkey.bin": 'K1-14AM',
+  "firmware.salt.bin": 'K1-14WL-S',
+};
+
 function fileMetaData2Json() {
   return through.obj(function (file, enc, callback) {
     if (file.isStream()) {
@@ -99,11 +104,7 @@ function fileMetaData2Json() {
     }
 
     if (file.isBuffer()) {
-      var modelNumberLocation = file.contents.indexOf('K1-14');
-      if (modelNumberLocation === -1) {
-        throw 'model number prefix not found in firmware file';
-      }
-      let modelNumber = extractString(file, modelNumberLocation);
+      let modelNumber = MODEL_NUMBERS[file.relative];
 
       var versionMarkerLocation = file.contents.indexOf('VERSION');
       if (versionMarkerLocation === -1) {
