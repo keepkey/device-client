@@ -1,6 +1,6 @@
 {
   "name": "@keepkey/device-client",
-  "version": "5.2.2-alpha.0",
+  "version": "5.2.3-beta.0",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
@@ -21,13 +21,12 @@
   },
   "homepage": "https://github.com/keepkey/keepkey-device-client#readme",
   "devDependencies": {
-    "@types/bignumber.js": "^4.0.3",
     "@types/bitcore-lib": "keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",
     "@types/concat-stream": "^1.6.0",
     "@types/lodash": "4.14.50",
     "@types/node": "^7.0.5",
-    "device-protocol": "keepkey/device-protocol.git#beta-mfr",
+    "device-protocol": "keepkey/device-protocol.git#v5.1.2",
     "gulp": "gulpjs/gulp.git#6d71a658c61edb3090221579d8f97dbe086ba2ed",
     "gulp-bump": "^2.7.0",
     "gulp-concat": "^2.6.1",
@@ -44,13 +43,12 @@
   },
   "dependencies": {
     "bignumber.js": "^4.0.0",
-    "bitcore-lib": "keepkey/bitcore-lib.git",
     "bytebuffer": "^5.0.1",
     "concat-stream": "^1.6.0",
     "events": "^1.1.1",
-    "js-sha3": "^0.7.0",
     "lodash": "4.17.2",
     "protobufjs": "^5.0",
-    "through2": "^2.0.3"
+    "through2": "^2.0.3",
+    "bitcore-lib": "keepkey/bitcore-lib.git"
   }
 }
