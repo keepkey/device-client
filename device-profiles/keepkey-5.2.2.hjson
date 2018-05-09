@@ -7,6 +7,8 @@
     bootloader_mode: null
   }
   capabilities: {
-    firmwareDowngradeRequired: true
+    vendorName: KeepKey
+    firmwareImageAvailable: true
+    upgradeSkipable: false
   }
 }
