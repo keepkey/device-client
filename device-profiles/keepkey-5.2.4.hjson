@@ -8,12 +8,6 @@
   }
   capabilities: {
     vendorName: KeepKey
-    firmwareImageAvailable: true
-    defaultMnemonicSeedLength: 12
-    supportsCipheredKeyRecovery: true
-    supportsSecureAccountTransfer: true
-    usesProtectCallButtonRequests: false
-    usesShapeshiftResponseV2: true
-    upgradeSkipable: true
+    firmwareBorken: true
   }
 }
