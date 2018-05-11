@@ -8,6 +8,7 @@ import FlashWrite = DeviceMessages.FlashWrite;
 import FlashHash = DeviceMessages.FlashHash;
 import FlashHashResponse = DeviceMessages.FlashHashResponse;
 import * as _ from 'lodash';
+const FlashBinaries = require('../../dist/flash-bin-dictionary.json');
 
 export type SectorData = {
   name: string,
@@ -129,6 +130,7 @@ export class VerifyFlashHashAction {
   private static writeSector(client: DeviceClient, sectorData: SectorData, statusCallback: StatusCallbackFunction): Promise<any> {
     let promise = Promise.resolve();
 
+    // skip for read-only sectors
     if (sectorData.ro) { return promise; }
 
     for (let pos = sectorData.start; pos <= sectorData.end; pos += MAX_CHUNK_SIZE) {
@@ -154,10 +156,26 @@ export class VerifyFlashHashAction {
               size: chunkSize,
             });
 
-          });
+          })
+          .then(() => VerifyFlashHashAction.fetchB64Assets(client, sectorData, statusCallback));
       });
     }
     return promise;
+  }
+
+  private static fetchB64Assets(client: DeviceClient, sector: SectorData, statusCallback: StatusCallbackFunction): Promise<void> {
+    let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
+
+    let message: FlashHash = DeviceMessageHelper.factory('FlashHash');
+    message.setAddress(sector.start);
+    message.setChallenge(challenge);
+    message.setLength(VerifyFlashHashAction.sectorLength(sector));
+
+    return client.writeToDevice(message)
+      .then((response: FlashHashResponse) => {
+        let fingerprint = response.data.toHex();
+
+      })
   }
 
   private static validateRWSector(client: DeviceClient, sector: SectorData): Promise<void> {
