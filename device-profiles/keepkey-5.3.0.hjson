@@ -2,8 +2,8 @@
   identity: {
     vendor: keepkey.com
     major_version: 5
-    minor_version: 2
-    patch_version: 4
+    minor_version: 3
+    patch_version: 0
     bootloader_mode: null
   }
   capabilities: {
@@ -15,6 +15,5 @@
     usesProtectCallButtonRequests: false
     usesShapeshiftResponseV2: true
     upgradeSkipable: true
-    firmwareBorken: true
   }
 }
