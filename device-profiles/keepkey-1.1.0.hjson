@@ -13,5 +13,6 @@
     supportsCipheredKeyRecovery: true
     supportsSecureAccountTransfer: true
     usesProtectCallButtonRequests: true
+    upgradeSkipable: false
   }
 }
