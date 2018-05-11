@@ -8,7 +8,6 @@
   }
   capabilities: {
     vendorName: KeepKey
-    firmwareImageAvailable: true
-    upgradeSkipable: false
+    firmwareBorken: true
   }
 }
