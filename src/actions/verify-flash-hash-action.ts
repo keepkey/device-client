@@ -13,6 +13,7 @@ export type SectorData = {
   name: string,
   start: number,
   end: number,
+  ro?: boolean,
   buffer?: ByteBuffer,
 }
 
@@ -45,13 +46,35 @@ const MAX_BYTES_OF_ENTROPY_AVAILABLE = 65536;
 
 export class VerifyFlashHashAction {
   private static rwSectors: Array<SectorData> = [
+    {name: 'bootstrap', start: 0x08000000 , end: 0x08003FFF, ro: true},
     {name: 'empty-sector-1', start: 0x08004000, end: 0x08007FFF},
     {name: 'empty-sector-2', start: 0x08008000, end: 0x0800BFFF},
     {name: 'data-sector', start: 0x0800C000, end: 0x0800FFFF},
-    {name: 'empty-sector-3', start: 0x08010000, end: 0x0801FFFF},
+    {name: 'empty-sector-4', start: 0x08010000, end: 0x0801FFFF},
+    {name: 'bootloaders', start: 0x08020000 , end: 0x0805FFFF, ro: true},
     // (0x080C0f32,0x080DFFFF),
     {name: 'reserved-sector', start: 0x080E0000, end: 0x080FFFFF}
   ];
+
+// flash memory layout:
+// --------------------
+//    name    |          range          |  size   |     function
+// -----------+-------------------------+---------+------------------
+//  Sector  0 | 0x08000000 - 0x08003FFF |  16 KiB | bootstrap code (Read Only)
+//  Sector  1 | 0x08004000 - 0x08007FFF |  16 KiB | storage/config (Read/Write)
+// -----------+-------------------------+---------+------------------
+//  Sector  2 | 0x08008000 - 0x0800BFFF |  16 KiB | storage/config (Read/Write)
+//  Sector  3 | 0x0800C000 - 0x0800FFFF |  16 KiB | storage/config (Read/Write)
+// -----------+-------------------------+---------+------------------
+//  Sector  4 | 0x08010000 - 0x0801FFFF |  64 KiB | empty (Read/Write)
+//  Sector  5 | 0x08020000 - 0x0803FFFF | 128 KiB | bootloader code (Read Only)
+//  Sector  6 | 0x08040000 - 0x0805FFFF | 128 KiB | bootloader code (Read Only)
+//  Sector  7 | 0x08060000 - 0x0807FFFF | 128 KiB | application code(Read/Write)
+// ===========+=========================+============================
+//  Sector  8 | 0x08080000 - 0x0809FFFF | 128 KiB | application code (Read/Write)
+//  Sector  9 | 0x080A0000 - 0x080BFFFF | 128 KiB | application code (Read/Write)
+//  Sector 10 | 0x080C0000 - 0x080DFFFF | 128 KiB | application code (Read/Write)
+//  Sector 11 | 0x080E0000 - 0x080FFFFF | 128 KiB | application code (Read/Write)
 
   public static operation(client: DeviceClient, statusCallback?: StatusCallbackFunction): Promise<any> {
     let protectedStatusCallback: StatusCallbackFunction = (...args) => statusCallback && statusCallback.apply(this, args);
@@ -70,6 +93,10 @@ export class VerifyFlashHashAction {
             result: VerifyFlashResult.inProgress,
             sector: _.omit(sectorData, 'buffer'),
           });
+
+          // skip for read-only sectors
+          if (sectorData.ro) { return promise; }
+
           while (remaining > 0) {
             let requestedBytes = Math.min(remaining, MAX_BYTES_OF_ENTROPY_AVAILABLE);
             sectorData.buffer.append(Bitcore.crypto.Random.getRandomBuffer(requestedBytes));
@@ -102,6 +129,8 @@ export class VerifyFlashHashAction {
   private static writeSector(client: DeviceClient, sectorData: SectorData, statusCallback: StatusCallbackFunction): Promise<any> {
     let promise = Promise.resolve();
 
+    if (sectorData.ro) { return promise; }
+
     for (let pos = sectorData.start; pos <= sectorData.end; pos += MAX_CHUNK_SIZE) {
       let message: FlashWrite = DeviceMessageHelper.factory('FlashWrite');
 
@@ -125,7 +154,7 @@ export class VerifyFlashHashAction {
               size: chunkSize,
             });
 
-          })
+          });
       });
     }
     return promise;
