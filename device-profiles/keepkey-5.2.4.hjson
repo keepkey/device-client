@@ -14,7 +14,6 @@
     supportsSecureAccountTransfer: true
     usesProtectCallButtonRequests: false
     usesShapeshiftResponseV2: true
-    upgradeSkipable: true
-    firmwareBorken: true
+    upgradeSkipable: false
   }
 }
