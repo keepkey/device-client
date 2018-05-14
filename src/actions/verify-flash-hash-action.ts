@@ -111,14 +111,14 @@ export class VerifyFlashHashAction {
       .then(() => {
         let promise = Promise.resolve();
         VerifyFlashHashAction.roSectors.map((sectorData: SectorData) => {
-          promise = promise.then(() => VerifyFlashHashAction.fetchB64Assets(client, sectorData, challenge, statusCallback))
+          promise = promise.then(() => VerifyFlashHashAction.fetchB64Assets(client, sectorData, statusCallback))
         });
         return promise;
       })
       // .then(() => {
       //   return Promise.all(VerifyFlashHashAction.rwSectors.map((sectorData: SectorData) => {
       //     let result: VerifyFlashResult;
-      //     return VerifyFlashHashAction.validateRWSector(client, sectorData, challenge)
+      //     return VerifyFlashHashAction.validateRWSector(client, sectorData)
       //       .then(() => result = VerifyFlashResult.successful)
       //       .catch((msg) => {
       //         console.error(msg);
@@ -167,7 +167,10 @@ export class VerifyFlashHashAction {
     return promise;
   }
 
-  private static fetchB64Assets(client: DeviceClient, sector: SectorData, challenge: ByteBuffer, statusCallback: StatusCallbackFunction): Promise<void> {
+  private static fetchB64Assets(client: DeviceClient, sector: SectorData, statusCallback: StatusCallbackFunction): Promise<void> {
+    let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
+
+    console.assert(challenge.capacity() === CHALLENGE_SIZE, "Challenge buffer size is wrong");
 
     let message: FlashHash = DeviceMessageHelper.factory('FlashHash');
     message.setAddress(sector.start);
@@ -180,15 +183,14 @@ export class VerifyFlashHashAction {
         console.log('FINGERPRINT FROM DEVICE', fingerprint);
         let promise = Promise.resolve();
 
-        promise = promise.then(() => {
+        promise.then(() => {
           statusCallback({
             step: VerifyFlashSteps.findB64Asset,
             result: VerifyFlashResult.inProgress,
             sector: _.omit(sector, 'buffer')
           });
         });
-
-        // promise = promise.then(() => VerifyFlashHashAction.findB64asset(sector, flashBinaries, fingerprint));
+        // .then(() => VerifyFlashHashAction.findB64asset(sector, flashBinaries, fingerprint));
         return promise;
       });
   }
@@ -214,8 +216,8 @@ export class VerifyFlashHashAction {
     return promise;
   }
 
-  private static validateRWSector(client: DeviceClient, sector: SectorData, challenge: ByteBuffer): Promise<void> {
-    // let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
+  private static validateRWSector(client: DeviceClient, sector: SectorData): Promise<void> {
+    let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
 
     console.assert(challenge.capacity() === CHALLENGE_SIZE, "Challenge buffer size is wrong");
     console.assert(sector.buffer.capacity() === VerifyFlashHashAction.sectorLength(sector), "sector data buffer size is wrong");
