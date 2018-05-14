@@ -57,8 +57,7 @@ export class VerifyFlashHashAction {
 
   private static roSectors: Array<SectorData> = [
     {name: 'bootstrap', start: 0x08000000, end: 0x08003FFF},
-    {name: 'bootloaders-1', start: 0x08020000, end: 0x0803FFFF},
-    {name: 'bootloaders-2', start: 0x08040000, end: 0x0805FFFF},
+    {name: 'bootloader', start: 0x08020000, end: 0x0805FFFF},
   ];
 
 // flash memory layout:
@@ -83,6 +82,7 @@ export class VerifyFlashHashAction {
 
   public static operation(client: DeviceClient, statusCallback?: StatusCallbackFunction): Promise<any> {
     let protectedStatusCallback: StatusCallbackFunction = (...args) => statusCallback && statusCallback.apply(this, args);
+    let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
     return client.featuresService.promise
       .then((features: Features) => {
         protectedStatusCallback({
@@ -111,14 +111,14 @@ export class VerifyFlashHashAction {
       .then(() => {
         let promise = Promise.resolve();
         VerifyFlashHashAction.roSectors.map((sectorData: SectorData) => {
-          promise = promise.then(() => VerifyFlashHashAction.fetchB64Assets(client, sectorData, statusCallback))
+          promise = promise.then(() => VerifyFlashHashAction.fetchB64Assets(client, sectorData, challenge, statusCallback))
         });
         return promise;
       })
       // .then(() => {
       //   return Promise.all(VerifyFlashHashAction.rwSectors.map((sectorData: SectorData) => {
       //     let result: VerifyFlashResult;
-      //     return VerifyFlashHashAction.validateRWSector(client, sectorData)
+      //     return VerifyFlashHashAction.validateRWSector(client, sectorData, challenge)
       //       .then(() => result = VerifyFlashResult.successful)
       //       .catch((msg) => {
       //         console.error(msg);
@@ -167,8 +167,7 @@ export class VerifyFlashHashAction {
     return promise;
   }
 
-  private static fetchB64Assets(client: DeviceClient, sector: SectorData, statusCallback: StatusCallbackFunction): Promise<void> {
-    let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
+  private static fetchB64Assets(client: DeviceClient, sector: SectorData, challenge: ByteBuffer, statusCallback: StatusCallbackFunction): Promise<void> {
 
     let message: FlashHash = DeviceMessageHelper.factory('FlashHash');
     message.setAddress(sector.start);
@@ -215,8 +214,8 @@ export class VerifyFlashHashAction {
     return promise;
   }
 
-  private static validateRWSector(client: DeviceClient, sector: SectorData): Promise<void> {
-    let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
+  private static validateRWSector(client: DeviceClient, sector: SectorData, challenge: ByteBuffer): Promise<void> {
+    // let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
 
     console.assert(challenge.capacity() === CHALLENGE_SIZE, "Challenge buffer size is wrong");
     console.assert(sector.buffer.capacity() === VerifyFlashHashAction.sectorLength(sector), "sector data buffer size is wrong");
