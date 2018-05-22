@@ -11,6 +11,7 @@ export interface CoinTypeConfiguration {
   addressFormat: string;
   dust: number | string;
   defaultDecimals?: number;
+  exchangeForbidden?: boolean;
 }
 
 //TODO Addresses should be validated using the address validation checks from the core client. Using regexp allows checksum errors.
@@ -103,6 +104,7 @@ export class CoinType {
   public decimals: number;
   public coinTypeCode: string;
   public isToken: boolean;
+  public exchangeForbidden: boolean;
 
   private _symbol: string;
   public get symbol(): string {
@@ -176,7 +178,9 @@ export class CoinType {
     }
   }
 
-  private constructor(public configuration: CoinTypeConfiguration) {}
+  private constructor(public configuration: CoinTypeConfiguration) {
+    this.exchangeForbidden = !!this.configuration.exchangeForbidden;
+  }
 
   private number2Big(n: ByteBuffer | Long | number | string | BigNumber): BigNumber {
     if (n instanceof ByteBuffer) {
@@ -322,7 +326,8 @@ export class CoinType {
     name            : CoinName[CoinName.MatchPool],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-    defaultDecimals : 3
+    defaultDecimals : 3,
+    exchangeForbidden: true,
   }, {
     name            : CoinName[CoinName.Status],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
@@ -337,7 +342,8 @@ export class CoinType {
     name            : CoinName[CoinName.Edgeless],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
-    defaultDecimals : 0
+    defaultDecimals : 0,
+    exchangeForbidden: true,
   }, {
     name            : CoinName[CoinName.Metal],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
