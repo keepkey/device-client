@@ -174,7 +174,8 @@ export class CoinType {
       decimals: this.decimals,
       dust: this.dust.toString(),
       name: this.name,
-      isToken: this.isToken
+      isToken: this.isToken,
+      exchangeForbidden: this.exchangeForbidden,
     }
   }
 
