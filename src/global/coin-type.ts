@@ -327,7 +327,7 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 3,
-    exchangeForbidden: true,
+    exchangeForbidden: true, // Disabled for exchange because expected withdrawal amount calculation differs from SS calculation
   }, {
     name            : CoinName[CoinName.Status],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
@@ -343,7 +343,7 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 0,
-    exchangeForbidden: true,
+    exchangeForbidden: true, // Disabled for exchange because expected withdrawal amount calculation differs from SS calculation
   }, {
     name            : CoinName[CoinName.Metal],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
