@@ -35,7 +35,7 @@ export class StatefulDeviceMessenger extends EventEmitter {
     var messageType = message.$type.name;
     var state = DeviceMessageStates.getHostMessageState(messageType);
 
-    if (!state && !MessageStates.getMessageState(MessageSender.host, MessageDirection.response, name)) {
+    if (!state && !MessageStates.getMessageState(MessageSender.host, MessageDirection.response, messageType)) {
       throw(`Unknown message: ${messageType}`);
     }
 
