@@ -22,6 +22,7 @@ export declare class CoinType {
     static Ethereum: CoinType;
     static Dash: CoinType;
     static BitcoinCash: CoinType;
+    static Bitcore: CoinType;
     static get(type: CoinName): CoinType;
     static getByName(name: string): CoinType;
     static getBySymbol(symbol: string): CoinType;

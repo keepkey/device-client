@@ -10,4 +10,5 @@ var CoinName;
     CoinName[CoinName["Dash"] = 5] = "Dash";
     CoinName[CoinName["Ethereum"] = 6] = "Ethereum";
     CoinName[CoinName["BitcoinCash"] = 145] = "BitcoinCash";
+    CoinName[CoinName["Bitcore"] = 160] = "Bitcore";
 })(CoinName = exports.CoinName || (exports.CoinName = {}));

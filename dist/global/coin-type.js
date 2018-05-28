@@ -162,6 +162,17 @@ var CoinType = (function () {
             DECIMAL_PLACES: 8
         }
     });
+    CoinType.Bitcore = new CoinType({
+        name: coin_name_1.CoinName[coin_name_1.CoinName.Bitcore],
+        currencySymbol: 'BTX',
+        coinTypeCode: "160'",
+        addressFormat: "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+        dust: CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
+        decimals: 8,
+        amountParameters: {
+            DECIMAL_PLACES: 8
+        }
+    });	
     return CoinType;
 }());
 exports.CoinType = CoinType;
