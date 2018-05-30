@@ -15,7 +15,6 @@ export type SectorData = {
   start: number,
   end: number,
   ro?: boolean,
-  firmware?: boolean,
   buffer?: ByteBuffer,
 }
 
@@ -62,14 +61,14 @@ const MAX_BYTES_OF_ENTROPY_AVAILABLE = 65536;
 
 export class VerifyFlashHashAction {
   private static sectors: Array<SectorData> = [
+    {name: 'bootstrap', start: 0x08000000, end: 0x08003FFF, ro: true},
     {name: 'empty-sector-1', start: 0x08004000, end: 0x08007FFF},
     {name: 'empty-sector-2', start: 0x08008000, end: 0x0800BFFF},
     {name: 'data-sector', start: 0x0800C000, end: 0x0800FFFF},
     {name: 'empty-sector-4', start: 0x08010000, end: 0x0801FFFF},
-    {name: 'reserved-sector', start: 0x080E0000, end: 0x080FFFFF},
-    {name: 'mfr-firmware', start: 0x08060000, end: 0x080DFFFF, ro: true},
-    {name: 'bootstrap', start: 0x08000000, end: 0x08003FFF, ro: true},
     {name: 'bootloader', start: 0x08020000, end: 0x0805FFFF, ro: true},
+    {name: 'mfr-firmware', start: 0x08060000, end: 0x080DFFFF, ro: true},
+    {name: 'reserved-sector', start: 0x080E0000, end: 0x080FFFFF},
   ];
 
 // flash memory layout:
@@ -111,7 +110,7 @@ export class VerifyFlashHashAction {
             result: VerifyFlashResult.inProgress,
             sector: _.omit(sectorData, 'buffer'),
 
-            // max: number of iterations, count: the amount to increment.
+            // max is number of iterations, count is the amount to increment.
             initializeCount: {count: 1, max: 8},
           });
 
@@ -131,31 +130,26 @@ export class VerifyFlashHashAction {
       .then(() => {
         // Clean UP!!
         let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
-        let count = 1
 
-        console.assert(challenge.capacity() === CHALLENGE_SIZE, "Challenge buffer size is wrong");
+        console.assert(challenge.limit === CHALLENGE_SIZE, "Challenge buffer size is wrong");
 
         var hash = sha3_256.create();
-        hash.update(challenge.buffer);
+        hash.update(challenge.toArrayBuffer());
         VerifyFlashHashAction.sectors.forEach((sector) => {
           protectedStatusCallback({
             step: VerifyFlashSteps.hashSectors,
             result: VerifyFlashResult.inProgress,
             sector: _.omit(sector, 'buffer'),
-            hashSectorCount: {count: count, max: 8},
+            hashSectorCount: {count: 1, max: 8},
           });
-          console.log('sector', sector)
-          console.log('sector-buffer', sector.buffer)
-          sector.buffer
-          hash.update(sector.buffer.toHex());
+          hash.update(sector.buffer.toArrayBuffer());
         });
 
         return {challenge: challenge, expectedHash: hash.hex()};
       })
       .then((obj) => {
-        console.log("EXPECTED HASH", obj);
         let result: VerifyFlashResult;
-        return VerifyFlashHashAction.validateSector(client, obj['challenge'], obj['expectedHash'])
+        return VerifyFlashHashAction.validateSector(client, obj.challenge, obj.expectedHash)
           .then(() => result = VerifyFlashResult.successful)
           .catch((msg) => {
             console.error(msg);
@@ -167,6 +161,9 @@ export class VerifyFlashHashAction {
               result: result,
             });
           });
+      })
+      .catch((msg) => {
+        console.error(msg)
       });
   }
 
@@ -211,7 +208,7 @@ export class VerifyFlashHashAction {
 
     let challenge = new ByteBuffer(0);
 
-    console.assert(challenge.capacity() === 0, "Challenge buffer size is wrong");
+    console.assert(challenge.limit === 0, "Challenge buffer size is wrong");
 
     let message: FlashHash = DeviceMessageHelper.factory('FlashHash');
     message.setAddress(sector.start);
@@ -226,7 +223,7 @@ export class VerifyFlashHashAction {
           b64AssetCount: {count: 1, max: 3},
         });
 
-        return VerifyFlashHashAction.findB64asset(sector, FlashBinaries, response)
+        return VerifyFlashHashAction.findB64asset(sector, FlashBinaries, response);
       });
   }
 
@@ -253,11 +250,9 @@ export class VerifyFlashHashAction {
   }
 
   private static validateSector(client: DeviceClient, challenge: ByteBuffer, expectedResponse: any): Promise<void> {
-    // let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
     let flashLength = FLASH_END - FLASH_START + 1;
 
-    console.assert(challenge.capacity() === CHALLENGE_SIZE, "Challenge buffer size is wrong");
-    // console.assert(flashBuffer.capacity() === flashLength, "flash buffer size is wrong");
+    console.assert(challenge.limit === CHALLENGE_SIZE, "Challenge buffer size is wrong");
 
     let message: FlashHash = DeviceMessageHelper.factory('FlashHash');
     message.setAddress(FLASH_START);
@@ -266,9 +261,7 @@ export class VerifyFlashHashAction {
 
     return client.writeToDevice(message)
       .then((response: FlashHashResponse) => {
-
         let actualResult = response.data.toHex();
-
         if (actualResult !== expectedResponse) {
           throw `Error: Flash hash mismatch for flash sectors\n  expected: ${expectedResponse}\n    actual: ${actualResult}`;
         }
