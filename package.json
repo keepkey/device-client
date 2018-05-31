@@ -48,6 +48,7 @@
     "concat-stream": "^1.6.0",
     "events": "^3.0.0",
     "lodash": "4.17.10",
+    "js-sha3": "^0.7.0",
     "protobufjs": "^5.0",
     "replace-ext": "^1.0.0",
     "through2": "^2.0.3"
