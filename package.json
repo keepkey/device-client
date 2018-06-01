@@ -5,9 +5,12 @@
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
   "typings": "dist/*.d.ts",
-  "files": ["dist/**/*", "misc/*"],
+  "files": [
+    "dist/**/*",
+    "misc/*"
+  ],
   "scripts": {
-    "prepublish": "gulp pre-tsc && tsc",
+    "prepublish": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,7 +29,7 @@
     "@types/concat-stream": "^1.6.0",
     "@types/lodash": "4.14.50",
     "@types/node": "^7.0.5",
-    "device-protocol": "keepkey/device-protocol.git#v5.1.2",
+    "device-protocol": "keepkey/device-protocol.git#beta-mfr",
     "gulp": "gulpjs/gulp.git#6d71a658c61edb3090221579d8f97dbe086ba2ed",
     "gulp-bump": "^2.7.0",
     "gulp-concat": "^2.6.1",
@@ -36,7 +39,7 @@
     "gulp-pbjs": "keepkey/gulp-pbjs.git",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "gulp-typescript": "^3.1.4",
+    "gulp-typescript": "^3.2.4",
     "gulp-util": "^3.0.8",
     "proto2typescript": "keepkey/Proto2TypeScript.git",
     "typescript": "^2.1.6"

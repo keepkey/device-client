@@ -45,7 +45,8 @@ const paths = {
   typescriptSources: [
     'src/**/*.ts', '!src/**/*.spec.ts'
   ],
-  versionedFiles: ['package.json', 'README.md']
+  versionedFiles: ['package.json', 'README.md'],
+  deviceValidationData: 'device-profiles/device-validation-data/**/*',
 };
 
 gulp.task('buildDeviceProfiles', function gatherConfigs() {
@@ -100,7 +101,7 @@ function fileMetaData2Json() {
   return through.obj(function (file, enc, callback) {
     if (file.isStream()) {
       this.emit('error', new PluginError(PLUGIN_NAME, 'Streams are not supported!'));
-      return cb();
+      return callback();
     }
 
     if (file.isBuffer()) {
@@ -198,11 +199,41 @@ function copyDtsToDist() {
     .pipe(gulp.dest(paths.distDirectory));
 }
 
-gulp.task('pre-tsc', gulp.series(
+function copyValidationDataToDist() {
+  return gulp.src(paths.deviceValidationData)
+    .pipe(gulp.dest(paths.distDirectory));
+}
+
+gulp.task('validateDeviceSectorMap', () => {
+  let DeviceSectorProvider = require('./dist/global/device-sector-provider');
+  return gulp.src(paths.messagesJs)
+    .pipe(through.obj((file, enc, callback) => {
+      let error;
+      try {
+        DeviceSectorProvider.DeviceSectorProvider.getInstance();
+      } catch (e) {
+        error = e;
+        this.emit('error', new PluginError(PLUGIN_NAME, e));
+      } finally {
+        callback(error, file);
+      }
+    }));
+});
+
+function tsc() {
+  return gulp.src(paths.typescriptSources)
+    .pipe(ts(require('./tsconfig.json').compilerOptions)).js
+    .pipe(gulp.dest(paths.distDirectory));
+}
+
+gulp.task('build', gulp.series(
+  copyValidationDataToDist,
   'buildDeviceProfiles',
   'extractMetadataFromFirmware',
   'messages.d.ts',
-  copyDtsToDist
+  copyDtsToDist,
+  tsc,
+  'validateDeviceSectorMap'
 ));
 
 module.exports = gulp;

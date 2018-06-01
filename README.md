@@ -1,4 +1,8 @@
 # keepkey-device-client
-Version: 0.1.4
+Version: 5.4.1-beta.0
 
-This is an early release of the KeepKey Device Client. Better documentation coming soon.
+KeepKey Device Client
+
+##Resources
+* [Device Protocol](https://github.com/keepkey/device-protocol)
+* [Device Firmware/Bootloader](https://github.com/keepkey/keepkey-firmware)
