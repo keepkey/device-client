@@ -1,0 +1,58 @@
+[
+  {
+    "name": "bootstrap",
+    "start": "0x08000000",
+    "end": "0x08003FFF",
+    "size": "0x4000",
+    "ro": true
+  },
+  {
+    "name": "empty-sector-1",
+    "start": "0x08004000",
+    "end": "0x08007FFF",
+    "size": "0x4000",
+    "ro": false
+  },
+  {
+    "name": "empty-sector-2",
+    "start": "0x08008000",
+    "end": "0x0800BFFF",
+    "size": "0x4000",
+    "ro": false
+  },
+  {
+    "name": "data-sector",
+    "start": "0x0800C000",
+    "end": "0x0800FFFF",
+    "size": "0x4000",
+    "ro": false
+  },
+  {
+    "name": "empty-sector-4",
+    "start": "0x08010000",
+    "end": "0x0801FFFF",
+    "size": "0x10000",
+    "ro": false
+  },
+  {
+    "name": "bootloader",
+    "start": "0x08020000",
+    "end": "0x0805FFFF",
+    "size": "0x40000",
+    "ro": true
+  },
+  {
+    "name": "mfr-firmware",
+    "start": "0x08060000",
+    "end": "0x080DFFFF",
+    "size": "0x80000",
+    "ro": true
+  },
+  {
+    "name": "reserved-sector",
+    "start": "0x080E0000",
+    "end": "0x080FFFFF",
+    "size": "0x20000",
+    "ro": false
+  }
+]

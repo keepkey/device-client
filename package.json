@@ -10,7 +10,7 @@
     "misc/*"
   ],
   "scripts": {
-    "prepublish": "gulp pre-tsc && tsc",
+    "prepublish": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
