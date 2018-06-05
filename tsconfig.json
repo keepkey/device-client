@@ -6,6 +6,7 @@
       "dom",
       "es5",
       "es2015.core",
+      "es2015.symbol",
       "es2015.promise",
       "scripthost"
     ],

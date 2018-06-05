@@ -34,6 +34,8 @@ let through = require('through2');
 let hjson = require('gulp-hjson');
 let crypto = require('crypto');
 let bump = require('gulp-bump');
+let file = require('gulp-file');
+let binaryLibrarian = require('kk-binary-librarian');
 
 const paths = {
   distDirectory: 'dist',
@@ -46,6 +48,7 @@ const paths = {
   ],
   versionedFiles: ['package.json', 'README.md'],
   deviceValidationData: 'device-profiles/device-validation-data/**/*',
+  deviceValidationDirectory: 'device-profiles/device-validation-data/'
 };
 
 gulp.task('buildDeviceProfiles', function gatherConfigs() {
@@ -224,6 +227,13 @@ function copyValidationDataToDist() {
     .pipe(gulp.dest(paths.distDirectory));
 }
 
+gulp.task('buildFlashDictionary', async () => {
+  let str = await binaryLibrarian.getFlashAssets();
+
+  return file('flash-bin-dictionary.json', str, { src: true })
+    .pipe(gulp.dest(paths.deviceValidationDirectory));
+});
+
 gulp.task('validateDeviceSectorMap', () => {
   let DeviceSectorProvider = require('./dist/global/device-sector-provider');
   return gulp.src(paths.messagesJs)
@@ -240,20 +250,14 @@ gulp.task('validateDeviceSectorMap', () => {
     }));
 });
 
-function tsc() {
-  return gulp.src(paths.typescriptSources)
-    .pipe(ts(require('./tsconfig.json').compilerOptions)).js
-    .pipe(gulp.dest(paths.distDirectory));
-}
-
-gulp.task('build', gulp.series(
+gulp.task('pre-tsc', gulp.series(
+  'buildFlashDictionary',
   copyValidationDataToDist,
   'buildDeviceProfiles',
   'buildBootloaderProfiles',
   'extractMetadataFromFirmware',
   'messages.d.ts',
   copyDtsToDist,
-  tsc,
   'validateDeviceSectorMap'
 ));
 

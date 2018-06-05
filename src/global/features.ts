@@ -50,6 +50,7 @@ export interface DeviceProfile {
 export interface IFeatures {
   available_firmware_version: string;
   bootloader_hash: ByteBuffer;
+  firmware_hash: ByteBuffer;
   bootloader_mode: any;
   coins: Array<IFeatureCoin>;
   device_id: string;
@@ -71,6 +72,8 @@ export interface IFeatures {
   bootloaderInfo: BootloaderInfo;
   model: string;
   version: string;
+  bootloader_hex_string: string;
+  firmware_hex_string: string;
 }
 
 export interface ICoinTable {
