@@ -10,7 +10,7 @@
     "misc/*"
   ],
   "scripts": {
-    "prepublish": "gulp build",
+    "prepublish": "gulp pre-tsc && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -47,8 +47,10 @@
     "bytebuffer": "^5.0.1",
     "concat-stream": "^1.6.0",
     "events": "^3.0.0",
-    "lodash": "4.17.10",
+    "gulp-file": "^0.4.0",
     "js-sha3": "^0.7.0",
+    "kk-binary-librarian": "keepkey/kk-binary-librarian",
+    "lodash": "4.17.10",
     "protobufjs": "^5.0",
     "replace-ext": "^1.0.0",
     "through2": "^2.0.3"

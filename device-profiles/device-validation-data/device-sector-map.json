@@ -32,7 +32,7 @@
     "start": "0x08010000",
     "end": "0x0801FFFF",
     "size": "0x10000",
-    "ro": false
+    "ro": true
   },
   {
     "name": "bootloader",
