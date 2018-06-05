@@ -17,7 +17,8 @@ export enum VerifyFlashSteps {
   writeRandomData,
   sectorVerification,
   findB64Asset,
-  hashSectors
+  hashSectors,
+  validateFlash
 }
 
 export enum VerifyFlashResult {
@@ -37,10 +38,11 @@ export type VerifyFlashStatus = {
   sector?: SectorData,
   location?: number,
   size?: number,
-  initializeCount?: VerifyFlashCount,
-  writeRandomDataCount?: VerifyFlashCount,
-  b64AssetCount?: VerifyFlashCount,
-  hashSectorCount?: VerifyFlashCount,
+  initialize?: VerifyFlashCount,
+  writeRandomData?: VerifyFlashCount,
+  b64Asset?: VerifyFlashCount,
+  hashSector?: VerifyFlashCount,
+  sectorVerification?: VerifyFlashCount,
 }
 
 export type StatusCallbackFunction = (message: VerifyFlashStatus) => Promise<void>;
@@ -70,7 +72,7 @@ export class VerifyFlashHashAction {
             sector: _.omit(sectorData, 'buffer'),
 
             // max is number of iterations, count is the amount to increment.
-            initializeCount: {count: 1, max: 8},
+            initialize: {count: 1, max: 8},
           });
 
           while (remaining > 0) {
@@ -87,9 +89,7 @@ export class VerifyFlashHashAction {
         return promise;
       })
       .then(() => {
-        // Clean UP!!
         let challenge = ByteBuffer.wrap(Bitcore.crypto.Random.getRandomBuffer(CHALLENGE_SIZE));
-
         console.assert(challenge.limit === CHALLENGE_SIZE, "Challenge buffer size is wrong");
 
         var hash = sha3_256.create();
@@ -99,7 +99,7 @@ export class VerifyFlashHashAction {
             step: VerifyFlashSteps.hashSectors,
             result: VerifyFlashResult.inProgress,
             sector: _.omit(sector, 'buffer'),
-            hashSectorCount: {count: 1, max: 8},
+            hashSector: {count: 1, max: 8},
           });
           hash.update(sector.buffer.toArrayBuffer());
         });
@@ -118,6 +118,7 @@ export class VerifyFlashHashAction {
             protectedStatusCallback({
               step: VerifyFlashSteps.sectorVerification,
               result: result,
+              sectorVerification: {count: 1, max: 1},
             });
           });
       })
@@ -153,7 +154,7 @@ export class VerifyFlashHashAction {
               sector: _.omit(sectorData, 'buffer'),
               location: pos,
               size: chunkSize,
-              writeRandomDataCount: {count: 1, max: 240},
+              writeRandomData: {count: 1, max: 240},
             });
 
           });
@@ -179,7 +180,7 @@ export class VerifyFlashHashAction {
         statusCallback({
           step: VerifyFlashSteps.findB64Asset,
           result: VerifyFlashResult.inProgress,
-          b64AssetCount: {count: 1, max: 3},
+          b64Asset: {count: 1, max: 3},
         });
 
         return VerifyFlashHashAction.findB64asset(sector, FlashBinaries, response);
@@ -194,11 +195,8 @@ export class VerifyFlashHashAction {
 
     Object.keys(flashBinaries).forEach((item) => {
       let expected = flashBinaries[item];
-      console.log('sector name', sector.name);
-      console.log('fingerprint device', fingerprint);
-      console.log('fingerprint database', expected);
-      if (expected['fingerprint'] === fingerprint) {
-        sector.buffer = ByteBuffer.fromBase64(expected['b64_asset']);
+      if (expected.fingerprint === fingerprint) {
+        sector.buffer = ByteBuffer.fromBase64(expected.b64_asset);
         return promise;
       }
 
