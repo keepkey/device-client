@@ -4,7 +4,6 @@ import * as ByteBuffer from "bytebuffer";
 import {DevicePolicyEnum} from "./device-policy-enum";
 import {CoinName} from "./coin-name";
 import {CoinTypeConfiguration} from "./coin-type";
-import * as ByteBuffer from "bytebuffer";
 
 export interface DeviceCapabilities {
   firmwareImageAvailable: boolean;

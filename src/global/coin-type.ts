@@ -58,7 +58,9 @@ export class CoinType {
 
   public static fromFeatureCoin(coin: IFeatureCoin) {
     let config: CoinTypeConfiguration = _.find(CoinType.config, {name: coin.coin_name});
-    if (config && !CoinType.get(CoinName[coin.coin_name])) {
+    if (!config) {
+      console.warn(`Coin ${coin.coin_name} was skipped. It doesn't have a configuration defined.`)
+    } else if (!CoinType.get(CoinName[coin.coin_name])) {
       let instance = new CoinType(config);
 
       instance.isToken = false;
@@ -289,7 +291,7 @@ export class CoinType {
     dust            : 1,
     defaultDecimals : 0
   }, {
-    name            : CoinName[CoinName.Iconomi],
+    name            : CoinName[CoinName.ICONOMI],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
@@ -324,7 +326,7 @@ export class CoinType {
     dust            : 1,
     defaultDecimals : 9
   }, {
-    name            : CoinName[CoinName.MatchPool],
+    name            : CoinName[CoinName.Matchpool],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 3,
@@ -356,7 +358,7 @@ export class CoinType {
     dust            : 1,
     defaultDecimals : 18
   }, {
-    name            : CoinName[CoinName.Qtum],
+    name            : "Qtum ICO Token",
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
@@ -371,7 +373,7 @@ export class CoinType {
     dust            : 1,
     defaultDecimals : 18
   }, {
-    name            : CoinName[CoinName.Ripio],
+    name            : CoinName[CoinName.RCN],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
