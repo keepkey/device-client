@@ -2,3 +2,6 @@
 src/*.js
 node_modules
 dist
+.DS_Store
+misc/.DS_Store
+npm-debug.log
