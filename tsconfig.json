@@ -3,7 +3,11 @@
   "compilerOptions": {
     "target": "es5",
     "lib": [
-      "dom", "es5", "es2015.core", "es2015.promise", "scripthost"
+      "dom",
+      "es5",
+      "es2015.core",
+      "es2015.promise",
+      "scripthost"
     ],
     "module": "CommonJS",
     "declaration": true,
@@ -11,7 +15,10 @@
     "removeComments": true,
     "traceResolution": true,
     "allowJs": false,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "types": [
+      "bytebuffer"
+    ]
   },
   "include": [
     "dist/messages.d.ts",

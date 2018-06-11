@@ -2,8 +2,9 @@ import * as _ from 'lodash';
 
 import {DeviceMessageHelper} from "./device-message-helper";
 import {DeviceMessageStates} from "./device-message-states";
-import {MessageState} from "./message-states";
+import {MessageDirection, MessageSender, MessageState, MessageStates} from "./message-states";
 import EventEmitter = require('events');
+import {ReflectableProtoBufModel} from "./global/message-handler";
 
 interface WriteRequestInProgress extends MessageState {
   resolve?: (any) => any;
@@ -31,52 +32,56 @@ export class StatefulDeviceMessenger extends EventEmitter {
     if (this.isDisabled) {
       return Promise.reject("failed state");
     }
-      var messageType = message.$type.name;
-      var state = DeviceMessageStates.getHostMessageState(messageType);
+    var messageType = message.$type.name;
+    var state = DeviceMessageStates.getHostMessageState(messageType);
 
-      if (this.writeRequestInProgress.length) {
-        var lastRequest = _.last(this.writeRequestInProgress);
-        if (lastRequest.resolveMessage === messageType) {
-          this.writeRequestInProgress.pop();
-        } else if (messageType === DeviceMessageStates.Cancel) {
-          _.each(this.writeRequestInProgress, (request: WriteRequestInProgress) => {
-            request.reject && request.reject(`${request.messageName} cancelled`);
-          });
-          this.writeRequestInProgress.length = 0;
-          this.cancelPendingRequests();
-        } else if (!DeviceMessageStates.isInterstitialMessage(lastRequest, messageType)) {
-          return this.enqueueMessage(message);
-        }
+    if (!state && !MessageStates.getMessageState(MessageSender.host, MessageDirection.response, messageType)) {
+      throw(`Unknown message: ${messageType}`);
+    }
+
+    if (this.writeRequestInProgress.length) {
+      var lastRequest = _.last(this.writeRequestInProgress);
+      if (lastRequest.resolveMessage === messageType) {
+        this.writeRequestInProgress.pop();
+      } else if (messageType === DeviceMessageStates.Cancel) {
+        _.each(this.writeRequestInProgress, (request: WriteRequestInProgress) => {
+          request.reject && request.reject(`${request.messageName} cancelled`);
+        });
+        this.writeRequestInProgress.length = 0;
+        this.cancelPendingRequests();
+      } else if (!DeviceMessageStates.isInterstitialMessage(lastRequest, messageType)) {
+        return this.enqueueMessage(message);
+      }
+    }
+
+    return new Promise((resolve, reject) => {
+      if (state && state.resolveMessage) {
+        var requestInProgress = <WriteRequestInProgress>(_.extend({
+          resolve: resolve,
+          reject: reject
+        }, state));
+        this.writeRequestInProgress.push(requestInProgress);
+      } else {
+        resolve();
       }
 
-      return new Promise((resolve, reject) => {
-        if (state && state.resolveMessage) {
-          var requestInProgress = <WriteRequestInProgress>(_.extend({
-            resolve: resolve,
-            reject : reject
-          }, state));
-          this.writeRequestInProgress.push(requestInProgress);
-        } else {
-          resolve();
-        }
+      console.log('proxy --> device:\n    [%s] %s\n    WaitFor: %s',
+        message.$type.name, DeviceMessageHelper.toPrintable(message),
+        state && state.resolveMessage);
 
-        console.log('proxy --> device:\n    [%s] %s\n    WaitFor: %s',
-          message.$type.name, DeviceMessageHelper.toPrintable(message),
-          state && state.resolveMessage);
-
-        this.transport.write.call(this.transport, message)
-          .then(() => {
-            if (this.writeRequestInProgress.length === 0) {
-              this.dequeueMessage();
-            }
-          })
-          .catch(() => {
-            console.log('Failed when writing to device');
-            this.writeRequestInProgress.length = 0;
-            this.cancelPendingRequests();
-            reject.apply(message);
-          });
-      });
+      this.transport.write.call(this.transport, message)
+        .then(() => {
+          if (this.writeRequestInProgress.length === 0) {
+            this.dequeueMessage();
+          }
+        })
+        .catch(() => {
+          console.log('Failed when writing to device');
+          this.writeRequestInProgress.length = 0;
+          this.cancelPendingRequests();
+          reject.apply(message);
+        });
+    });
 
   }
 

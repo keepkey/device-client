@@ -12,5 +12,6 @@
     supportsSecureAccountTransfer: true
     usesProtectCallButtonRequests: false
     usesShapeshiftResponseV2: true
+    upgradeSkipable: false
   }
 }

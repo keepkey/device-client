@@ -1,0 +1,12 @@
+{
+  identity: {
+    vendor: keepkey.com
+    major_version: 5
+    bootloader_mode: null
+    label: manufacturing firmware
+  }
+  capabilities: {
+    vendorName: KeepKey
+    newKeepKey: true
+  }
+}

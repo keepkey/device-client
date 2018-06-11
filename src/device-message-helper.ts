@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import ByteBuffer = require('bytebuffer');
 import Long = require('long');
+import {ReflectableProtoBufModel} from "./global/message-handler";
 
 export class DeviceMessageHelper {
   public static messageFactories = require('../dist/messages.js');

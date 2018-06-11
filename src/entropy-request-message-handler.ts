@@ -3,6 +3,7 @@ import EntropyAck = DeviceMessages.EntropyAck;
 import {DeviceMessageHelper} from "./device-message-helper";
 import ByteBuffer = require('bytebuffer');
 import * as Bitcore from "bitcore-lib";
+import {MessageHandler} from "./global/message-handler";
 
 export class EntropyRequestMessageHandler implements MessageHandler<EntropyRequest, EntropyAck> {
   public static messageNames = ['EntropyRequest'];

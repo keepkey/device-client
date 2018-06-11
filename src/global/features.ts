@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as ByteBuffer from "bytebuffer";
 
 import {DevicePolicyEnum} from "./device-policy-enum";
 import {CoinName} from "./coin-name";
@@ -27,6 +28,10 @@ export interface IFeatureCoin {
   address_type_p2wsh: number;
   signed_message_header: string;
   bip44_account_path: number;
+  forkid: number;
+  decimals: number;
+  contract_address: ByteBuffer;
+  gas_limit: ByteBuffer;
 }
 
 export interface IFeatures {
@@ -100,6 +105,10 @@ export class Features {
   public supportsCoinType(coin: CoinName): boolean {
     var coinName: string = CoinName[coin];
     return !!(_.find(this.data.coin_metadata, {name: coinName}));
+  }
+
+  public getTokenList(): Array<IFeatureCoin> {
+    return this.data.coins.filter((coin: IFeatureCoin) => !!coin.contract_address)
   }
 
   public get model(): string {

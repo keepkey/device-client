@@ -1,0 +1,14 @@
+{
+  identity: {
+    vendor: keepkey.com
+    bootloader_mode: true
+    major_version: 1
+    minor_version: 0
+    patch_version: 3
+  }
+  capabilities: {
+    model: K1-14AM
+    vendorName: KeepKey
+    firmwareImageAvailable: true
+  }
+}

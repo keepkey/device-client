@@ -1,10 +1,11 @@
 {
   "name": "@keepkey/device-client",
-  "version": "4.1.3",
+  "version": "5.4.1",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
   "typings": "dist/*.d.ts",
+  "files": ["dist/**/*", "misc/*"],
   "scripts": {
     "prepublish": "gulp pre-tsc && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,13 +21,12 @@
   },
   "homepage": "https://github.com/keepkey/keepkey-device-client#readme",
   "devDependencies": {
-    "@types/bignumber.js": "^4.0.3",
     "@types/bitcore-lib": "keepkey/bitcore-lib-types.git",
     "@types/bytebuffer": "^5.0.33",
     "@types/concat-stream": "^1.6.0",
     "@types/lodash": "4.14.50",
     "@types/node": "^7.0.5",
-    "device-protocol": "keepkey/device-protocol.git#v4.0.3",
+    "device-protocol": "keepkey/device-protocol.git#v5.4.1",
     "gulp": "gulpjs/gulp.git#6d71a658c61edb3090221579d8f97dbe086ba2ed",
     "gulp-bump": "^2.7.0",
     "gulp-concat": "^2.6.1",

@@ -1,3 +1,4 @@
+import {MessageHandler} from "./global/message-handler";
 import {DeviceMessageHelper} from "./device-message-helper";
 import ButtonRequest = DeviceMessages.ButtonRequest;
 import ButtonAck = DeviceMessages.ButtonAck;
