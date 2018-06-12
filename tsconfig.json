@@ -23,6 +23,7 @@
   "include": [
     "dist/messages.d.ts",
     "src/global/*.d.ts",
-    "src/device-client-manager.ts"
+    "src/device-client-manager.ts",
+    "src/node-transport.ts"
   ]
 }
