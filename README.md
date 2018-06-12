@@ -35,7 +35,13 @@ NodeTransport.factory(hid, (deviceClient: DeviceClient) => {
 
 `.changePin(options: ChangePinOptions)`
 
-options defaults to `{ remove: false }` and merges any specified additions
+ChangePinOptions:
+
+```javascript
+{
+  remove: boolean, // false
+}
+```
 
 #### CharacterAckAction
 
