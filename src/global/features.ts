@@ -12,6 +12,13 @@ export interface DeviceCapabilities {
   supportsSecureAccountTransfer: boolean;
 }
 
+export interface BootloaderInfo {
+  hash: string;
+  upgradable: boolean;
+  upgradeSkipable: boolean;
+  version: string;
+}
+
 export interface Policy {
   policy_name: string;
   enabled: boolean;
@@ -54,6 +61,7 @@ export interface IFeatures {
   vendor: string;
   coin_metadata: Array<CoinTypeConfiguration>;
   deviceCapabilities: DeviceCapabilities;
+  bootloaderInfo: BootloaderInfo;
   model: string;
   version: string;
 }
