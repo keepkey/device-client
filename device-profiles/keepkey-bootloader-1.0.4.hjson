@@ -10,5 +10,7 @@
     model: K1-14WL-S
     vendorName: KeepKey
     firmwareImageAvailable: true
+    bootloaderUpgradable: true
+    bootloaderUpgradeSkipable: true
   }
 }

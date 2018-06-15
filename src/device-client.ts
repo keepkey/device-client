@@ -59,7 +59,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
   public wordAck = _.partial(WordAckAction.operation, this, _);
   public characterAck = _.partial(CharacterAckAction.operation, this, _);
   public firmwareUpload = <DeviceClientMethods.FirmwareUploadFunction>
-    _.partial(FirmwareUploadAction.operation, this);
+    _.partial(FirmwareUploadAction.operation, this, _);
   public getAddress = <DeviceClientMethods.GetAddressFunction>
     _.partial(GetAddressAction.operation, this, _, _, true, null);
   public getEthereumAddress = <DeviceClientMethods.GetEthereumAddressFunction>

@@ -38,7 +38,7 @@ export type EncryptNodeVectorFunction = {
 }
 
 export type FirmwareUploadFunction = {
-  (): Promise<void>;
+  (firmwareId: string): Promise<void>;
 }
 
 export type VerifyDevice = {
