@@ -10,5 +10,7 @@
     model: K1-14AM
     vendorName: KeepKey
     firmwareImageAvailable: true
+    bootloaderUpgradable: true
+    bootloaderUpgradeSkipable: true
   }
 }

@@ -118,6 +118,8 @@ function fileMetaData2Json() {
       var fileHashTrezor = crypto.createHash('sha256');
       fileHashTrezor.update(file.contents.slice(256));
 
+      var isBootloaderUpdater = file.relative.lastIndexOf('bootloader') !== -1;
+
       var metaData = {
         file: file.relative,
         digest: fileHash.digest('hex'),
@@ -125,7 +127,8 @@ function fileMetaData2Json() {
         size: file.stat.size,
         timeStamp: file.stat.mtime,
         version: firmwareVersion,
-        modelNumber: modelNumber
+        modelNumber: modelNumber,
+        isBootloaderUpdater: isBootloaderUpdater
       };
 
       file.path = gutil.replaceExtension(file.path, '.json');

@@ -16,7 +16,7 @@ export class FirmwareUploadAction {
   private static client: DeviceClient;
   private static payload: ArrayBuffer;
 
-  public static operation(client: DeviceClient): Promise<void> {
+  public static operation(client: DeviceClient, firmwareId: string): Promise<void> {
     let modelNumber: string;
     if (!client.rawFirmwareStreamFactory) {
       throw 'firmware stream factory required to upload firmware';
@@ -25,16 +25,23 @@ export class FirmwareUploadAction {
     console.log('starting firmware upload');
     return client.featuresService.promise
       .then((features) => {
-        console.assert(features.model, "Device model number not available from the device feature object");
-        modelNumber = features.model;
-        FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {modelNumber: modelNumber});
-        console.assert(FirmwareUploadAction.firmwareFileMetaData, `Firmware metadata not found for ${modelNumber}`);
+        // TODO This needs to know whether there is a different bootloader updater for each model
+
+        if (firmwareId === 'bootloaderUpdater') {
+          FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {bootloaderUpdater: true});
+          console.assert(FirmwareUploadAction.firmwareFileMetaData, `Bootloader updater metadata not found`);
+        } else {
+          console.assert(features.model, "Device model number not available from the device feature object");
+          modelNumber = features.model;
+          FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {modelNumber: modelNumber});
+          console.assert(FirmwareUploadAction.firmwareFileMetaData, `Firmware metadata not found for ${modelNumber}`);
+        }
         return features;
       })
       .then<string>(FirmwareUploadAction.checkDeviceInBootloaderMode)
       .then<void>((): Promise<void> => {
         return new Promise<void>((resolve, reject) => {
-          client.rawFirmwareStreamFactory(modelNumber)
+          client.rawFirmwareStreamFactory(FirmwareUploadAction.firmwareFileMetaData.file)
             .on('error', (err: Error) => {
               console.error(err);
               reject(err);
