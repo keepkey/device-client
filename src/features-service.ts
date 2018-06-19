@@ -20,6 +20,7 @@ const OFFICIAL_BOOTLOADER_HASHES: Array<BootloaderInfo> = [
   {hash: '83d14cb6c7c48af2a83bc326353ee6b9abdd74cfe47ba567de1cb564da65e8e9', upgradable: true, upgradeSkipable: true, version: 'v1.0.3v3-patched'},
   {hash: '770b30aaa0be884ee8621859f5d055437f894a5c9c7ca22635e7024e059857b7', upgradable: true, upgradeSkipable: true, version: 'v1.0.4'},
   {hash: 'fc4e5c4dc2e5127b6814a3f69424c936f1dc241d1daf2c5a2d8f0728eb69d20d', upgradable: true, upgradeSkipable: true, version: 'v1.0.4-patched'},
+  {hash: '6cf4d2584b57d693e3fb0ab7854ad84c4b8d92b3084d9da8a21eada493952e9e', upgradable: false, upgradeSkipable: true, version: 'v1.1.0'},
 ];
 
 export class FeaturesService {

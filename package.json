@@ -5,7 +5,10 @@
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
   "typings": "dist/*.d.ts",
-  "files": ["dist/**/*", "misc/*"],
+  "files": [
+    "dist/**/*",
+    "misc/*"
+  ],
   "scripts": {
     "prepublish": "gulp pre-tsc && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -43,12 +46,12 @@
   },
   "dependencies": {
     "bignumber.js": "^4.0.0",
+    "bitcore-lib": "keepkey/bitcore-lib.git",
     "bytebuffer": "^5.0.1",
     "concat-stream": "^1.6.0",
     "events": "^1.1.1",
     "lodash": "4.17.2",
     "protobufjs": "^5.0",
-    "through2": "^2.0.3",
-    "bitcore-lib": "keepkey/bitcore-lib.git"
+    "through2": "^2.0.3"
   }
 }

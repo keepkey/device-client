@@ -28,7 +28,7 @@ export class FirmwareUploadAction {
         // TODO This needs to know whether there is a different bootloader updater for each model
 
         if (firmwareId === 'bootloaderUpdater') {
-          FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {bootloaderUpdater: true});
+          FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {isBootloaderUpdater: true});
           console.assert(FirmwareUploadAction.firmwareFileMetaData, `Bootloader updater metadata not found`);
         } else {
           console.assert(features.model, "Device model number not available from the device feature object");

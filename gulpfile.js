@@ -118,7 +118,7 @@ function fileMetaData2Json() {
       var fileHashTrezor = crypto.createHash('sha256');
       fileHashTrezor.update(file.contents.slice(256));
 
-      var isBootloaderUpdater = file.relative.lastIndexOf('bootloader') !== -1;
+      var isBootloaderUpdater = file.relative == 'blupdate.bin';
 
       var metaData = {
         file: file.relative,
