@@ -3,14 +3,13 @@
     vendor: keepkey.com
     bootloader_mode: true
     major_version: 1
-    minor_version: 0
-    patch_version: 4
+    minor_version: 1
+    patch_version: 0
   }
   capabilities: {
-    model: K1-14WL-S
     vendorName: KeepKey
     firmwareImageAvailable: true
-    bootloaderUpgradable: true
+    bootloaderUpgradable: false
     bootloaderUpgradeSkipable: true
   }
 }
