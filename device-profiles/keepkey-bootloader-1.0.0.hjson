@@ -11,6 +11,6 @@
     vendorName: KeepKey
     firmwareImageAvailable: true
     bootloaderUpgradable: true
-    bootloaderUpgradeSkipable: true
+    bootloaderUpgradeSkipable: false
   }
 }
