@@ -5,4 +5,5 @@ interface FirmwareFileMetadata {
   size: number;
   timeStamp: Date;
   version: string;
+  isBootloaderUpdater: boolean;
 }

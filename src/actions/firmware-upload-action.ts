@@ -25,8 +25,6 @@ export class FirmwareUploadAction {
     console.log('starting firmware upload');
     return client.featuresService.promise
       .then((features) => {
-        // TODO This needs to know whether there is a different bootloader updater for each model
-
         if (firmwareId === 'bootloaderUpdater') {
           FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {isBootloaderUpdater: true});
           console.assert(FirmwareUploadAction.firmwareFileMetaData, `Bootloader updater metadata not found`);
@@ -36,6 +34,7 @@ export class FirmwareUploadAction {
           FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {modelNumber: modelNumber});
           console.assert(FirmwareUploadAction.firmwareFileMetaData, `Firmware metadata not found for ${modelNumber}`);
         }
+        console.log(`Installing ${FirmwareUploadAction.firmwareFileMetaData.file} version ${FirmwareUploadAction.firmwareFileMetaData.version}`);
         return features;
       })
       .then<string>(FirmwareUploadAction.checkDeviceInBootloaderMode)
@@ -101,7 +100,7 @@ export class FirmwareUploadAction {
   private static validateFirmwareImageDigest(): Promise<void> {
     return FirmwareUploadAction.checkHash(
       Bitcore.crypto.Hash.sha256(Buffer.from(FirmwareUploadAction.payload)),
-      "firmware payload digest",
+      "firmware file digest",
       FirmwareUploadAction.firmwareFileMetaData.digest
     );
   }
