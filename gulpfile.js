@@ -33,7 +33,6 @@ let proto2ts = require('proto2typescript');
 let through = require('through2');
 let hjson = require('gulp-hjson');
 let crypto = require('crypto');
-let ts = require('gulp-typescript');
 let bump = require('gulp-bump');
 
 const paths = {
@@ -52,7 +51,25 @@ gulp.task('buildDeviceProfiles', function gatherConfigs() {
   return gulp.src(paths.deviceProfiles)
     .pipe(hjson({to: 'json'}))
     .pipe(jsoncombine('device-profiles.json', function (files) {
-      return new Buffer(JSON.stringify(_.values(files)));
+      let profiles = _.map(files, (file) => {
+          return _.pick(file, ['identity', 'capabilities']);
+        });
+      return new Buffer(JSON.stringify(profiles));
+    }))
+    .pipe(gulp.dest(paths.distDirectory));
+});
+
+gulp.task('buildBootloaderProfiles', function gatherConfigs() {
+  return gulp.src(paths.deviceProfiles)
+    .pipe(hjson({to: 'json'}))
+    .pipe(jsoncombine('bootloader-profiles.json', function (files) {
+      let profiles = _.reduce(files, (acc, file) => {
+        if (file.hashes) {
+          acc.push(file.hashes);
+        }
+        return acc;
+      }, []);
+      return new Buffer(JSON.stringify(_.flatten(profiles)));
     }))
     .pipe(gulp.dest(paths.distDirectory));
 });
@@ -76,10 +93,10 @@ gulp.task('bumpMajor', function () {
 });
 
 function extractString(file, cursor) {
-  var nextChar, str = '';
+  let nextChar, str = '';
   nextChar = file.contents.slice(cursor++, cursor).toString();
 
-  var max = 20;
+  let max = 20;
   while (nextChar.charCodeAt(0) && max--) {
     str += nextChar;
     nextChar = file.contents.slice(cursor++, cursor).toString();
@@ -92,35 +109,35 @@ function extractString(file, cursor) {
 }
 
 const MODEL_NUMBERS = {
-  "firmware.keepkey.bin": 'K1-14AM',
-  "firmware.salt.bin": 'K1-14WL-S',
+  'firmware.keepkey.bin': 'K1-14AM',
+  'firmware.salt.bin': 'K1-14WL-S',
 };
 
 function fileMetaData2Json() {
   return through.obj(function (file, enc, callback) {
     if (file.isStream()) {
       this.emit('error', new PluginError(PLUGIN_NAME, 'Streams are not supported!'));
-      return cb();
+      return callback();
     }
 
     if (file.isBuffer()) {
       let modelNumber = MODEL_NUMBERS[file.relative];
 
-      var versionMarkerLocation = file.contents.indexOf('VERSION');
+      let versionMarkerLocation = file.contents.indexOf('VERSION');
       if (versionMarkerLocation === -1) {
         throw 'Firmware file needs a version tag';
       }
-      var firmwareVersion = extractString(file, versionMarkerLocation + 7);
+      let firmwareVersion = extractString(file, versionMarkerLocation + 7);
 
-      var fileHash = crypto.createHash('sha256');
+      let fileHash = crypto.createHash('sha256');
       fileHash.update(file.contents);
 
-      var fileHashTrezor = crypto.createHash('sha256');
+      let fileHashTrezor = crypto.createHash('sha256');
       fileHashTrezor.update(file.contents.slice(256));
 
-      var isBootloaderUpdater = file.relative === 'blupdater.bin';
+      let isBootloaderUpdater = file.relative === 'blupdater.bin';
 
-      var metaData = {
+      let metaData = {
         file: file.relative,
         digest: fileHash.digest('hex'),
         trezorDigest: fileHashTrezor.digest('hex'),
@@ -169,9 +186,9 @@ function extractMessagesJson() {
 function extractMessagesDts(cb) {
   return gulp.src(paths.messagesJson)
     .pipe(through.obj(function (file, enc, cb) {
-      var protoJson = JSON.parse(file.contents);
+      let protoJson = JSON.parse(file.contents);
       protoJson.package = 'DeviceMessages';
-      var result = proto2ts(JSON.stringify(protoJson), {
+      proto2ts(JSON.stringify(protoJson), {
         camelCaseGetSet: true,
         properties: true,
         underscoreGetSet: false
@@ -186,7 +203,7 @@ function extractMessagesDts(cb) {
       path.basename += '.d';
       path.extname = '.ts';
     }))
-    .pipe(gulp.dest(paths.distDirectory))
+    .pipe(gulp.dest(paths.distDirectory));
 }
 
 
@@ -203,6 +220,7 @@ function copyDtsToDist() {
 
 gulp.task('pre-tsc', gulp.series(
   'buildDeviceProfiles',
+  'buildBootloaderProfiles',
   'extractMetadataFromFirmware',
   'messages.d.ts',
   copyDtsToDist

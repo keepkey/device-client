@@ -6,6 +6,14 @@
     minor_version: 1
     patch_version: 0
   }
+  hashes: [
+    {
+      hash: e45f587fb07533d832548402d0e71d8e8234881da54d86c4b699c28a6482b0ee
+      upgradable: false
+      upgradeSkipable: true
+      tag: v1.1.0
+    }
+  ]
   capabilities: {
     vendorName: KeepKey
     firmwareImageAvailable: true
