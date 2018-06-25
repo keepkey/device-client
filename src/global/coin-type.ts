@@ -231,6 +231,11 @@ export class CoinType {
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
   }, {
+    name            : CoinName[CoinName.BitcoinGold],
+    addressFormat   : "^[AG][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
+    defaultDecimals : 8
+  }, {
     name            : CoinName[CoinName.Aragon],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
