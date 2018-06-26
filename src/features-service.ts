@@ -1,6 +1,9 @@
 import * as _ from "lodash";
-import {BootloaderInfo, DeviceProfile, Features, IFeatureCoin, IFeatures} from "./global/features";
+import {BootloaderInfo, DeviceProfile, Features, IFeatureCoin, IFeatures, ICoinTable} from "./global/features";
 import {CoinType} from "./global/coin-type";
+import {BasicClient} from "./device-client";
+import {DeviceMessageHelper} from "./device-message-helper";
+import GetCoinTable = DeviceMessages.GetCoinTable;
 
 const FIRMWARE_METADATA_FILE: Array<FirmwareFileMetadata> = require('../dist/firmware.json');
 const OFFICIAL_BOOTLOADER_HASHES: Array<BootloaderInfo> = require('../dist/bootloader-profiles.json');
@@ -24,12 +27,45 @@ export class FeaturesService {
   private rejector: Function;
   private _promise: Promise<Features>;
 
-  public setValue(features: IFeatures, skipBootloaderHashCheck?: boolean): void {
+  public async setValue(features: IFeatures, client: BasicClient,
+                        skipBootloaderHashCheck?: boolean): Promise<Features> {
     features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
 
-    this.addFeatureDataToCoinType(features.coins);
+    if (!features.bootloader_mode) {
+      // Legacy support for devices that still put the CoinTable in the
+      // Features object.
+      features.coins = features.coins || [];
 
-    features.coin_metadata = CoinType.getList().map((coin:CoinType) => coin.toFeatureCoinMetadata());
+      if (features.deviceCapabilities.hasPagedCoinTable) {
+        // Grab all of the pages of the coin table.
+        //
+        // To start, we have to find out how many coins the device supports,
+        // and what chunk size it is prepared to return them back in.
+        let head_message: GetCoinTable = DeviceMessageHelper.factory('GetCoinTable');
+        let head = await client.writeToDevice(head_message);
+
+        // Then iterate through and request each of the chunks, building up
+        // a chain of promises of the features object.
+        for (let i = 0; i < head.num_coins; i += head.chunk_size) {
+          let tail_message: GetCoinTable = DeviceMessageHelper.factory('GetCoinTable');
+          tail_message.setStart(i);
+          tail_message.setEnd(Math.min(i + head.chunk_size, head.num_coins));
+          let tail: ICoinTable = await client.writeToDevice(tail_message);
+          // And add those chunks to the coin table. We do this to minimize the
+          // impact on users of device-client, and keep some semblance of API
+          // stability, despite having paginated the coins table.
+          features.coins = features.coins.concat(tail.table);
+        }
+      }
+
+      features.coins.forEach((coin) => {
+        CoinType.fromFeatureCoin(coin);
+      });
+
+      let coin_list = CoinType.getList();
+      features.coin_metadata = coin_list.map((coin:CoinType) => coin.toFeatureCoinMetadata());
+    }
+
     features.version = `v${features.major_version}.${features.minor_version}.${features.patch_version}`;
 
     if (!features.model || features.model === "Unknown") {
@@ -62,12 +98,8 @@ export class FeaturesService {
       this.resolver = undefined;
       this.rejector = undefined;
     }
-  }
 
-  private addFeatureDataToCoinType(coins: Array<IFeatureCoin>) {
-    coins.forEach((coin) => {
-      CoinType.fromFeatureCoin(coin);
-    });
+    return this.promise;
   }
 
   public get promise(): Promise<Features> {

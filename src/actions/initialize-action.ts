@@ -5,12 +5,11 @@ import {IFeatures} from "../global/features";
 
 export class InitializeAction {
   public static operation(client: BasicClient, skipBootloaderHashCheck?: boolean): Promise<any> {
-    var message: Initialize = DeviceMessageHelper.factory('Initialize');
+    var initialize: Initialize = DeviceMessageHelper.factory('Initialize');
 
-    return client.writeToDevice(message)
-      .then((featuresMessage: IFeatures) => {
-        client.featuresService.setValue(featuresMessage, skipBootloaderHashCheck);
-        return client.featuresService.promise;
-      });
+    return client.writeToDevice(initialize)
+    .then((features: IFeatures) => {
+      return client.featuresService.setValue(features, client, !!skipBootloaderHashCheck);
+    });
   }
 }

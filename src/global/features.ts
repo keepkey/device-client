@@ -4,12 +4,14 @@ import * as ByteBuffer from "bytebuffer";
 import {DevicePolicyEnum} from "./device-policy-enum";
 import {CoinName} from "./coin-name";
 import {CoinTypeConfiguration} from "./coin-type";
+import {CoinType} from "./coin-type";
 
 export interface DeviceCapabilities {
   firmwareImageAvailable: boolean;
   defaultMnemonicSeedLength: number;
   supportsCipheredKeyRecovery: boolean;
   supportsSecureAccountTransfer: boolean;
+  hasPagedCoinTable: boolean;
 }
 
 export interface BootloaderInfo {
@@ -69,6 +71,12 @@ export interface IFeatures {
   bootloaderInfo: BootloaderInfo;
   model: string;
   version: string;
+}
+
+export interface ICoinTable {
+  table: Array<IFeatureCoin>;
+  num_coins: number;
+  chunk_size: number;
 }
 
 export class Features {

@@ -68,6 +68,21 @@ MessageStates.register({
   userInteractionRequired: false
 });
 MessageStates.register({
+  messageName: "GetCoinTable",
+  validMode: DeviceExecutionMode.running,
+  sender: MessageSender.host,
+  messageType: MessageDirection.request,
+  resolveMessage: "CoinTable",
+  userInteractionRequired: false
+});
+MessageStates.register({
+  messageName: "CoinTable",
+  validMode: DeviceExecutionMode.running,
+  sender: MessageSender.device,
+  messageType: MessageDirection.response,
+  userInteractionRequired: false
+})
+MessageStates.register({
   messageName: "ClearSession",
   validMode: DeviceExecutionMode.running,
   sender: MessageSender.host,
