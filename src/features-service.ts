@@ -24,7 +24,7 @@ export class FeaturesService {
   private rejector: Function;
   private _promise: Promise<Features>;
 
-  public setValue(features: IFeatures): void {
+  public setValue(features: IFeatures, skipBootloaderHashCheck?: boolean): void {
     features.deviceCapabilities = FeaturesService.getDeviceCapabilities(features);
 
     this.addFeatureDataToCoinType(features.coins);
@@ -40,7 +40,7 @@ export class FeaturesService {
 
     let bootloaderHash: string = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
     features.bootloaderInfo = _.find(OFFICIAL_BOOTLOADER_HASHES, {hash: bootloaderHash});
-    let isUnofficialBootloader = !features.bootloader_mode && !features.bootloaderInfo;
+    let isUnofficialBootloader = !features.bootloader_mode && !features.bootloaderInfo && !skipBootloaderHashCheck;
     if (!this._promise || !this.resolver) {
       if (isUnofficialBootloader) {
         this._promise = Promise.reject<Features>(

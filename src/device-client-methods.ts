@@ -1,5 +1,10 @@
 import {NodeVector} from "./node-vector";
 import {DevicePolicyEnum} from "./global/device-policy-enum";
+import Initialize = DeviceMessages.Initialize;
+
+export type Initialize = {
+  (skipBootloaderHashCheck?: boolean): Promise<any>;
+}
 
 export type GetAddressFunction = {
   (nodePath: NodeVector, coinName: string): Promise<any>;
