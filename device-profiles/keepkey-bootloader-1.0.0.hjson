@@ -6,6 +6,20 @@
     minor_version: 0
     patch_version: 0
   }
+  hashes: [
+    {
+      hash: 6397c446f6b9002a8b150bf4b9b4e0bb66800ed099b881ca49700139b0559f10
+      upgradable: true
+      upgradeSkipable: false
+      tag: v1.0.0
+    }
+    {
+      hash: f13ce228c0bb2bdbc56bdcb5f4569367f8e3011074ccc63331348deb498f2d8f
+      upgradable: true
+      upgradeSkipable: false
+      tag: v1.0.0-patched
+    }
+  ]
   capabilities: {
     model: K1-14AM
     vendorName: KeepKey

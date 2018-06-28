@@ -48,7 +48,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
   public static UNEXPECTED_MESSAGE_EVENT = StatefulDeviceMessenger.UNEXPECTED_MESSAGE_EVENT;
 
   /* imported methods */
-  public initialize = _.partial(InitializeAction.operation, this);
+  public initialize = <DeviceClientMethods.Initialize>_.partial(InitializeAction.operation, this, _);
   public cancel = _.partial(CancelAction.operation, this);
   public wipeDevice = _.partial(WipeDeviceAction.operation, this);
   public resetDevice = <DeviceClientMethods.ResetDeviceFunction>

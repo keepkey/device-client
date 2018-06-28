@@ -40,6 +40,11 @@ export interface IFeatureCoin {
   gas_limit: ByteBuffer;
 }
 
+export interface DeviceProfile {
+  identity: Object;
+  capabilities: DeviceCapabilities;
+}
+
 export interface IFeatures {
   available_firmware_version: string;
   bootloader_hash: ByteBuffer;

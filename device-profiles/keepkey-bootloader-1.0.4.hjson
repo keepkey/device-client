@@ -6,6 +6,20 @@
     minor_version: 0
     patch_version: 4
   }
+  hashes: [
+    {
+      hash: 770b30aaa0be884ee8621859f5d055437f894a5c9c7ca22635e7024e059857b7
+      upgradable: true
+      upgradeSkipable: false
+      tag: v1.0.4
+    }
+    {
+      hash: fc4e5c4dc2e5127b6814a3f69424c936f1dc241d1daf2c5a2d8f0728eb69d20d
+      upgradable: true
+      upgradeSkipable: false
+      tag: v1.0.4-patched
+    }
+  ]
   capabilities: {
     model: K1-14WL-S
     vendorName: KeepKey
