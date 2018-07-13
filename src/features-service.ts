@@ -32,7 +32,7 @@ export class FeaturesService {
     features.coin_metadata = CoinType.getList().map((coin:CoinType) => coin.toFeatureCoinMetadata());
     features.version = `v${features.major_version}.${features.minor_version}.${features.patch_version}`;
 
-    if (!features.model) {
+    if (!features.model || features.model === "Unknown") {
       features.model = 'K1-14AM';
     }
 
