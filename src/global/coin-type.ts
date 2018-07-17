@@ -72,6 +72,10 @@ export class CoinType {
         DECIMAL_PLACES: instance.decimals,
         EXPONENTIAL_AT: [-(instance.decimals + 1), 40]
       };
+
+      instance.pubkeyhash = coin.address_type;
+      instance.scripthash = coin.address_type_p2sh;
+
       if (!!coin.contract_address) {
         // it is an ERC20 token
         instance.isToken = true;
@@ -107,6 +111,8 @@ export class CoinType {
   public coinTypeCode: string;
   public isToken: boolean;
   public exchangeForbidden: boolean;
+  public pubkeyhash: number;
+  public scripthash: number;
 
   private _symbol: string;
   public get symbol(): string {
