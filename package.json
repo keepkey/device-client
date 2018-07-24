@@ -45,7 +45,7 @@
     "typescript": "^2.1.6"
   },
   "dependencies": {
-    "bignumber.js": "^4.0.0",
+    "bignumber.js": "^7.2.1",
     "bitcore-lib": "keepkey/bitcore-lib.git",
     "bytebuffer": "^5.0.1",
     "concat-stream": "^1.6.0",
