@@ -23,7 +23,7 @@
  */
 
 let gulp = require('gulp');
-let gutil = require('gulp-util');
+let replaceExtension = require('replace-ext');
 let rename = require('gulp-rename');
 let replace = require('gulp-replace');
 let pbjs = require('gulp-pbjs');
@@ -148,7 +148,7 @@ function fileMetaData2Json() {
         isBootloaderUpdater: isBootloaderUpdater
       };
 
-      file.path = gutil.replaceExtension(file.path, '.json');
+      file.path = replaceExtension(file.path, '.json');
       file.contents = new Buffer(JSON.stringify(metaData));
     }
 
