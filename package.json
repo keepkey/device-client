@@ -32,8 +32,6 @@
     "device-protocol": "keepkey/device-protocol.git#v5.7.1",
     "gulp": "gulpjs/gulp.git#6d71a658c61edb3090221579d8f97dbe086ba2ed",
     "gulp-bump": "^2.7.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-download": "0.0.1",
     "gulp-hjson": "^2.0.3",
     "gulp-jsoncombine": "^1.0.3",
     "gulp-pbjs": "keepkey/gulp-pbjs.git",
