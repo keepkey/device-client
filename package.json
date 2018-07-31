@@ -37,9 +37,9 @@
     "gulp-pbjs": "keepkey/gulp-pbjs.git",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "gulp-typescript": "^3.1.4",
+    "gulp-typescript": "4.0.2",
     "proto2typescript": "keepkey/Proto2TypeScript.git",
-    "typescript": "^2.1.6"
+    "typescript": "^3.0.1"
   },
   "dependencies": {
     "bignumber.js": "^7.2.1",
