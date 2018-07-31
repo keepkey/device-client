@@ -72,7 +72,8 @@ export class FeaturesService {
       features.model = 'K1-14AM';
     }
 
-    features.available_firmware_version = _.find(FIRMWARE_METADATA_FILE, {modelNumber: features.model}).version;
+    let firmwareVersion: FirmwareFileMetadata = _.find(FIRMWARE_METADATA_FILE, <object>{modelNumber: features.model});
+    features.available_firmware_version = firmwareVersion.version;
 
     let bootloaderHash: string = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
     features.bootloaderInfo = _.find(OFFICIAL_BOOTLOADER_HASHES, {hash: bootloaderHash});
