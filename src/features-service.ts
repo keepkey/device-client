@@ -87,24 +87,31 @@ export class FeaturesService {
     }
 
     let isUnofficialBootloader = !features.bootloader_mode && !features.bootloaderInfo && !skipBootloaderHashCheck;
-    if (!this._promise || !this.resolver) {
-      if (isUnofficialBootloader) {
-        this._promise = Promise.reject<Features>(
-          `Potential bootloader issue. Please contact support. (${bootloaderHash})`);
-      } else if (features.deviceCapabilities) {
-        this._promise = Promise.resolve(new Features(features));
-      } else {
-        this._promise = Promise.reject<Features>('Unknown device or version');
-      }
+
+    if (isUnofficialBootloader) {
+      this.reject(`Potential bootloader issue. Please contact support. (${bootloaderHash})`);
+    } else if (!features.deviceCapabilities) {
+      this.reject('Unknown device or version');
     } else {
-      if (isUnofficialBootloader) {
-        this.rejector(
-          `Potential bootloader issue. Please contact support. (${bootloaderHash})`);
-      } else if (features.deviceCapabilities) {
-        this.resolver(new Features(features));
-      } else {
-        this.rejector('Unknown device or version');
-      }
+      this.resolve(new Features(features));
+    }
+  }
+
+  private resolve(features: Features): void {
+    if (!this._promise || !this.resolver) {
+      this._promise = Promise.resolve(features);
+    } else {
+      this.resolver(features);
+      this.resolver = undefined;
+      this.rejector = undefined;
+    }
+  }
+
+  private reject(error: string): void {
+    if (!this._promise || !this.resolver) {
+      this._promise = Promise.reject<Features>(error);
+    } else {
+      this.rejector(error);
       this.resolver = undefined;
       this.rejector = undefined;
     }
