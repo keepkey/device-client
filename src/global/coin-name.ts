@@ -41,5 +41,8 @@ export enum CoinName {
   "0x" = 628,
   FirstBlood = 629,
   RCN = 630,
-  Storj = 631
+  Storj = 631,
+  BinanceCoin = 632,
+  Tether = 633,
+  PolyMath = 634,
 }

@@ -398,6 +398,21 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.BinanceCoin],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.Tether],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 6
+  }, {
+    name            : CoinName[CoinName.PolyMath],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
   }];
 }
 
