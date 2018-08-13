@@ -97,15 +97,15 @@ export class Features {
   }
 
   public get supportsCipheredKeyRecovery(): boolean {
-    return _.get<boolean>(this.data, 'deviceCapabilities.supportsCipheredKeyRecovery');
+    return _.get(this.data, 'deviceCapabilities.supportsCipheredKeyRecovery');
   }
 
   public get defaultMnemonicSeedLength(): number {
-    return _.get<number>(this.data, 'deviceCapabilities.defaultMnemonicSeedLength');
+    return _.get(this.data, 'deviceCapabilities.defaultMnemonicSeedLength');
   }
 
   public get usesShapeshiftResponseV2(): boolean {
-    return _.get<boolean>(this.data, 'deviceCapabilities.usesShapeshiftResponseV2');
+    return _.get(this.data, 'deviceCapabilities.usesShapeshiftResponseV2');
   }
 
   public get raw(): IFeatures {
@@ -119,7 +119,7 @@ export class Features {
   }
 
   public policyEnabled(policy: DevicePolicyEnum): boolean {
-    return _.get<boolean>(this.findPolicy(policy), 'enabled');
+    return _.get(this.findPolicy(policy), 'enabled');
   }
 
   public supportsCoinType(coin: CoinName): boolean {
@@ -128,7 +128,7 @@ export class Features {
   }
 
   public getTokenList(): Array<IFeatureCoin> {
-    return this.data.coins.filter((coin: IFeatureCoin) => !!coin.contract_address)
+    return this.data.coins.filter((coin: IFeatureCoin) => !!coin.contract_address);
   }
 
   public get model(): string {

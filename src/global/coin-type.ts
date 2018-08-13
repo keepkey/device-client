@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import * as ByteBuffer from'bytebuffer';
-import {BigNumber, Configuration as BigNumberConfig} from "bignumber.js";
+import {BigNumber} from "bignumber.js";
 import Long = require('long');
 
 import {CoinName} from "./coin-name";
@@ -28,11 +28,11 @@ export class CoinType {
   private static instances: Array<CoinType> = [];
 
   private static newDustCalculation(dustRelayFee: number | BigNumber | string): string {
-    return new BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+    return new BigNumber(dustRelayFee).div(1000).times(ASSUMED_TX_SIZE).decimalPlaces(0, BigNumber.ROUND_UP).toString();
   }
 
   private static oldDustCalculation(minRelayTxFee: number | BigNumber | string): string {
-    return new BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).round(0, BigNumber.ROUND_UP).toString();
+    return new BigNumber(minRelayTxFee).div(1000).times(3).times(ASSUMED_TX_SIZE).decimalPlaces(0, BigNumber.ROUND_UP).toString();
   }
 
   public static get(type: CoinName): CoinType {
@@ -147,8 +147,8 @@ export class CoinType {
     console.assert(this._amountConstructor, 'AmountConstructor not set');
     return this._amountConstructor;
   }
-  public set amountParameters(config: Partial<BigNumberConfig>) {
-    this._amountConstructor = BigNumber.another(config);
+  public set amountParameters(config: Partial<BigNumber.Config>) {
+    this._amountConstructor = BigNumber.clone(config);
   }
 
   // public methods
@@ -158,12 +158,12 @@ export class CoinType {
 
   public amountToFloat(amount: Long | string): BigNumber {
     return new this.amountConstructor(amount.toString())
-      .shift(-this.decimals);
+      .shiftedBy(-this.decimals);
   }
 
   public floatToAmount(amount: number | BigNumber | string): BigNumber {
     return new this.amountConstructor(amount)
-        .shift(this.decimals);
+        .shiftedBy(this.decimals);
   }
 
   public equals(other: any): boolean {
