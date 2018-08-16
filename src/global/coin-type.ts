@@ -213,7 +213,7 @@ export class CoinType {
     defaultDecimals : 8
   }, {
     name            : CoinName[CoinName.Litecoin],
-    addressFormat   : "^[L3][a-km-zA-HJ-NP-Z1-9]{26,33}$",
+    addressFormat   : "^[LM][a-km-zA-HJ-NP-Z1-9]{26,33}$",
     dust            : CoinType.newDustCalculation(LITECOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
   }, {
