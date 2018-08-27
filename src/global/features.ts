@@ -18,7 +18,7 @@ export interface BootloaderInfo {
   hash: string;
   upgradable: boolean;
   upgradeSkipable: boolean;
-  version: string;
+  tag: string;
 }
 
 export interface Policy {
