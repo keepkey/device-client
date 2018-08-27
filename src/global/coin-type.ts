@@ -233,7 +233,7 @@ export class CoinType {
     defaultDecimals : 8
   }, {
     name            : CoinName[CoinName.BitcoinCash],
-    addressFormat   : "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    addressFormat   : "(^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$)|(^bitcoincash:[qpzry9x8gf2tvdw0s3jn54khce6mua7l]{25,55}$)|(^bitcoincash:[QPZRY9X8GF2TVDW0S3JN54KHCE6MUA7L]{25,55}$)",
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
   }, {
