@@ -72,11 +72,20 @@ export class FeaturesService {
       features.model = 'K1-14AM';
     }
 
-    let firmwareVersion: FirmwareFileMetadata = _.find(FIRMWARE_METADATA_FILE, <object>{modelNumber: features.model});
-    features.available_firmware_version = firmwareVersion.version;
+    let bootloaderHash: string;
+    if (skipBootloaderHashCheck) {
+        features.available_firmware_version = features.version;
 
-    let bootloaderHash: string = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
-    features.bootloaderInfo = _.find(OFFICIAL_BOOTLOADER_HASHES, {hash: bootloaderHash});
+        bootloaderHash = "unofficial bootloader";
+        features.bootloaderInfo = undefined;
+    } else {
+        let firmwareVersion: FirmwareFileMetadata = _.find(FIRMWARE_METADATA_FILE, <object>{modelNumber: features.model});
+        features.available_firmware_version = firmwareVersion.version;
+
+        bootloaderHash = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
+        features.bootloaderInfo = _.find(OFFICIAL_BOOTLOADER_HASHES, {hash: bootloaderHash});
+    }
+
     let isUnofficialBootloader = !features.bootloader_mode && !features.bootloaderInfo && !skipBootloaderHashCheck;
     if (!this._promise || !this.resolver) {
       if (isUnofficialBootloader) {
