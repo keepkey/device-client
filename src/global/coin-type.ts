@@ -208,12 +208,12 @@ export class CoinType {
   // Create all instances
   private static config: Array<CoinTypeConfiguration> = [{
     name            : CoinName[CoinName.Bitcoin],
-    addressFormat   : "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    addressFormat   : "(^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$)|(^(bc1)[a-zA-HJ-NP-Z0-9]{25,39}$)",
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
   }, {
     name            : CoinName[CoinName.Litecoin],
-    addressFormat   : "^[LM][a-km-zA-HJ-NP-Z1-9]{26,33}$",
+    addressFormat   : "(^[LM][a-km-zA-HJ-NP-Z1-9]{26,33}$)|(^(ltc1)[a-zA-HJ-NP-Z0-9]{25,39}$)",
     dust            : CoinType.newDustCalculation(LITECOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
   }, {
@@ -238,7 +238,7 @@ export class CoinType {
     defaultDecimals : 8
   }, {
     name            : CoinName[CoinName.BitcoinGold],
-    addressFormat   : "^[AG][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    addressFormat   : "(^[AG][a-km-zA-HJ-NP-Z1-9]{25,34}$)|(^(btg1)[a-zA-HJ-NP-Z0-9]{25,39}$)",
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
   }, {
