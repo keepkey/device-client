@@ -413,6 +413,16 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.Zilliqa],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 12
+  }, {
+    name            : CoinName[CoinName.Decentraland],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
   }];
 }
 

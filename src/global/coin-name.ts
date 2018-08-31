@@ -45,4 +45,6 @@ export enum CoinName {
   BinanceCoin = 632,
   Tether = 633,
   PolyMath = 634,
+  Zilliqa = 635,
+  Decentraland = 636,
 }
