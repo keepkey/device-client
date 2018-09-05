@@ -230,7 +230,7 @@ function copyValidationDataToDist() {
 gulp.task('buildFlashDictionary', async () => {
   let str = await binaryLibrarian.getFlashAssets();
 
-  return file('flash-bin-dictionary.json', str, { src: true })
+  return file('new-flash-bin-dictionary.json', str, { src: true })
     .pipe(gulp.dest(paths.deviceValidationDirectory));
 });
 
