@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keepkey/keepkey-device-client.git"
+    "url": "git+https://github.com/keepkey/keepkey-device-client"
   },
   "author": "KeepKey, LLC",
   "license": "MIT",
