@@ -47,4 +47,13 @@ export enum CoinName {
   PolyMath = 634,
   Zilliqa = 635,
   Decentraland = 636,
+  "0xBitcoin" = 637,
+  Gifto = 638,
+  IOSToken = 639,
+  Aelf = 640,
+  TrueUSD = 641,
+  Aeternity = 642,
+  Maker = 643,
+  Dai = 644,
+  SpankChain = 645,
 }

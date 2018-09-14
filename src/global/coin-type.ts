@@ -423,6 +423,51 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
+  }, {
+    name            : "0xBitcoin",
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.Gifto],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 5
+  }, {
+    name            : CoinName[CoinName.IOSToken],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Aelf],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.TrueUSD],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Aeternity],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Maker],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Dai],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.SpankChain],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
   }];
 }
 
