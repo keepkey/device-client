@@ -228,7 +228,7 @@ export class CoinType {
     defaultDecimals : 18
   }, {
     name            : CoinName[CoinName.Dash],
-    addressFormat   : "^X[a-km-zA-HJ-NP-Z1-9]{25,34}$", //TODO
+    addressFormat   : "^[X7][a-km-zA-HJ-NP-Z1-9]{25,34}$",
     dust            : CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
     defaultDecimals : 8
   }, {
@@ -420,6 +420,51 @@ export class CoinType {
     defaultDecimals : 12
   }, {
     name            : CoinName[CoinName.Decentraland],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : "0xBitcoin",
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.Gifto],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 5
+  }, {
+    name            : CoinName[CoinName.IOSToken],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Aelf],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.TrueUSD],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Aeternity],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Maker],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.Dai],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.SpankChain],
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
