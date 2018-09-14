@@ -228,7 +228,7 @@ export class CoinType {
     defaultDecimals : 18
   }, {
     name            : CoinName[CoinName.Dash],
-    addressFormat   : "^X[a-km-zA-HJ-NP-Z1-9]{25,34}$", //TODO
+    addressFormat   : "^[X7][a-km-zA-HJ-NP-Z1-9]{25,34}$",
     dust            : CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
     defaultDecimals : 8
   }, {
