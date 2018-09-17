@@ -24,10 +24,13 @@
   },
   "homepage": "https://github.com/keepkey/keepkey-device-client#readme",
   "devDependencies": {
+    "@types/bitcore-lib": "keepkey/bitcore-lib-types",
+    "@types/bytebuffer": "^5.0.33",
     "@types/concat-stream": "^1.6.0",
+    "@types/lodash": "4.14.115",
     "@types/node": "^10.5.4",
     "device-protocol": "keepkey/device-protocol#v5.7.1",
-    "gulp": "github:gulpjs/gulp#6d71a658c61edb3090221579d8f97dbe086ba2ed",
+    "gulp": "gulpjs/gulp#6d71a658c61edb3090221579d8f97dbe086ba2ed",
     "gulp-bump": "^3.1.1",
     "gulp-hjson": "^2.0.3",
     "gulp-jsoncombine": "^1.0.3",
@@ -39,9 +42,6 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "@types/bitcore-lib": "keepkey/bitcore-lib-types",
-    "@types/bytebuffer": "^5.0.33",
-    "@types/lodash": "4.14.115",
     "bignumber.js": "^7.2.1",
     "bitcore-lib": "keepkey/bitcore-lib",
     "bytebuffer": "^5.0.1",
