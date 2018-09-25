@@ -56,4 +56,7 @@ export enum CoinName {
   Maker = 643,
   Dai = 644,
   SpankChain = 645,
+  CyberMiles = 646,
+  "Crypto.com" = 647,
+  Populous = 648,
 }
