@@ -468,6 +468,21 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
+  }, {
+    name            : CoinName[CoinName.CyberMiles],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 18
+  }, {
+    name            : "Crypto.com",
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.Populous],
+    addressFormat   : ETHEREUM_ADDRESS_FORMAT,
+    dust            : 1,
+    defaultDecimals : 8
   }];
 }
 
