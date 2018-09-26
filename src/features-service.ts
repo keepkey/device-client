@@ -80,6 +80,9 @@ export class FeaturesService {
         features.bootloaderInfo = undefined;
     } else {
         let firmwareVersion: FirmwareFileMetadata = _.find(FIRMWARE_METADATA_FILE, <object>{modelNumber: features.model});
+        if (!firmwareVersion) {
+            firmwareVersion = _.find(FIRMWARE_METADATA_FILE, <object>{modelNumber: "K1-14AM"});
+        }
         features.available_firmware_version = firmwareVersion.version;
 
         bootloaderHash = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
