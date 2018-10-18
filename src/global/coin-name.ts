@@ -59,4 +59,5 @@ export enum CoinName {
   CyberMiles = 646,
   "Crypto.com" = 647,
   Populous = 648,
+  ODEM = 649,
 }
