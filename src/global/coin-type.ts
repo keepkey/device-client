@@ -242,6 +242,11 @@ export class CoinType {
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
     defaultDecimals : 8
   }, {
+    name            : CoinName[CoinName.Bitcore],
+    addressFormat   : "(^[2s][a-km-zA-HJ-NP-Z1-9]{25,34}$)|(^(btg1)[a-zA-HJ-NP-Z0-9]{25,39}$)",
+    dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
+    defaultDecimals : 8
+  }, {
     name            : CoinName[CoinName.Zcash],
     addressFormat   : "^t1[a-km-zA-HJ-NP-Z1-9]{33}$",
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),

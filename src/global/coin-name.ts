@@ -9,6 +9,7 @@ export enum CoinName {
   Ethereum = 6,
   BitcoinCash = 145,
   BitcoinGold = 156,
+  Bitcore = 160,
   Zcash = 133,
   // ERC20 Tokens
   Aragon = 601,
