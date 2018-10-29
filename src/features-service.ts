@@ -46,7 +46,7 @@ export class FeaturesService {
 
         // Then iterate through and request each of the chunks, building up
         // a chain of promises of the features object.
-        for (let i = 0; i < head.num_coins; i += head.chunk_size) {
+        for (let i = 0; i < 72; i += head.chunk_size) {
           let tail_message: GetCoinTable = DeviceMessageHelper.factory('GetCoinTable');
           tail_message.setStart(i);
           tail_message.setEnd(Math.min(i + head.chunk_size, head.num_coins));
