@@ -14,7 +14,7 @@
     supportsSecureAccountTransfer: true
     usesProtectCallButtonRequests: false
     usesShapeshiftResponseV2: true
-    upgradeSkipable: true
+    upgradeSkipable: false
     hasPagedCoinTable: true
   }
 }

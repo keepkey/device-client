@@ -2,7 +2,7 @@
   identity: {
     vendor: keepkey.com
     major_version: 5
-    minor_version: 5
+    minor_version: 9
     patch_version: 0
     bootloader_mode: null
   }
@@ -14,6 +14,7 @@
     supportsSecureAccountTransfer: true
     usesProtectCallButtonRequests: false
     usesShapeshiftResponseV2: true
-    upgradeSkipable: false
+    upgradeSkipable: true
+    hasPagedCoinTable: true
   }
 }
