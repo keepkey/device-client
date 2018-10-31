@@ -79,7 +79,7 @@ export class DeviceClientManager extends EventEmitter {
     this._rawFirmwareStreamFactory = streamFactory;
   }
 
-  private clients: _.Dictionary<DeviceClient> = {};
+  public clients: _.Dictionary<DeviceClient> = {};
 
   public findByDeviceId(deviceId): DeviceClient {
     return this.clients[deviceId];
