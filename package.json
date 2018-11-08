@@ -1,6 +1,6 @@
 {
   "name": "@keepkey/device-client",
-  "version": "5.10.0",
+  "version": "5.10.1",
   "description": "A library to communicate with a KeepKey device",
   "main": "dist/device-client-manager.js",
   "module": "dist/**/*.js",
