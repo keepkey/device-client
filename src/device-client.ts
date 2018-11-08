@@ -71,9 +71,11 @@ export class DeviceClient extends EventEmitter implements BasicClient {
   public endSession = _.partial(EndSessionAction.operation, this);
   public changePin = _.partial(ChangePinAction.operation, this, _);
   public changeLabel = <DeviceClientMethods.ChangeLabelFunction>
-    _.partial(ApplySettingsAction.operation, this, null, null, _);
+    _.partial(ApplySettingsAction.operation, this, null, null, _, null);
   public enablePassphrase = <DeviceClientMethods.EnablePassphraseFunction>
-    _.partial(ApplySettingsAction.operation, this, _, null, null);
+    _.partial(ApplySettingsAction.operation, this, _, null, null, null);
+  public changePinTimeout = <DeviceClientMethods.ChangePinTimeoutFunction>
+    _.partial(ApplySettingsAction.operation, this, null, null, null, _);
   public encryptNodeVector = <DeviceClientMethods.EncryptNodeVectorFunction>
     _.partial(CipherNodeVectorAction.operation, this, true, _);
   public decryptNodeVector = <DeviceClientMethods.DecryptNodeVectorFunction>

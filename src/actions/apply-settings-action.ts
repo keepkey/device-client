@@ -7,7 +7,7 @@ import {ActionHelper} from "./action-helper";
 
 export class ApplySettingsAction {
   public static operation(client: BasicClient, usePassphrase: boolean,
-                          language: Language, label: string) {
+                          language: Language, label: string, autoLockDelayMs: number) {
     return client.featuresService.promise
       .then((features: Features) => {
         if (!features.initialized) {
@@ -24,6 +24,9 @@ export class ApplySettingsAction {
         }
         if (usePassphrase !== null) {
           message.setUsePassphrase(usePassphrase);
+        }
+        if (autoLockDelayMs !== null) {
+          message.setAutoLockDelayMs(autoLockDelayMs);
         }
 
         return client.writeToDevice(message);

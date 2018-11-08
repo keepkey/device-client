@@ -22,6 +22,10 @@ export type ChangeLabelFunction = {
   (label: string): Promise<any>;
 }
 
+export type ChangePinTimeoutFunction = {
+  (timeout: number): Promise<any>;
+}
+
 export type EnablePassphraseFunction = {
   (enabled: boolean): Promise<any>;
 }
