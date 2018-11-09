@@ -17,6 +17,7 @@ export class StatefulDeviceMessenger extends EventEmitter {
   private writeRequestInProgress: Array<WriteRequestInProgress> = [];
   private pendingMessageQueue: Array<any> = [];
   private isDisabled: boolean = false;
+  private cancelInitiated: boolean = false;
 
   constructor(private transport) {
     super();
@@ -94,7 +95,7 @@ export class StatefulDeviceMessenger extends EventEmitter {
     var messageType = message.$type.name;
     var hydratedMessage = DeviceMessageHelper.hydrate(message);
     if (!this.isDisabled) {
-      if (this.writeRequestInProgress.length) {
+      if (this.writeRequestInProgress.length && !this.cancelInitiated) {
         var writeRequest = _.last(this.writeRequestInProgress);
 
         if (messageType === DeviceMessageStates.TxRequest) {
@@ -139,12 +140,14 @@ export class StatefulDeviceMessenger extends EventEmitter {
   }
 
   private cancelPendingRequests() {
+    this.cancelInitiated = true;
     _.each(this.pendingMessageQueue, (pendingMessage) => {
       pendingMessage.reject(
         `${pendingMessage.message.$type.name} not sent due to Cancel request`
       );
     });
     this.pendingMessageQueue.length = 0;
+    this.cancelInitiated = false;
   };
 
   private enqueueMessage(message): Promise<any> {
