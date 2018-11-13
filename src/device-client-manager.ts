@@ -53,21 +53,18 @@ export class DeviceClientManager extends EventEmitter {
     return DeviceClientManager._instance;
   }
 
+  private _hidHelpers: HidHelper[] = [];
 
-  private _hidHelper: HidHelper;
-
-  public get hidHelper(): HidHelper {
-    if (!this._hidHelper) {
-      throw 'HidHelper must be set';
-    }
-    return this._hidHelper;
+  public addHidHelper(helper: HidHelper) {
+    this._hidHelpers.push(helper);
   }
 
-  public set hidHelper(helper: HidHelper) {
-    if (this._hidHelper) {
-      throw "HidHelper is already set";
-    }
-    this._hidHelper = helper;
+  public removeHidHelpers() {
+    this._hidHelpers = [];
+  }
+
+  public hidHelperIsSet() {
+    return !!this._hidHelpers[0]
   }
 
   private _rawFirmwareStreamFactory: FirmwareStreamFactory;
@@ -93,7 +90,8 @@ export class DeviceClientManager extends EventEmitter {
   }
 
   public getActiveClient(): Promise<DeviceClient> {
-    return this.hidHelper.getActiveClient();
+    const hidHelper = this._hidHelpers[0];
+    return hidHelper ? hidHelper.getActiveClient() : Promise.reject('No Active Client');
   }
 
   public factory(transport: Transport): DeviceClient {

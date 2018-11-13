@@ -14,7 +14,7 @@ export abstract class Transport {
   private pendingWriteQueue = Promise.resolve();
 
   public get deviceId() {
-    return this.deviceData.deviceId;
+    return this.deviceData.deviceId || this.deviceData.device;
   }
 
   public get vendorId() {
