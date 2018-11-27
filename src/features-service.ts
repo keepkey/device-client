@@ -36,7 +36,9 @@ export class FeaturesService {
       // Features object.
       features.coins = features.coins || [];
 
-      if (features.deviceCapabilities.hasPagedCoinTable) {
+      if (features.deviceCapabilities.hasPagedCoinTable ||
+          features.major_version > 5 ||
+          (features.major_version == 5 && features.minor_version >= 7)) {
         // Grab all of the pages of the coin table.
         //
         // To start, we have to find out how many coins the device supports,
