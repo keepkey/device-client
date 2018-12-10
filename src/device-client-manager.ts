@@ -33,7 +33,12 @@ const RECOGNIZED_DEVICES: Array<any> = [
   {
     type: "KEEPKEY",
     vendorId: 11044,
-    productId: 1
+    productId: 1     // HID KeepKey
+  },
+  {
+    type: "KEEPKEY",
+    vendorId: 11044,
+    productId: 2     // WebUSB KeepKey
   },
   {
     type: "TREZOR",
