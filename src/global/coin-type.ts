@@ -119,7 +119,7 @@ export class CoinType {
     return this._symbol;
   }
   public set symbol(s: string) {
-    this._symbol = s.toUpperCase();
+    this._symbol = s;
   }
 
   private _contractAddress: ByteBuffer;
