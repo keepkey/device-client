@@ -61,7 +61,7 @@ export class DeviceClient extends EventEmitter implements BasicClient {
   public firmwareUpload = <DeviceClientMethods.FirmwareUploadFunction>
     _.partial(FirmwareUploadAction.operation, this, _);
   public getAddress = <DeviceClientMethods.GetAddressFunction>
-    _.partial(GetAddressAction.operation, this, _, _, true, null);
+    _.partial(GetAddressAction.operation, this, _, _, _, null);
   public getEthereumAddress = <DeviceClientMethods.GetEthereumAddressFunction>
     _.partial(GetEthereumAddressAction.operation, this, _, _);
   public getPublicKey = <DeviceClientMethods.GetPublicKeyFunction>

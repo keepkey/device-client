@@ -7,7 +7,7 @@ export type Initialize = {
 }
 
 export type GetAddressFunction = {
-  (nodePath: NodeVector, coinName: string): Promise<any>;
+  (nodePath: NodeVector, coinName: string, showDisplay: boolean): Promise<any>;
 }
 
 export type GetEthereumAddressFunction = {
