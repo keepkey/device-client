@@ -21,6 +21,7 @@ const ASSUMED_TX_SIZE = 182;
 const BITCOIN_DUST_RELAY_FEE = 3000; // From bitcoin source code
 const LITECOIN_DUST_RELAY_FEE = 100000; // https://github.com/litecoin-project/litecoin/blob/master/src/policy/policy.h#L48
 const DASH_MIN_RELAY_TX_FEE = 10000; // https://github.com/dashpay/dash/blob/master/src/wallet/wallet.h#L57
+const AXE_MIN_RELAY_TX_FEE = 10000;
 
 const ETHEREUM_ADDRESS_FORMAT = "^(0x)?[0-9a-fA-F]{40}$";
 
@@ -245,6 +246,11 @@ export class CoinType {
     name            : CoinName[CoinName.Zcash],
     addressFormat   : "^t1[a-km-zA-HJ-NP-Z1-9]{33}$",
     dust            : CoinType.newDustCalculation(BITCOIN_DUST_RELAY_FEE),
+    defaultDecimals : 8
+  }, {
+    name            : CoinName[CoinName.Axe],
+    addressFormat   : "^[P7][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    dust            : CoinType.oldDustCalculation(AXE_MIN_RELAY_TX_FEE),
     defaultDecimals : 8
   }, {
     name            : CoinName[CoinName.Aragon],
@@ -490,4 +496,3 @@ export class CoinType {
     defaultDecimals : 18
   }];
 }
-
