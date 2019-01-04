@@ -1,4 +1,3 @@
-# keepkey-device-client
-Version: 0.1.4
+# @keepkey/device-client
 
-This is an early release of the KeepKey Device Client. Better documentation coming soon.
+This package has been deprecated. Please use [@keepkey/keepkey.js](https://github.com/keepkey/keepkey.js) for new projects!
