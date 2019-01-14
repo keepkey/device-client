@@ -80,6 +80,9 @@ export class CoinType {
         // it is an ERC20 token
         instance.isToken = true;
         instance.contractAddressString = "0x"+coin.contract_address.toHex();
+        // v6.0.0 firmware removed gas_limit from the coin table, but the
+        // KeepKey client still needs it:
+        coin.gas_limit = coin.gas_limit || ByteBuffer.fromHex("000000000000000000000000000000000000000000000000000000000001e848");
         instance.gasLimitFromBuffer = coin.gas_limit;
       }
 
