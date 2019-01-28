@@ -45,7 +45,7 @@ export class DeviceMessageHelper {
   }
 
   public static buffer2Hex(key, value: any) {
-    if (key === 'passphrase' || key === 'pin') {
+    if (key === 'passphrase' || key === 'pin' || key === 'character') {
       return '<redacted>';
     } else if (value && value.buffer) {
       // NOTE: v.buffer is type Buffer in node and ArrayBuffer in chrome
