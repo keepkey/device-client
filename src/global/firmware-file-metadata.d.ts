@@ -6,4 +6,5 @@ interface FirmwareFileMetadata {
   timeStamp: Date;
   version: string;
   isBootloaderUpdater: boolean;
+  modelNumber?: string;
 }

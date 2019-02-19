@@ -81,11 +81,13 @@ export class FeaturesService {
         bootloaderHash = "unofficial bootloader";
         features.bootloaderInfo = undefined;
     } else {
-        let firmwareVersion: FirmwareFileMetadata = _.find(FIRMWARE_METADATA_FILE, <object>{modelNumber: features.model});
-        if (!firmwareVersion) {
-            firmwareVersion = _.find(FIRMWARE_METADATA_FILE, <object>{modelNumber: "K1-14AM"});
+        let firmwareMetadata: FirmwareFileMetadata;
+        for (var i = 0; i < FIRMWARE_METADATA_FILE.length; i++) {
+            if (FIRMWARE_METADATA_FILE[i].modelNumber === "K1-14AM") {
+                firmwareMetadata = FIRMWARE_METADATA_FILE[i];
+            }
         }
-        features.available_firmware_version = firmwareVersion.version;
+        features.available_firmware_version = firmwareMetadata.version;
 
         bootloaderHash = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
         features.bootloaderInfo = _.find(OFFICIAL_BOOTLOADER_HASHES, {hash: bootloaderHash});
