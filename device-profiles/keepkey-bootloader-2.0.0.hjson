@@ -1,0 +1,23 @@
+{
+  identity: {
+    vendor: keepkey.com
+    bootloader_mode: true
+    major_version: 2
+    minor_version: 0
+    patch_version: 0
+  }
+  hashes: [
+    {
+      hash: 9bf1580d1b21250f922b68794cdadd6c8e166ae5b15ce160a42f8c44a2f05936
+      upgradable: false
+      upgradeSkipable: true
+      tag: v2.0.0
+    }
+  ]
+  capabilities: {
+    vendorName: KeepKey
+    firmwareImageAvailable: true
+    bootloaderUpgradable: false
+    bootloaderUpgradeSkipable: true
+  }
+}

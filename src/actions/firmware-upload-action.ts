@@ -31,8 +31,8 @@ export class FirmwareUploadAction {
         } else {
           console.assert(features.model, "Device model number not available from the device feature object");
           modelNumber = features.model;
-          FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {isBootloaderUpdater: false});
-          console.assert(FirmwareUploadAction.firmwareFileMetaData, `Firmware metadata not found for ${modelNumber}`);
+          FirmwareUploadAction.firmwareFileMetaData = _.find(FIRMWARE_METADATA_FILE, {isBootloaderUpdater: false, version: firmwareId});
+          console.assert(FirmwareUploadAction.firmwareFileMetaData, `${firmwareId} firmware metadata not found for ${modelNumber}`);
         }
         console.log(`Installing ${FirmwareUploadAction.firmwareFileMetaData.file} version ${FirmwareUploadAction.firmwareFileMetaData.version}`);
         return features;
