@@ -74,40 +74,25 @@ export class FeaturesService {
       features.model = 'K1-14AM';
     }
 
-    let bootloaderHash: string;
-    if (skipBootloaderHashCheck) {
-        features.available_firmware_version = features.version;
-
-        bootloaderHash = "unofficial bootloader";
-        features.bootloaderInfo = undefined;
-    } else {
-        let firmwareMetadata: FirmwareFileMetadata;
-        for (var i = 0; i < FIRMWARE_METADATA_FILE.length; i++) {
-            if (FIRMWARE_METADATA_FILE[i].modelNumber === "K1-14AM") {
-                firmwareMetadata = FIRMWARE_METADATA_FILE[i];
-            }
+    let availableVersions = []
+    for (var i = 0; i < FIRMWARE_METADATA_FILE.length; i++) {
+        if (FIRMWARE_METADATA_FILE[i].isBootloaderUpdater === false) {
+            availableVersions.push(FIRMWARE_METADATA_FILE[i].version);
         }
-        features.available_firmware_version = firmwareMetadata.version;
-
-        bootloaderHash = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
-        features.bootloaderInfo = _.find(OFFICIAL_BOOTLOADER_HASHES, {hash: bootloaderHash});
     }
+    features.available_firmware_versions = availableVersions;
 
-    let isUnofficialBootloader = !features.bootloader_mode && !features.bootloaderInfo && !skipBootloaderHashCheck;
+    let bootloaderHash: string = features.bootloader_mode ? '' : features.bootloader_hash.toHex();
+    features.bootloaderInfo = _.find(OFFICIAL_BOOTLOADER_HASHES, {hash: bootloaderHash});
+
     if (!this._promise || !this.resolver) {
-      if (isUnofficialBootloader) {
-        this._promise = Promise.reject<Features>(
-          `Potential bootloader issue. Please contact support. (${bootloaderHash})`);
-      } else if (features.deviceCapabilities) {
+      if (features.deviceCapabilities) {
         this._promise = Promise.resolve(new Features(features));
       } else {
         this._promise = Promise.reject<Features>('Unknown device or version');
       }
     } else {
-      if (isUnofficialBootloader) {
-        this.rejector(
-          `Potential bootloader issue. Please contact support. (${bootloaderHash})`);
-      } else if (features.deviceCapabilities) {
+      if (features.deviceCapabilities) {
         this.resolver(new Features(features));
       } else {
         this.rejector('Unknown device or version');

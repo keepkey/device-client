@@ -48,7 +48,7 @@ export interface DeviceProfile {
 }
 
 export interface IFeatures {
-  available_firmware_version: string;
+  available_firmware_versions: Array<string>;
   bootloader_hash: ByteBuffer;
   bootloader_mode: any;
   coins: Array<IFeatureCoin>;
