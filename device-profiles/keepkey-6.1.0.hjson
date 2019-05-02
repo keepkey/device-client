@@ -16,5 +16,6 @@
     usesShapeshiftResponseV2: true
     upgradeSkipable: true
     hasPagedCoinTable: true
+    supportsRecoveryDryRun: true
   }
 }

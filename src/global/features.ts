@@ -12,6 +12,7 @@ export interface DeviceCapabilities {
   supportsCipheredKeyRecovery: boolean;
   supportsSecureAccountTransfer: boolean;
   hasPagedCoinTable: boolean;
+  supportsRecoveryDryRun: boolean;
 }
 
 export interface BootloaderInfo {
