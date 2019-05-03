@@ -337,7 +337,8 @@ MessageStates.register({
   interstitialMessages: [
     "WordRequest",
     "PinMatrixRequest",
-    "CharacterRequest"
+    "CharacterRequest",
+    "ButtonRequest"
   ],
   userInteractionRequired: true
 });

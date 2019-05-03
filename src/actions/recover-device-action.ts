@@ -13,6 +13,7 @@ export interface RecoverDeviceOptions {
   word_count?: number;
   enforce_wordlist?: boolean;
   use_character_cipher?: boolean;
+  dry_run?: boolean;
 }
 
 enum FailureCodes {
@@ -27,7 +28,8 @@ export class RecoverDeviceAction {
     label: null,
     word_count: 12,
     enforce_wordlist: true,
-    use_character_cipher: true
+    use_character_cipher: true,
+    dry_run: false
   };
 
   public static operation(client: BasicClient, options: RecoverDeviceOptions) {
@@ -36,32 +38,37 @@ export class RecoverDeviceAction {
 
     return client.featuresService.promise
       .then((features: Features) => {
-        if (!features.initialized) {
-          o.use_character_cipher = features.supportsCipheredKeyRecovery;
-          if (o.use_character_cipher) {
-            o.word_count = 0;
-          } else {
-            o.word_count = features.defaultMnemonicSeedLength;
-          }
-
-          var message: RecoveryDevice = DeviceMessageHelper.factory('RecoveryDevice');
-          message.setWordCount(o.word_count);
-          message.setPassphraseProtection(o.passphrase_protection);
-          message.setPinProtection(o.pin_protection);
-          message.setLanguage(o.language);
-          message.setLabel(o.label);
-          message.setEnforceWordlist(o.enforce_wordlist);
-          message.setUseCharacterCipher(o.use_character_cipher);
-
-          return client.writeToDevice(message)
-            .catch((failureMessage) => {
-              if (!FailureCodes[failureMessage.code]) {
-                return Promise.reject(failureMessage);
-              }
-            });
-        } else {
+        if (features.initialized && !o.dry_run) {
           return Promise.reject("Expected the device to be uninitialized");
         }
+
+        if (!features.initialized && o.dry_run) {
+          return Promise.reject("Expected the device to be initialized");
+        }
+
+        o.use_character_cipher = features.supportsCipheredKeyRecovery;
+        if (o.use_character_cipher) {
+          o.word_count = 0;
+        } else {
+          o.word_count = features.defaultMnemonicSeedLength;
+        }
+
+        var message: RecoveryDevice = DeviceMessageHelper.factory('RecoveryDevice');
+        message.setWordCount(o.word_count);
+        message.setPassphraseProtection(o.passphrase_protection);
+        message.setPinProtection(o.pin_protection);
+        message.setLanguage(o.language);
+        message.setLabel(o.label);
+        message.setEnforceWordlist(o.enforce_wordlist);
+        message.setUseCharacterCipher(o.use_character_cipher);
+        message.setDryRun(o.dry_run);
+
+        return client.writeToDevice(message)
+          .catch((failureMessage) => {
+            if (!FailureCodes[failureMessage.code]) {
+              return Promise.reject(failureMessage);
+            }
+          });
       })
       .catch(function (failure) {
         console.log('deviceRecovery failed', arguments);

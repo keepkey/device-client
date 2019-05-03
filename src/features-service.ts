@@ -15,6 +15,9 @@ export class FeaturesService {
       return !!(_.find([features], profile.identity));
     });
 
+    if (deviceProfile.capabilities.supportsRecoveryDryRun === undefined)
+        deviceProfile.capabilities.supportsRecoveryDryRun = false;
+
     if (!deviceProfile) {
       console.error('Unknown device or version');
       return undefined;
