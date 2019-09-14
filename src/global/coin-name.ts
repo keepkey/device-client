@@ -60,4 +60,5 @@ export enum CoinName {
   "Crypto.com" = 647,
   Populous = 648,
   ODEM = 649,
+  Hatch = 88888888,
 }

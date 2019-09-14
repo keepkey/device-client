@@ -491,6 +491,11 @@ export class CoinType {
     addressFormat   : ETHEREUM_ADDRESS_FORMAT,
     dust            : 1,
     defaultDecimals : 18
+  } {
+    name            : CoinName[CoinName.Hatch],
+    addressFormat   : "^[X7][a-km-zA-HJ-NP-Z1-9]{25,34}$",
+    dust            : CoinType.oldDustCalculation(DASH_MIN_RELAY_TX_FEE),
+    defaultDecimals : 8
   }];
 }
 
