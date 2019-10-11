@@ -29,7 +29,7 @@
     "@types/concat-stream": "^1.6.0",
     "@types/lodash": "4.14.115",
     "@types/node": "^10.5.4",
-    "device-protocol": "keepkey/device-protocol#v6.0.1",
+    "device-protocol": "keepkey/device-protocol#v6.0.2",
     "gulp": "gulpjs/gulp#6d71a658c61edb3090221579d8f97dbe086ba2ed",
     "gulp-bump": "^3.1.1",
     "gulp-hjson": "^2.0.3",

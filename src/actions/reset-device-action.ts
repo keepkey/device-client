@@ -40,6 +40,7 @@ export class ResetDeviceAction {
           message.setPinProtection(o.pin_protection);
           message.setLanguage(o.language);
           message.setLabel(o.label);
+          message.setU2fCounter(Math.floor(Date.now() / 1000))
 
           return client.writeToDevice(message);
         } else {
