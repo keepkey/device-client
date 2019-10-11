@@ -62,6 +62,7 @@ export class RecoverDeviceAction {
         message.setEnforceWordlist(o.enforce_wordlist);
         message.setUseCharacterCipher(o.use_character_cipher);
         message.setDryRun(o.dry_run);
+        message.setU2fCounter(Math.floor(Date.now() / 1000))
 
         return client.writeToDevice(message)
           .catch((failureMessage) => {
